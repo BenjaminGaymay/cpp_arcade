@@ -30,8 +30,15 @@ void launch(const char *lib)
 	std::cout << mdr << std::endl;
 }
 
+void displayHelp()
+{
+	std::cout << "USAGE:\n\t./arcade [lib]\nDESCRIPTION:\n\tlib\tlibrary that contains the game askip" << std::endl;
+}
+
 int main(int ac, char **av)
 {
+	if (ac != 2)
+		return displayHelp(), 84;
 	try {
 		launch(av[1]);
 	}
