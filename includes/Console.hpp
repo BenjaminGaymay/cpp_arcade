@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <memory>
 #include <iostream>
 #include <dlfcn.h>
 #include "ILibrary.hpp"
@@ -24,7 +25,8 @@ namespace Arcade {
 	private:
 		std::string _lib;
 		void *_handle;
-		int (*lol)(int, int);
+		std::unique_ptr<ILibrary> (*create)();
+		std::unique_ptr<ILibrary> _game;
 		// int pouet(test::*)(int,int);
 	};
 }

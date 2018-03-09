@@ -40,8 +40,7 @@ void N_Console::openLib()
 
 void N_Console::launch()
 {
-	lol = reinterpret_cast<int(*)(int,int)>(dlsym(_handle, "addnb"));
-	if (lol)
-		std::cout << lol(5,5) << std::endl;
-	// pouet = reinterpret_cast<(test::*)(int,int)>(dlsym(_handle, "addnb"));
+	create = reinterpret_cast<std::unique_ptr<ILibrary>(*)()>(dlsym(_handle, "launch"));
+	if (create)
+		_game = create();
 }
