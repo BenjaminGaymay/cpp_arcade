@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include "ILibrary.hpp"
+#include "IDisplay.hpp"
 #include <iostream>
 
-class LibNcurses : public ILibrary {
+class LibNcurses : public IDisplay {
 public:
 	LibNcurses();
 	~LibNcurses();
@@ -20,4 +20,5 @@ public:
 	void display(std::vector<std::vector<char>> &lol) {};
 	void render() {};
 	void processEvent() {};
+	void closeWindow() {};
 };

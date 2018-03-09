@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include "ILibrary.hpp"
+#include "IDisplay.hpp"
 
-class LibSfml : public ILibrary {
+class LibSfml : public IDisplay {
 public:
 	LibSfml();
 	~LibSfml();
@@ -19,4 +19,5 @@ public:
 	void display(std::vector<std::vector<char>> &lol) {};
 	void render() {};
 	void processEvent() {};
+	void closeWindow() {};
 };

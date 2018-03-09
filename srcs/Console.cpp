@@ -40,9 +40,9 @@ void N_Console::openLib()
 
 int N_Console::launch()
 {
-	create = reinterpret_cast<std::unique_ptr<ILibrary>(*)()>(dlsym(_handle, "launch"));
+	create = reinterpret_cast<std::unique_ptr<IDisplay>(*)()>(dlsym(_handle, "launch"));
 	try {
-		if (_game)
+		if (create)
 			_game = create();
 		else
 			throw std::runtime_error("Error: lib: bad format of library.");

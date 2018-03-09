@@ -15,7 +15,7 @@ LibNcurses::~LibNcurses()
 {
 }
 
-extern "C" std::unique_ptr<ILibrary> launch()
+extern "C" std::unique_ptr<IDisplay> launch()
 {
 	return std::make_unique<LibNcurses>();
 }
