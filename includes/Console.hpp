@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <dlfcn.h>
+#include "ILibrary.hpp"
 
 namespace Arcade {
 	class Console {

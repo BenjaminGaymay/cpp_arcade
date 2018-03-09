@@ -35,12 +35,13 @@ void N_Console::openLib()
 	_handle = dlopen(_lib.c_str(), RTLD_LAZY);
 
 	if (dlerror() != NULL)
-		throw std::runtime_error("Error: lib: bad library path");
+		throw std::runtime_error("Error: lib: bad library path or the file isn't a library.");
 }
 
 void N_Console::launch()
 {
 	lol = reinterpret_cast<int(*)(int,int)>(dlsym(_handle, "addnb"));
-	std::cout << lol(5,5) << std::endl;
+	if (lol)
+		std::cout << lol(5,5) << std::endl;
 	// pouet = reinterpret_cast<(test::*)(int,int)>(dlsym(_handle, "addnb"));
 }

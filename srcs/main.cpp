@@ -22,5 +22,4 @@ int main(int ac, char **av)
 		std::cerr << e.what() << std::endl;
 	}
 	lol.launch();
-	// std::cout << lol.getLib() << std::endl;
 }

@@ -14,3 +14,8 @@ LibNcurses::LibNcurses()
 LibNcurses::~LibNcurses()
 {
 }
+
+extern "C" int addnb(int n, int b)
+{
+	return n + b;
+}
