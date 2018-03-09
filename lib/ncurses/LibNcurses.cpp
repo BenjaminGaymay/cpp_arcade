@@ -15,7 +15,7 @@ LibNcurses::~LibNcurses()
 {
 }
 
-extern "C" int addnb(int n, int b)
+extern "C" std::unique_ptr<ILibrary> create()
 {
-	return n + b;
+	return std::make_unique<LibNcurses>();
 }

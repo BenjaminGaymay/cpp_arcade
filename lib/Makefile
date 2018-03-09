@@ -6,9 +6,9 @@ CC		=	g++
 
 RM		=	rm -f
 
-SRCSFML		=	./ncurses/LibNcurses.cpp
+SRCNCURSES	=	./ncurses/LibNcurses.cpp
 
-SRCNCURSES	=	./sfml/LibSfml.cpp
+SRCSFML		=	./sfml/LibSfml.cpp
 
 OBJSFML		=	$(SRCSFML:.cpp=.o)
 

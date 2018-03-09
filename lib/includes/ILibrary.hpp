@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <memory>
+
 class ILibrary {
 public:
 	virtual ~ILibrary() {};

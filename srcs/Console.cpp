@@ -40,7 +40,10 @@ void N_Console::openLib()
 
 void N_Console::launch()
 {
-	create = reinterpret_cast<std::unique_ptr<ILibrary>(*)()>(dlsym(_handle, "launch"));
-	if (create)
+	create = reinterpret_cast<std::unique_ptr<ILibrary>(*)()>(dlsym(_handle, "create"));
+	if (create) {
 		_game = create();
+		_game->launch();
+	}
+
 }
