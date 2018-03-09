@@ -47,7 +47,6 @@ int N_Console::launch()
 		else
 			throw std::runtime_error("Error: lib: bad format of library.");
 	} catch (std::runtime_error &e) {
-		std::cerr << e.what() << std::endl;
-		return Macro::ERROR;
+		return std::cerr << e.what() << std::endl, Macro::ERROR;
 	}
 }
