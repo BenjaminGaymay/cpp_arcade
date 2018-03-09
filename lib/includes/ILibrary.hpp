@@ -10,5 +10,5 @@
 class ILibrary {
 public:
 	virtual ~ILibrary() {};
-	virtual void hello() = 0;
+	virtual void launch() = 0;
 };

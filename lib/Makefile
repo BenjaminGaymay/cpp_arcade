@@ -15,7 +15,7 @@ OBJSFML		=	$(SRCSFML:.cpp=.o)
 OBJNCURSES	=	$(SRCNCURSES:.cpp=.o)
 
 CPPFLAGS	=	-I ./includes/
-CPPFLAGS	+=	-W -Wall -Wextra
+CPPFLAGS	+=	-W -Wall -Wextra -fPIC
 
 LDFLAGS		=	-shared
 

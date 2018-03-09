@@ -7,10 +7,13 @@
 
 #pragma once
 
-class LibNcurses {
+#include "ILibrary.hpp"
+
+class LibNcurses : public ILibrary {
 public:
 	LibNcurses();
 	~LibNcurses();
-protected:
-private:
+	void launch() {
+		return;
+	}
 };
