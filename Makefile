@@ -11,7 +11,7 @@ OBJS	=	$(SRCS:.cpp=.o)
 
 LDFLAGS =	-ldl
 
-CPPFLAGS =	-I ./includes/ -I ./lib/
+CPPFLAGS =	-I./includes/ -I./lib/ -I./lib/includes
 CPPFLAGS +=	-W -Wall -Wextra
 
 all:	$(NAME)
