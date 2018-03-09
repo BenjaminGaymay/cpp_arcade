@@ -5,45 +5,22 @@
 // main
 //
 
-#include <exception>
-#include <iostream>
-
-class LibException : std::exception {
-public:
-	LibException(const std::string  &msg):
-		_msg(msg) {};
-	std::string what()
-	{
-		return "Error: Lib: " + _msg;
-	};
-private:
-	std::string _msg;
-};
-
-void launch(const char *lib)
-{
-	std::string mdr;
-
-	if (lib == nullptr)
-		throw LibException("Bad library file.");
-	mdr = lib;
-	std::cout << mdr << std::endl;
-}
-
-void displayHelp()
-{
-	std::cout << "USAGE:\n\t./arcade [lib]\nDESCRIPTION:\n\tlib\tlibrary that contains the game askip" << std::endl;
-}
+#include "Console.hpp"
+#include "Macro.hpp"
 
 int main(int ac, char **av)
 {
-	if (ac != 2)
-		return displayHelp(), 84;
-	try {
-		launch(av[1]);
+	Arcade::Console lol;
+
+	if (ac != 2) {
+		std::cerr << "Error: program needs a lib to run." << std::endl;
+		return Macro::ERROR;
 	}
-	catch (LibException &e) {
+	try {
+		lol.setLib(av[1]).openLib();
+	} catch (std::runtime_error &e) {
 		std::cerr << e.what() << std::endl;
 	}
-	return 0;
+	lol.launch();
+	// std::cout << lol.getLib() << std::endl;
 }

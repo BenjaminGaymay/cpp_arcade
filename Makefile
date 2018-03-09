@@ -1,27 +1,33 @@
-NAME	= program
+NAME	=	arcade
 
-CC	= g++
+CC	=	g++
 
-RM	= rm -f
+RM	=	rm -f
 
-SRCS	= ./srcs/main.cpp
+SRCS	=	./srcs/Console.cpp	\
+		./srcs/main.cpp
 
-OBJS	= $(SRCS:.cpp=.o)
+OBJS	=	$(SRCS:.cpp=.o)
 
-CPPFLAGS = -I ./includes/
-CPPFLAGS += -W -Wall -Wextra
+LDFLAGS =	-ldl
 
-all: $(NAME)
+CPPFLAGS =	-I ./includes/ -I ./lib/
+CPPFLAGS +=	-W -Wall -Wextra
 
-$(NAME): $(OBJS)
-	 $(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+all:	$(NAME)
+
+$(NAME):$(OBJS)
+	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+	make -C ./lib/
 
 clean:
 	$(RM) $(OBJS)
+	make clean -C ./lib/
 
-fclean: clean
+fclean:	clean
 	$(RM) $(NAME)
+	make fclean -C ./lib/
 
-re: fclean all
+re: 	fclean all
 
-.PHONY: all clean fclean re
+.PHONY:	all clean fclean re
