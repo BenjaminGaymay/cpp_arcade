@@ -38,12 +38,16 @@ void N_Console::openLib()
 		throw std::runtime_error("Error: lib: bad library path or the file isn't a library.");
 }
 
-void N_Console::launch()
+int N_Console::launch()
 {
-	create = reinterpret_cast<std::unique_ptr<ILibrary>(*)()>(dlsym(_handle, "create"));
-	if (create) {
-		_game = create();
-		_game->launch();
+	create = reinterpret_cast<std::unique_ptr<ILibrary>(*)()>(dlsym(_handle, "launch"));
+	try {
+		if (_game)
+			_game = create();
+		else
+			throw std::runtime_error("Error: lib: bad format of library.");
+	} catch (std::runtime_error &e) {
+		std::cerr << e.what() << std::endl;
+		return Macro::ERROR;
 	}
-
 }

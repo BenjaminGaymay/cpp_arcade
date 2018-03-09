@@ -11,6 +11,7 @@
 #include <iostream>
 #include <dlfcn.h>
 #include "ILibrary.hpp"
+#include "Macro.hpp"
 
 namespace Arcade {
 	class Console {
@@ -21,7 +22,7 @@ namespace Arcade {
 		void openLib();
 		Console &setLib(const char *);
 		const std::string &getLib() const;
-		void launch();
+		int launch();
 	private:
 		std::string _lib;
 		void *_handle;

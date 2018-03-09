@@ -20,6 +20,7 @@ int main(int ac, char **av)
 		lol.setLib(av[1]).openLib();
 	} catch (std::runtime_error &e) {
 		std::cerr << e.what() << std::endl;
+		return Macro::ERROR;
 	}
-	lol.launch();
+	return lol.launch();
 }

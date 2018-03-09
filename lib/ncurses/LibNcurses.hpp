@@ -14,8 +14,10 @@ class LibNcurses : public ILibrary {
 public:
 	LibNcurses();
 	~LibNcurses();
-	void launch() {
-		std::cout << "pd" << std::endl;
-		return;
-	}
+
+	void drawText(const std::string &, const int &x, const int &y) {};
+	void refresh() {};
+	void display(std::vector<std::vector<char>> &lol) {};
+	void render() {};
+	void processEvent() {};
 };
