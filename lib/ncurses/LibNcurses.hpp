@@ -7,18 +7,18 @@
 
 #pragma once
 
-#include "IDisplay.hpp"
+#include "IGraphics.hpp"
 #include <iostream>
 
-class LibNcurses : public IDisplay {
+class LibNcurses : public IGraphics {
 public:
 	LibNcurses();
 	~LibNcurses();
 
-	void drawText(const std::string &, const int &x, const int &y) {};
+	void drawText(const std::string &, const int &x, const int &y);
 	void refresh() {};
 	void display(std::vector<std::vector<char>> &lol) {};
 	void render() {};
-	void processEvent() {};
+	void getKey() {};
 	void closeWindow() {};
 };

@@ -10,7 +10,7 @@
 #include <memory>
 #include <iostream>
 #include <dlfcn.h>
-#include "IDisplay.hpp"
+#include "IGraphics.hpp"
 #include "Macro.hpp"
 
 namespace Arcade {
@@ -23,11 +23,12 @@ namespace Arcade {
 		Console &setLib(const char *);
 		const std::string &getLib() const;
 		int launch();
+		void writeMenu();
 	private:
-		std::string _lib;
+		std::string _libName;
 		void *_handle;
-		std::unique_ptr<IDisplay> (*create)();
-		std::unique_ptr<IDisplay> _game;
+		std::unique_ptr<IGraphics> (*create)();
+		std::unique_ptr<IGraphics> _lib;
 		// int pouet(test::*)(int,int);
 	};
 }

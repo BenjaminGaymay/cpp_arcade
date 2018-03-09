@@ -15,7 +15,13 @@ LibNcurses::~LibNcurses()
 {
 }
 
-extern "C" std::unique_ptr<IDisplay> launch()
+
+void LibNcurses::drawText(const std::string &text, const int &x, const int &y)
+{
+	std::cout << "ncurses " << text << std::endl;
+}
+
+extern "C" std::unique_ptr<IGraphics> launch()
 {
 	return std::make_unique<LibNcurses>();
 }

@@ -7,17 +7,17 @@
 
 #pragma once
 
-#include "IDisplay.hpp"
+#include "IGraphics.hpp"
 
-class LibSfml : public IDisplay {
+class LibSfml : public IGraphics {
 public:
 	LibSfml();
 	~LibSfml();
 
-	void drawText(const std::string &, const int &, const int &) {};
+	void drawText(const std::string &, const int &, const int &);
 	void refresh() {};
 	void display(std::vector<std::vector<char>> &lol) {};
 	void render() {};
-	void processEvent() {};
+	void getKey() {};
 	void closeWindow() {};
 };
