@@ -7,8 +7,9 @@
 
 #pragma once
 
-#include "IGraphics.hpp"
 #include <iostream>
+#include <ncurses.h>
+#include "IGraphics.hpp"
 
 class LibNcurses : public IGraphics {
 public:
@@ -16,9 +17,13 @@ public:
 	~LibNcurses();
 
 	void drawText(const std::string &, const int &x, const int &y);
-	void refresh() {};
+	void clearWindow();
+	void refreshWindow();
 	void display(std::vector<std::vector<char>> &lol) {};
-	void render() {};
 	void getKey() {};
-	void closeWindow() {};
+	void closeWindow();
+	void openWindow();
+
+private:
+	WINDOW *_window;
 };
