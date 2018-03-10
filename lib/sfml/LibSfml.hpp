@@ -22,7 +22,7 @@ namespace arcade {
 		void refreshWindow();
 		void display(std::vector<std::string> &lol) {};
 		void render() {};
-		void getKey() {};
+		Key getKey();
 		void closeWindow();
 		void openWindow();
 		int getWidth() {};
@@ -34,5 +34,7 @@ namespace arcade {
 		sf::RenderWindow _window;
 		sf::Font _font;
 		sf::Text _text;
+		std::map<Color, sf::Color> _colorsMatch;
+		std::map<sf::Keyboard::Key, Key> _keyMatch;
 	};
 }

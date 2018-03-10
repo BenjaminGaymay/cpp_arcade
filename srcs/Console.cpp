@@ -5,6 +5,8 @@
 // Console
 //
 
+#include <chrono>
+#include <thread>
 #include "Console.hpp"
 
 using N_Console = arcade::Console;
@@ -64,16 +66,16 @@ void N_Console::openLib()
 void N_Console::drawBox()
 {
 	for (int i = 0; i < _lib->getWidth(); i++)
-		_lib->drawSquare(i, 0, arcade::IGraphics::RED);
+		_lib->drawSquare(i, 0, arcade::IGraphics::BG_RED);
 
 	for (int i = 0; i < _lib->getWidth(); i++)
-		_lib->drawSquare(i, _lib->getHeight(), arcade::IGraphics::RED);
+		_lib->drawSquare(i, _lib->getHeight(), arcade::IGraphics::BG_RED);
 
 	for (int i = 0; i < _lib->getHeight(); i++)
-		_lib->drawSquare(0, i, arcade::IGraphics::RED);
+		_lib->drawSquare(0, i, arcade::IGraphics::BG_RED);
 
 	for (int i = 0; i < _lib->getHeight(); i++)
-		_lib->drawSquare(_lib->getWidth(), i, arcade::IGraphics::RED);
+		_lib->drawSquare(_lib->getWidth(), i, arcade::IGraphics::BG_RED);
 }
 
 void N_Console::drawListLibs()
@@ -105,11 +107,15 @@ void N_Console::writeMenu()
 		drawBox();
 		drawListLibs();
 		drawListGames();
+		if (_lib->getKey() == arcade::IGraphics::ESC) {
+			_lib->closeWindow();
+			break;
+		}
 		for (int i = _lib->getWidth()/3;i < _lib->getWidth()*2/3; i++){
-			_lib->drawSquare(i, 3, arcade::IGraphics::RED);
-			_lib->drawSquare(i, 7, arcade::IGraphics::RED);
-			_lib->drawSquare(i, 14, arcade::IGraphics::RED);
-			_lib->drawSquare(i, 18, arcade::IGraphics::RED);
+			_lib->drawSquare(i, 3, arcade::IGraphics::BG_RED);
+			_lib->drawSquare(i, 7, arcade::IGraphics::BG_RED);
+			_lib->drawSquare(i, 14, arcade::IGraphics::BG_RED);
+			_lib->drawSquare(i, 18, arcade::IGraphics::BG_RED);
 		}
 		_lib->drawText("Welcome in Arcade", _lib->getWidth() / 2 - 17/2, 5, IGraphics::GREEN);
 		_lib->refreshWindow();

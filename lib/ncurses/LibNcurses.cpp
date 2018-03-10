@@ -26,9 +26,12 @@ void N_LibNcurses::openWindow()
 	keypad(stdscr, true);
 	getmaxyx(stdscr, _height, _width);
 	start_color();
-	init_pair(1, COLOR_RED, COLOR_RED);
-	init_pair(2, COLOR_BLUE, COLOR_BLUE);
-	init_pair(3, COLOR_GREEN, COLOR_GREEN);
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_BLUE, COLOR_BLACK);
+	init_pair(3, COLOR_GREEN, COLOR_BLACK);
+	init_pair(4, COLOR_RED, COLOR_RED);
+	init_pair(5, COLOR_BLUE, COLOR_BLUE);
+	init_pair(6, COLOR_GREEN, COLOR_GREEN);
 }
 
 void N_LibNcurses::closeWindow()

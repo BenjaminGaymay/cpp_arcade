@@ -16,9 +16,21 @@ namespace arcade {
 		enum Color {
 			RED = 1,
 			BLUE,
-			GREEN
+			GREEN,
+			BG_RED,
+			BG_BLUE,
+			BG_GREEN
 		};
 
+		enum Key {
+			UP,
+			DOWN,
+			LEFT,
+			RIGHT,
+			ESC,
+			ENTER,
+			NONE
+		};
 	public:
 		virtual ~IGraphics() {};
 
@@ -27,7 +39,7 @@ namespace arcade {
 		virtual void clearWindow() = 0;
 		virtual void refreshWindow() = 0;
 		virtual void display(std::vector<std::string> &) = 0;
-		virtual void getKey() = 0;
+		virtual Key getKey() = 0;
 		virtual void closeWindow() = 0;
 		virtual void openWindow() = 0;
 		virtual int getWidth() = 0;

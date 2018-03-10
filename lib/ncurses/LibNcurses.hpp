@@ -22,7 +22,7 @@ namespace arcade {
 		void clearWindow();
 		void refreshWindow();
 		void display(std::vector<std::string> &lol) {};
-		void getKey() {};
+		Key getKey() {};
 		void closeWindow();
 		void openWindow();
 		int getHeight();
