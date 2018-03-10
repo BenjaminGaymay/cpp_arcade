@@ -17,8 +17,8 @@ namespace arcade {
 		LibNcurses();
 		~LibNcurses();
 
-		void drawText(const std::string &, const int &x, const int &y);
-		void drawSquare(const int &, const int &);
+		void drawText(const std::string &, const int &x, const int &y, const Color &);
+		void drawSquare(const int &, const int &, const Color &);
 		void clearWindow();
 		void refreshWindow();
 		void display(std::vector<std::string> &lol) {};
@@ -29,7 +29,6 @@ namespace arcade {
 		int getWidth();
 
 	private:
-		WINDOW *_window;
 		int _width;
 		int _height;
 	};

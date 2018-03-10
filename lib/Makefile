@@ -17,7 +17,7 @@ OBJNCURSES	=	$(SRCNCURSES:.cpp=.o)
 CPPFLAGS	=	-I ./includes/
 CPPFLAGS	+=	-W -Wall -Wextra -fPIC
 
-LDFLAGS		=	-shared -lncurses
+LDFLAGS		=	-shared -lncurses -lsfml-graphics
 
 all:		$(SFML) $(NCURSES)
 

@@ -24,6 +24,7 @@ void N_Console::loadLibs(const std::string &path, Type type)
 	DIR *dir;
 	struct dirent *dp;
 	std::string fileName;
+	int i = 0;
 
 	dir = opendir(path.c_str());
 	if (dir == nullptr)
@@ -34,15 +35,19 @@ void N_Console::loadLibs(const std::string &path, Type type)
 			type == LIBS ? _listLibs.push_back(path + fileName) : _listGames.push_back(path + fileName);
 		}
 	}
+	for (auto &c : _listLibs) {
+		if (_libName == c)
+			_currLib = i;
+		++i;
+	}
 }
 
-N_Console &N_Console::setLib(const char *lib)
+void N_Console::setLibName(const char *lib)
 {
 	_libName = lib;
-	return *this;
 }
 
-const std::string &N_Console::getLib() const
+const std::string &N_Console::getLibName() const
 {
 	return _libName;
 }
@@ -59,16 +64,16 @@ void N_Console::openLib()
 void N_Console::drawBox()
 {
 	for (int i = 0; i < _lib->getWidth(); i++)
-		_lib->drawSquare(i, 0);
+		_lib->drawSquare(i, 0, arcade::IGraphics::RED);
 
 	for (int i = 0; i < _lib->getWidth(); i++)
-		_lib->drawSquare(i, _lib->getHeight());
+		_lib->drawSquare(i, _lib->getHeight(), arcade::IGraphics::RED);
 
 	for (int i = 0; i < _lib->getHeight(); i++)
-		_lib->drawSquare(0, i);
+		_lib->drawSquare(0, i, arcade::IGraphics::RED);
 
 	for (int i = 0; i < _lib->getHeight(); i++)
-		_lib->drawSquare(_lib->getWidth(), i);
+		_lib->drawSquare(_lib->getWidth(), i, arcade::IGraphics::RED);
 }
 
 void N_Console::drawListLibs()
@@ -76,7 +81,7 @@ void N_Console::drawListLibs()
 	int i = 10;
 
 	for (auto &c : _listLibs) {
-		_lib->drawText(c,_lib->getWidth() / 2 - c.size()/2 ,i);
+		_lib->drawText(c,_lib->getWidth()/2 - c.size()/2 ,i, IGraphics::BLUE);
 		i+=2;
 	}
 }
@@ -86,7 +91,7 @@ void N_Console::drawListGames()
 	int i = 16;
 
 	for (auto &c : _listGames) {
-		_lib->drawText(c,_lib->getWidth() / 2 - c.size()/2 ,i);
+		_lib->drawText(c,_lib->getWidth() / 2 - c.size()/2 ,i, IGraphics::BLUE);
 		i+=2;
 	}
 }
@@ -101,12 +106,12 @@ void N_Console::writeMenu()
 		drawListLibs();
 		drawListGames();
 		for (int i = _lib->getWidth()/3;i < _lib->getWidth()*2/3; i++){
-			_lib->drawSquare(i, 3);
-			_lib->drawSquare(i, 7);
-			_lib->drawSquare(i, 14);
-			_lib->drawSquare(i, 18);
+			_lib->drawSquare(i, 3, arcade::IGraphics::RED);
+			_lib->drawSquare(i, 7, arcade::IGraphics::RED);
+			_lib->drawSquare(i, 14, arcade::IGraphics::RED);
+			_lib->drawSquare(i, 18, arcade::IGraphics::RED);
 		}
-		_lib->drawText("Welcome in Arcade", _lib->getWidth() / 2 - 17/2, 5);
+		_lib->drawText("Welcome in Arcade", _lib->getWidth() / 2 - 17/2, 5, IGraphics::GREEN);
 		_lib->refreshWindow();
 	}
 	_lib->closeWindow();

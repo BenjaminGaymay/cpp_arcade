@@ -10,20 +10,18 @@
 
 int main(int ac, char **av)
 {
-	arcade::Console lol;
+	arcade::Console PS4;
 
-	if (ac != 2) {
-		std::cerr << "Error: program needs a lib to run." << std::endl;
-		return Macro::ERROR;
-	}
+	if (ac != 2)
+		return std::cerr << "Error: program needs a lib to run." << std::endl, Macro::ERROR;
 	try {
-		lol.loadLibs("./lib/", arcade::Console::LIBS);
-		lol.loadLibs("./games/", arcade::Console::GAME);
-		lol.setLib(av[1]).openLib();
-		lol.showList();
+		PS4.setLibName(av[1]);
+		PS4.openLib();
+		PS4.loadLibs("./lib/", arcade::Console::LIBS);
+		PS4.loadLibs("./games/", arcade::Console::GAME);
+		PS4.showList();
 	} catch (std::runtime_error &e) {
-		std::cerr << e.what() << std::endl;
-		return Macro::ERROR;
+		return std::cerr << e.what() << std::endl, Macro::ERROR;
 	}
-	return lol.launch();
+	return PS4.launch();
 }

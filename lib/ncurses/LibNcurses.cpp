@@ -44,19 +44,20 @@ void N_LibNcurses::clearWindow()
 void N_LibNcurses::refreshWindow()
 {
 	refresh();
-	wrefresh(_window);
 }
 
-void N_LibNcurses::drawText(const std::string &text, const int &x, const int &y)
+void N_LibNcurses::drawText(const std::string &text, const int &x, const int &y, const Color &color)
 {
+	attron(COLOR_PAIR(color));
 	mvprintw(y, x, "%s", text.c_str());
+	attroff(COLOR_PAIR(color));
 }
 
-void N_LibNcurses::drawSquare(const int &x, const int &y)
+void N_LibNcurses::drawSquare(const int &x, const int &y, const Color &color)
 {
-	attron(COLOR_PAIR(1));
+	attron(COLOR_PAIR(color));
 	mvprintw(y, x, "XX");
-	attroff(COLOR_PAIR(1));
+	attroff(COLOR_PAIR(color));
 }
 
 int N_LibNcurses::getHeight()

@@ -13,10 +13,17 @@
 namespace arcade {
 	class IGraphics {
 	public:
+		enum Color {
+			RED = 1,
+			BLUE,
+			GREEN
+		};
+
+	public:
 		virtual ~IGraphics() {};
 
-		virtual void drawText(const std::string &, const int &, const int &) = 0;
-		virtual void drawSquare(const int &, const int &) = 0;
+		virtual void drawText(const std::string &, const int &, const int &, const Color &) = 0;
+		virtual void drawSquare(const int &, const int &, const Color &) = 0;
 		virtual void clearWindow() = 0;
 		virtual void refreshWindow() = 0;
 		virtual void display(std::vector<std::string> &) = 0;

@@ -29,8 +29,8 @@ namespace arcade {
 		~Console();
 		void openLib();
 		void loadLibs(const std::string &, Type);
-		Console &setLib(const char *);
-		const std::string &getLib() const;
+		void setLibName(const char *);
+		const std::string &getLibName() const;
 		int launch();
 		void writeMenu();
 		void drawBox();
@@ -45,5 +45,7 @@ namespace arcade {
 		std::unique_ptr<IGraphics> _lib;
 		std::vector<std::string> _listLibs;
 		std::vector<std::string> _listGames;
+		std::size_t _currLib;
+		std::size_t _currGame;
 	};
 }
