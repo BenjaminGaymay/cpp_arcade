@@ -1,6 +1,6 @@
 NAME	=	arcade
 
-CC	=	g++
+CC	=	g++ -std=c++17
 
 RM	=	rm -f
 
@@ -11,7 +11,7 @@ OBJS	=	$(SRCS:.cpp=.o)
 
 LDFLAGS =	-ldl
 
-CPPFLAGS =	-I./includes/ -I./lib/ -I./lib/includes
+CPPFLAGS =	-I./includes/ -I./lib/ -I./lib/includes -I./games/includes
 CPPFLAGS +=	-W -Wall -Wextra
 
 all:	$(NAME)

@@ -19,6 +19,22 @@ N_Console::Console()
 N_Console::~Console()
 {}
 
+void N_Console::loadLibs(const std::string &path, Type type)
+{
+	DIR *dir;
+	struct dirent *dp;
+	std::string fileName;
+
+	dir = opendir(path.c_str());
+	if (dir == nullptr)
+		throw std::runtime_error("Error: there isn't a " + path + " directory.");
+	while ((dp = readdir(dir))) {
+		fileName = dp->d_name;
+		if (fileName.substr(fileName.find_last_of(".") + 1) == "so")
+			type == LIBS ? _listLibs.push_back(fileName) : _listGames.push_back(fileName);
+	}
+}
+
 N_Console &N_Console::setLib(const char *lib)
 {
 	_libName = lib;
@@ -78,4 +94,14 @@ int N_Console::launch()
 	}
 	writeMenu();
 	return Macro::SUCCESS;
+}
+
+void N_Console::showList()
+{
+	std::cout << "GAME" << std::endl;
+	for (auto &c : _listGames)
+		std::cout << c << std::endl;
+	std::cout << "LIBS GRAPHICS" << std::endl;
+	for (auto &c : _listLibs)
+		std::cout << c << std::endl;
 }
