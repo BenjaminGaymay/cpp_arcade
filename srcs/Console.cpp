@@ -41,14 +41,11 @@ void N_Console::openLib()
 
 void N_Console::writeMenu()
 {
-	_lib->drawText("pd", 5, 5);
 	_lib->openWindow();
-	// while (true) {
-	// 	_lib->clear();
-	// 	_lib->refresh();
-	// }
-	for (int i = 0; i < 5000; i++) {
+	while (true) {
 		_lib->clearWindow();
+		_lib->drawText("salut", 5, 5);
+		_lib->drawSquare(5, 5);
 		_lib->refreshWindow();
 	}
 	_lib->closeWindow();

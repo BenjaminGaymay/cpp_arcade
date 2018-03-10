@@ -15,6 +15,7 @@ public:
 	~LibSfml();
 
 	void drawText(const std::string &, const int &, const int &);
+	void drawSquare(const int &, const int &) {};
 	void clearWindow() {};
 	void refreshWindow() {};
 	void display(std::vector<std::vector<char>> &lol) {};

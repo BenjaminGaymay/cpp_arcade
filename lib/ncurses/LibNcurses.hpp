@@ -17,6 +17,7 @@ public:
 	~LibNcurses();
 
 	void drawText(const std::string &, const int &x, const int &y);
+	void drawSquare(const int &, const int &);
 	void clearWindow();
 	void refreshWindow();
 	void display(std::vector<std::vector<char>> &lol) {};
