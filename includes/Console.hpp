@@ -34,6 +34,8 @@ namespace arcade {
 		int launch();
 		void writeMenu();
 		void drawBox();
+		void drawListLibs();
+		void drawListGames();
 		void showList();
 
 	private:

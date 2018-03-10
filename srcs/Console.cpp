@@ -71,14 +71,41 @@ void N_Console::drawBox()
 		_lib->drawSquare(_lib->getWidth(), i);
 }
 
+void N_Console::drawListLibs()
+{
+	int i = 10;
+
+	for (auto &c : _listLibs) {
+		_lib->drawText(c,_lib->getWidth() / 2 - c.size()/2 ,i);
+		i+=2;
+	}
+}
+
+void N_Console::drawListGames()
+{
+	int i = 16;
+
+	for (auto &c : _listGames) {
+		_lib->drawText(c,_lib->getWidth() / 2 - c.size()/2 ,i);
+		i+=2;
+	}
+}
+
 void N_Console::writeMenu()
 {
 	_lib->openWindow();
-	int i = 0;
 
 	while (true) {
 		_lib->clearWindow();
 		drawBox();
+		drawListLibs();
+		drawListGames();
+		for (int i = _lib->getWidth()/3;i < _lib->getWidth()*2/3; i++){
+			_lib->drawSquare(i, 3);
+			_lib->drawSquare(i, 7);
+			_lib->drawSquare(i, 14);
+			_lib->drawSquare(i, 18);
+		}
 		_lib->drawText("Welcome in Arcade", _lib->getWidth() / 2 - 17/2, 5);
 		_lib->refreshWindow();
 	}
