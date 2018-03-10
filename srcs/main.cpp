@@ -17,9 +17,10 @@ int main(int ac, char **av)
 		return Macro::ERROR;
 	}
 	try {
-		lol.loadLibs("./lib", arcade::Console::LIBS);
-		lol.loadLibs("./games", arcade::Console::GAME);
+		lol.loadLibs("./lib/", arcade::Console::LIBS);
+		lol.loadLibs("./games/", arcade::Console::GAME);
 		lol.setLib(av[1]).openLib();
+		lol.showList();
 	} catch (std::runtime_error &e) {
 		std::cerr << e.what() << std::endl;
 		return Macro::ERROR;

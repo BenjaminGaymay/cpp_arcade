@@ -30,8 +30,9 @@ void N_Console::loadLibs(const std::string &path, Type type)
 		throw std::runtime_error("Error: there isn't a " + path + " directory.");
 	while ((dp = readdir(dir))) {
 		fileName = dp->d_name;
-		if (fileName.substr(fileName.find_last_of(".") + 1) == "so")
-			type == LIBS ? _listLibs.push_back(fileName) : _listGames.push_back(fileName);
+		if (fileName.substr(fileName.find_last_of(".") + 1) == "so") {
+			type == LIBS ? _listLibs.push_back(path + fileName) : _listGames.push_back(path + fileName);
+		}
 	}
 }
 
@@ -50,6 +51,7 @@ void N_Console::openLib()
 {
 	_handle = dlopen(_libName.c_str(), RTLD_LAZY);
 	char *err = dlerror();
+
 	if (err)
 		throw std::runtime_error("Error: lib: " + std::string(err));
 }
@@ -72,6 +74,8 @@ void N_Console::drawBox()
 void N_Console::writeMenu()
 {
 	_lib->openWindow();
+	int i = 0;
+
 	while (true) {
 		_lib->clearWindow();
 		drawBox();
