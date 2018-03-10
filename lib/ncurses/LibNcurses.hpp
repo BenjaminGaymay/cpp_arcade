@@ -11,20 +11,26 @@
 #include <ncurses.h>
 #include "IGraphics.hpp"
 
-class LibNcurses : public IGraphics {
-public:
-	LibNcurses();
-	~LibNcurses();
+namespace arcade {
+	class LibNcurses : public IGraphics {
+	public:
+		LibNcurses();
+		~LibNcurses();
 
-	void drawText(const std::string &, const int &x, const int &y);
-	void drawSquare(const int &, const int &);
-	void clearWindow();
-	void refreshWindow();
-	void display(std::vector<std::vector<char>> &lol) {};
-	void getKey() {};
-	void closeWindow();
-	void openWindow();
+		void drawText(const std::string &, const int &x, const int &y);
+		void drawSquare(const int &, const int &);
+		void clearWindow();
+		void refreshWindow();
+		void display(std::vector<std::string> &lol) {};
+		void getKey() {};
+		void closeWindow();
+		void openWindow();
+		int getHeight();
+		int getWidth();
 
-private:
-	WINDOW *_window;
-};
+	private:
+		WINDOW *_window;
+		int _width;
+		int _height;
+	};
+}

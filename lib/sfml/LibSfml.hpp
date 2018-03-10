@@ -9,18 +9,22 @@
 
 #include "IGraphics.hpp"
 
-class LibSfml : public IGraphics {
-public:
-	LibSfml();
-	~LibSfml();
+namespace arcade {
+	class LibSfml : public IGraphics {
+	public:
+		LibSfml();
+		~LibSfml();
 
-	void drawText(const std::string &, const int &, const int &);
-	void drawSquare(const int &, const int &) {};
-	void clearWindow() {};
-	void refreshWindow() {};
-	void display(std::vector<std::vector<char>> &lol) {};
-	void render() {};
-	void getKey() {};
-	void closeWindow() {};
-	void openWindow();
-};
+		void drawText(const std::string &, const int &, const int &);
+		void drawSquare(const int &, const int &) {};
+		void clearWindow() {};
+		void refreshWindow() {};
+		void display(std::vector<std::string> &lol) {};
+		void render() {};
+		void getKey() {};
+		void closeWindow() {};
+		void openWindow();
+		int getWidth() {};
+		int getHeight() {};
+	};
+}

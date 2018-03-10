@@ -13,7 +13,7 @@
 #include "IGraphics.hpp"
 #include "Macro.hpp"
 
-namespace Arcade {
+namespace arcade {
 	class Console {
 	public:
 		Console(const std::string &);
@@ -24,6 +24,7 @@ namespace Arcade {
 		const std::string &getLib() const;
 		int launch();
 		void writeMenu();
+		void drawBox();
 	private:
 		std::string _libName;
 		void *_handle;

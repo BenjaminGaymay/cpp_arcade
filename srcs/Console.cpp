@@ -6,9 +6,8 @@
 //
 
 #include "Console.hpp"
-#include <chrono>
-#include <thread>
-using N_Console = Arcade::Console;
+
+using N_Console = arcade::Console;
 
 N_Console::Console(const std::string &lib) :
 	_libName(lib)
@@ -39,13 +38,28 @@ void N_Console::openLib()
 		throw std::runtime_error("Error: lib: " + std::string(err));
 }
 
+void N_Console::drawBox()
+{
+	for (int i = 0; i < _lib->getWidth(); i++)
+		_lib->drawSquare(i, 0);
+
+	for (int i = 0; i < _lib->getWidth(); i++)
+		_lib->drawSquare(i, _lib->getHeight());
+
+	for (int i = 0; i < _lib->getHeight(); i++)
+		_lib->drawSquare(0, i);
+
+	for (int i = 0; i < _lib->getHeight(); i++)
+		_lib->drawSquare(_lib->getWidth(), i);
+}
+
 void N_Console::writeMenu()
 {
 	_lib->openWindow();
 	while (true) {
 		_lib->clearWindow();
-		_lib->drawText("salut", 5, 5);
-		_lib->drawSquare(5, 5);
+		drawBox();
+		_lib->drawText("Welcome in Arcade", _lib->getWidth() / 2 - 17/2, 5);
 		_lib->refreshWindow();
 	}
 	_lib->closeWindow();

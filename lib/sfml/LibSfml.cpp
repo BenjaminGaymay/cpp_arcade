@@ -8,24 +8,27 @@
 #include <iostream>
 #include "LibSfml.hpp"
 
-LibSfml::LibSfml()
+
+using N_LibSfml = arcade::LibSfml;
+
+N_LibSfml::LibSfml()
 {
 }
 
-LibSfml::~LibSfml()
+N_LibSfml::~LibSfml()
 {
 }
 
-void LibSfml::drawText(const std::string &text, const int &x, const int &y)
+void N_LibSfml::drawText(const std::string &text, const int &x, const int &y)
 {
 	std::cout << "sfml " << text << std::endl;
 }
 
-void LibSfml::openWindow()
+void N_LibSfml::openWindow()
 {
 }
 
-extern "C" std::unique_ptr<IGraphics> launch()
+extern "C" std::unique_ptr<arcade::IGraphics> launch()
 {
-	return std::make_unique<LibSfml>();
+	return std::make_unique<arcade::LibSfml>();
 }

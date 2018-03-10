@@ -10,7 +10,7 @@
 
 int main(int ac, char **av)
 {
-	Arcade::Console lol;
+	arcade::Console lol;
 
 	if (ac != 2) {
 		std::cerr << "Error: program needs a lib to run." << std::endl;
