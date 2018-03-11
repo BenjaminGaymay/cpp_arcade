@@ -27,6 +27,5 @@
 
 #include "ncurses.hpp"
 
-void initColor();
 void showMap(std::vector<std::string> &map);
 void initNcurses();
