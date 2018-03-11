@@ -23,26 +23,26 @@ void initColor()
   init_pair(12, COLOR_CYAN, COLOR_BLACK);
 }
 
+void setColor(char c)
+{
+	switch (c) {
+		case '*':
+			attron(COLOR_PAIR(7)); break;
+		case 'G':
+			attron(COLOR_PAIR(2)); break;
+		case 'R':
+			attron(COLOR_PAIR(1)); break;
+		default:
+			attron(COLOR_PAIR(8)); break;
+	}
+}
+
 void showMap(std::vector<std::string> &map)
 {
 	for (unsigned i = 0 ; i < map.size() ; i++) {
 		for (unsigned f = 0 ; f < map.size() * 2 ; f++) {
-
 			move(LINES / 2 - (map.size() / 2) + i, COLS / 2 - map.size() + f);
-			switch (map[i][f / 2]) {
-				case '*':
-					attron(COLOR_PAIR(7));
-					break;
-				case 'G':
-					attron(COLOR_PAIR(2));
-					break;
-				case 'R':
-					attron(COLOR_PAIR(1));
-					break;
-				default:
-					attron(COLOR_PAIR(8));
-					break;
-			}
+			setColor(map[i][f / 2]);
 			printw("%c", map[i][f / 2]);
 		}
 	}
