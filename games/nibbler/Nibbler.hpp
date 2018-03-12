@@ -31,7 +31,7 @@ namespace arcade {
 			void clearMap();
 			void startChrono();
 			bool doLoop();
-			void addApple();
+			//void addApple();
 			bool checkApple(std::pair<std::size_t, std::size_t> &pos);
 			void checkCollision(std::pair<std::size_t, std::size_t> &pos);
 
@@ -42,6 +42,7 @@ namespace arcade {
 			int _y;
 			std::vector<std::pair<std::size_t, std::size_t>> _nibblerPos;
 			std::vector<std::pair<std::size_t, std::size_t>> _applePos;
+			std::vector<std::pair<std::size_t, std::size_t>> _wallPos;
 			std::chrono::time_point<std::chrono::system_clock> _previousLoop;
 			Key _key;
 			bool _pause;
