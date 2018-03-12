@@ -11,26 +11,29 @@
 #include <vector>
 
 namespace arcade {
-	class IGraphics {
-	public:
-		enum Color {
-			RED = 1,
-			BLUE,
-			GREEN,
-			BG_RED,
-			BG_BLUE,
-			BG_GREEN
-		};
+	enum Color {
+		RED = 1,
+		BLUE,
+		GREEN,
+		BG_RED,
+		BG_BLUE,
+		BG_GREEN,
+		WHITE,
+		BG_WHITE,
+		BG_BLACK
+	};
 
-		enum Key {
-			UP,
-			DOWN,
-			LEFT,
-			RIGHT,
-			ESC,
-			ENTER,
-			NONE
-		};
+	enum Key {
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		ESC,
+		ENTER,
+		PAUSE,
+		NONE
+	};
+	class IGraphics {
 	public:
 		virtual ~IGraphics() {};
 
@@ -44,5 +47,6 @@ namespace arcade {
 		virtual void openWindow() = 0;
 		virtual int getWidth() = 0;
 		virtual int getHeight() = 0;
+		virtual bool isOpen() = 0;
 	};
 }

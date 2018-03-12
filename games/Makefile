@@ -1,28 +1,45 @@
-NAME	= program
+##
+## EPITECH PROJECT, 2018
+## cpp_arcade
+## File description:
+##
+##
 
-CC	= g++
+NIBBLER		=	lib_arcade_nibbler.so
 
-RM	= rm -f
+# NCURSES		=	libncurses.so
 
-SRCS	= ./srcs/Snake.cpp	\
-	  ./srcs/ncurses.cpp
+CC		=	g++
 
-OBJS	= $(SRCS:.cpp=.o)
+RM		=	rm -f
 
-CPPFLAGS = -I ./includes/
-CPPFLAGS += -W -Wall -Wextra
+SRCNIBBLER	=	./nibbler/Nibbler.cpp
 
-all: $(NAME)
+# SRCNCURSES	=	./ncurses/LibNcurses.cpp
 
-$(NAME): $(OBJS)
-	 $(CC) $(OBJS) -o $(NAME) $(LDFLAGS) -lncurses
+OBJNIBBLER	=	$(SRCNIBBLER:.cpp=.o)
+
+# OBJNCURSES	=	$(SRCNCURSES:.cpp=.o)
+
+CPPFLAGS	=	-I ./includes/ -I../lib/includes
+CPPFLAGS	+=	-W -Wall -Wextra -fPIC
+
+LDFLAGS		=	-shared -lncurses
+
+all:		$(NIBBLER) #$(NCURSES)
+
+$(NIBBLER):	$(OBJNIBBLER)
+		$(CC) $(OBJNIBBLER) -o $(NIBBLER) $(LDFLAGS)
+
+# $(NCURSES):	$(OBJNCURSES)
+# 		$(CC) $(OBJNCURSES) -o $(NCURSES) $(LDFLAGS)
 
 clean:
-	$(RM) $(OBJS)
+		$(RM) $(OBJSNIBBLER)
 
-fclean: clean
-	$(RM) $(NAME)
+fclean: 	clean
+		$(RM) $(NIBBLER) #$(NCURSES)
 
-re: fclean all
+re:		fclean all
 
-.PHONY: all clean fclean re
+.PHONY:		all clean fclean re

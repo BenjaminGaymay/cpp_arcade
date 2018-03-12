@@ -25,12 +25,15 @@ N_LibSfml::LibSfml() :
 	_colorsMatch[GREEN] = sf::Color::Green;
 	_colorsMatch[BG_GREEN] = sf::Color::Green;
 
-	_keyMatch[sf::Keyboard::Key::Up] = UP;
-	_keyMatch[sf::Keyboard::Key::Down] = DOWN;
-	_keyMatch[sf::Keyboard::Key::Left] = LEFT;
-	_keyMatch[sf::Keyboard::Key::Right] = RIGHT;
-	_keyMatch[sf::Keyboard::Key::Return] = ENTER;
-	_keyMatch[sf::Keyboard::Key::Escape] = ESC;
+	_keyMatch[sf::Keyboard::Key::Z] = UP;
+	_keyMatch[sf::Keyboard::Key::S] = DOWN;
+	_keyMatch[sf::Keyboard::Key::Q] = LEFT;
+	_keyMatch[sf::Keyboard::Key::D] = RIGHT;
+	_keyMatch[sf::Keyboard::Key::A] = ESC;
+	_keyMatch[sf::Keyboard::Key::E] = ENTER;
+	_keyMatch[sf::Keyboard::Key::P] = PAUSE;
+
+	_text.setFont(_font);
 }
 
 N_LibSfml::~LibSfml()
@@ -41,15 +44,19 @@ void N_LibSfml::drawText(const std::string &text, const int &x, const int &y, co
 {
 	_text.setString(text);
 	_text.setFillColor(_colorsMatch[color]);
-	_text.setPosition(x, y);
+	_text.setPosition(sf::Vector2f(x, y));
 	_window.draw(_text);
+}
+
+bool N_LibSfml::isOpen()
+{
+	return _window.isOpen();
 }
 
 void N_LibSfml::openWindow()
 {
-	// _window.create(sf::VideoMode(_width, _height), "Arcade", sf::Style::Close | sf::Style::Fullscreen);
 	_window.setVerticalSyncEnabled(true);
-	_window.setFramerateLimit(60);
+	_window.setFramerateLimit(10);
 	if (_font.loadFromFile("./ressources/Lato.ttf") == false)
 		throw std::runtime_error("Error: sfml: can't load font.");
 }
@@ -58,8 +65,8 @@ void N_LibSfml::drawSquare(const int &x, const int &y, const Color &color)
 {
 	sf::RectangleShape rect;
 	rect.setFillColor(_colorsMatch[color]);
-	rect.setSize(sf::Vector2f(200,200));
-	rect.setPosition(x, y);
+	rect.setSize(sf::Vector2f(20,20));
+	rect.setPosition(sf::Vector2f(x, y));
 	_window.draw(rect);
 }
 
@@ -78,11 +85,25 @@ void N_LibSfml::refreshWindow()
 	_window.display();
 }
 
-arcade::IGraphics::Key N_LibSfml::getKey()
+int N_LibSfml::getWidth()
 {
-	for (auto &c : _keyMatch)
-		if (sf::Keyboard::isKeyPressed(c.first))
-			return c.second;
+	return _width;
+}
+
+int N_LibSfml::getHeight()
+{
+	return _height;
+}
+
+arcade::Key N_LibSfml::getKey()
+{
+	while (_window.pollEvent(_event))
+		if (_event.type == sf::Event::KeyPressed) {
+			if (_keyMatch.find(_event.key.code) != _keyMatch.end())
+				return _keyMatch[_event.key.code];
+			else
+				return NONE;
+		}
 	return NONE;
 }
 

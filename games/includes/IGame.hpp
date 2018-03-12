@@ -8,17 +8,16 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 #include <vector>
 #include <map>
+#include "IGraphics.hpp"
 
 namespace arcade {
 	class IGame {
 	public:
-		// IGame();
-		// ~IGame();
-		virtual std::vector<std::string> &getMap() = 0;
-	protected:
-		std::vector<std::string> _map;
-	private:
+		~IGame() {};
+		virtual void start(std::unique_ptr<arcade::IGraphics> &) = 0;
+		virtual void setKey(const Key &) = 0;
 	};
 }

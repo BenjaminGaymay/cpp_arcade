@@ -1,6 +1,6 @@
-SFML		=	libsfml.so
+SFML		=	lib_arcade_sfml.so
 
-NCURSES		=	libncurses.so
+NCURSES		=	lib_arcade_ncurses.so
 
 CC		=	g++
 
@@ -28,7 +28,7 @@ $(NCURSES):	$(OBJNCURSES)
 		$(CC) $(OBJNCURSES) -o $(NCURSES) $(LDFLAGS)
 
 clean:
-		$(RM) $(OBJS)
+		$(RM) $(OBJSFML) $(OBJNCURSES)
 
 fclean: 	clean
 		$(RM) $(SFML) $(NCURSES)

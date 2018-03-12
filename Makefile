@@ -19,14 +19,17 @@ all:	$(NAME)
 $(NAME):$(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
 	make -C ./lib/
+	make -C ./games/
 
 clean:
 	$(RM) $(OBJS)
 	make clean -C ./lib/
+	make clean -C ./games/
 
 fclean:	clean
 	$(RM) $(NAME)
 	make fclean -C ./lib/
+	make fclean -C ./games/
 
 re: 	fclean all
 

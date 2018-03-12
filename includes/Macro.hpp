@@ -14,4 +14,5 @@ public:
 	static const int SUCCESS = 0;
 	static const int ERROR = 84;
 	static const int FAILURE = 1;
+	static const int EXIT = 21;
 };

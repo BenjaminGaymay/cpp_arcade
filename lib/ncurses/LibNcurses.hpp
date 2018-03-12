@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <ncurses.h>
+#include <map>
 #include "IGraphics.hpp"
 
 namespace arcade {
@@ -22,14 +23,17 @@ namespace arcade {
 		void clearWindow();
 		void refreshWindow();
 		void display(std::vector<std::string> &lol) {};
-		Key getKey() {};
+		Key getKey();
 		void closeWindow();
 		void openWindow();
 		int getHeight();
 		int getWidth();
+		bool isOpen();
 
 	private:
 		int _width;
 		int _height;
+
+		std::map<char, Key> _keyMatch;
 	};
 }

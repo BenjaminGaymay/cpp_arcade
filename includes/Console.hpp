@@ -23,29 +23,47 @@ namespace arcade {
 			LIBS
 		};
 
+		enum State {
+			IN_MENU,
+			IN_PAUSE,
+			IN_GAME
+		};
+
 	public:
 		Console(const std::string &);
 		Console();
 		~Console();
-		void openLib();
+		void openLib(const Type &);
 		void loadLibs(const std::string &, Type);
-		void setLibName(const char *);
+		void setLibName(const std::string &);
+		void setGameName(const std::string &);
 		const std::string &getLibName() const;
+		const std::string &getGameName() const;
 		int launch();
-		void writeMenu();
+		int writeMenu();
 		void drawBox();
 		void drawListLibs();
 		void drawListGames();
 		void showList();
+		void loopConsole();
 
 	private:
-		std::string _libName;
 		void *_handle;
-		std::unique_ptr<IGraphics> (*create)();
+
+		std::string _libName;
+		std::string _gameName;
+
+		std::unique_ptr<IGraphics> (*_getLib)();
 		std::unique_ptr<IGraphics> _lib;
+		std::unique_ptr<IGame> (*_getGame)();
+		std::unique_ptr<IGame> _game;
+
 		std::vector<std::string> _listLibs;
 		std::vector<std::string> _listGames;
 		std::size_t _currLib;
 		std::size_t _currGame;
+
+		State _state;
+		Key _key;
 	};
 }

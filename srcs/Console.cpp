@@ -5,6 +5,7 @@
 // Console
 //
 
+#include <unistd.h>
 #include <chrono>
 #include <thread>
 #include "Console.hpp"
@@ -13,7 +14,9 @@ using N_Console = arcade::Console;
 
 N_Console::Console(const std::string &lib) :
 	_libName(lib)
-{}
+{
+	_state = IN_MENU;
+}
 
 N_Console::Console()
 {}
@@ -37,45 +40,47 @@ void N_Console::loadLibs(const std::string &path, Type type)
 			type == LIBS ? _listLibs.push_back(path + fileName) : _listGames.push_back(path + fileName);
 		}
 	}
-	for (auto &c : _listLibs) {
-		if (_libName == c)
-			_currLib = i;
-		++i;
-	}
+	if (type == LIBS) {
+		for (auto &c : _listLibs) {
+			if (_libName == c)
+				_currLib = i;
+			++i;
+		}
+	} else
+		_gameName = _listGames[0];
 }
 
-void N_Console::setLibName(const char *lib)
+void N_Console::openLib(const Type &type)
 {
-	_libName = lib;
-}
+	std::string lib = type == LIBS ? _libName : _gameName;
 
-const std::string &N_Console::getLibName() const
-{
-	return _libName;
-}
-
-void N_Console::openLib()
-{
-	_handle = dlopen(_libName.c_str(), RTLD_LAZY);
+	std::cout << lib << std::endl;
+	_handle = dlopen(lib.c_str(), RTLD_LAZY);
 	char *err = dlerror();
 
 	if (err)
+		throw std::runtime_error("Error: lib: " + std::string(err));
+	if (type == LIBS)
+		_getLib = reinterpret_cast<std::unique_ptr<IGraphics>(*)()>(dlsym(_handle, "launch"));
+	else
+		_getGame = reinterpret_cast<std::unique_ptr<IGame>(*)()>(dlsym(_handle, "launch"));
+	if ((err = dlerror()))
 		throw std::runtime_error("Error: lib: " + std::string(err));
 }
 
 void N_Console::drawBox()
 {
 	for (int i = 0; i < _lib->getWidth(); i++)
-		_lib->drawSquare(i, 0, arcade::IGraphics::BG_RED);
+		_lib->drawSquare(i, 0, arcade::BG_RED);
 
 	for (int i = 0; i < _lib->getWidth(); i++)
-		_lib->drawSquare(i, _lib->getHeight(), arcade::IGraphics::BG_RED);
+		_lib->drawSquare(i, _lib->getHeight(), arcade::BG_RED);
 
 	for (int i = 0; i < _lib->getHeight(); i++)
-		_lib->drawSquare(0, i, arcade::IGraphics::BG_RED);
+		_lib->drawSquare(0, i, arcade::BG_RED);
 
 	for (int i = 0; i < _lib->getHeight(); i++)
-		_lib->drawSquare(_lib->getWidth(), i, arcade::IGraphics::BG_RED);
+		_lib->drawSquare(_lib->getWidth(), i, arcade::BG_RED);
 }
 
 void N_Console::drawListLibs()
@@ -83,7 +88,7 @@ void N_Console::drawListLibs()
 	int i = 10;
 
 	for (auto &c : _listLibs) {
-		_lib->drawText(c,_lib->getWidth()/2 - c.size()/2 ,i, IGraphics::BLUE);
+		_lib->drawText(c,_lib->getWidth()/2 - c.size()/2 ,i, BLUE);
 		i+=2;
 	}
 }
@@ -93,31 +98,43 @@ void N_Console::drawListGames()
 	int i = 16;
 
 	for (auto &c : _listGames) {
-		_lib->drawText(c,_lib->getWidth() / 2 - c.size()/2 ,i, IGraphics::BLUE);
+		_lib->drawText(c,_lib->getWidth() / 2 - c.size()/2 ,i, BLUE);
 		i+=2;
 	}
 }
 
-void N_Console::writeMenu()
+int N_Console::writeMenu()
 {
-	_lib->openWindow();
+	drawBox();
+	drawListLibs();
+	drawListGames();
+	_lib->drawSquare(0, 0, BG_RED);
+	_lib->drawText("Welcome in Arcade", _lib->getWidth() / 2 - 17/2, 5, GREEN);
+	if (_key == ENTER)
+		_state = IN_GAME;
+	else if (_key == ESC)
+		return Macro::EXIT;
+	return Macro::SUCCESS;
+}
 
-	while (true) {
+void N_Console::loopConsole()
+{
+	_state = IN_MENU;
+
+	_lib->openWindow();
+	while (_lib->isOpen()) {
 		_lib->clearWindow();
-		drawBox();
-		drawListLibs();
-		drawListGames();
-		if (_lib->getKey() == arcade::IGraphics::ESC) {
-			_lib->closeWindow();
-			break;
+		if (_state == IN_MENU) {
+			if (writeMenu() == Macro::EXIT)
+				break;
 		}
-		for (int i = _lib->getWidth()/3;i < _lib->getWidth()*2/3; i++){
-			_lib->drawSquare(i, 3, arcade::IGraphics::BG_RED);
-			_lib->drawSquare(i, 7, arcade::IGraphics::BG_RED);
-			_lib->drawSquare(i, 14, arcade::IGraphics::BG_RED);
-			_lib->drawSquare(i, 18, arcade::IGraphics::BG_RED);
+		else {
+			_game->start(_lib);
+			_game->setKey(_key);
+			if (_key == ESC)
+				_state = IN_MENU;
 		}
-		_lib->drawText("Welcome in Arcade", _lib->getWidth() / 2 - 17/2, 5, IGraphics::GREEN);
+		_key = _lib->getKey();
 		_lib->refreshWindow();
 	}
 	_lib->closeWindow();
@@ -125,16 +142,19 @@ void N_Console::writeMenu()
 
 int N_Console::launch()
 {
-	create = reinterpret_cast<std::unique_ptr<IGraphics>(*)()>(dlsym(_handle, "launch"));
 	try {
-		if (create)
-			_lib = create();
+		openLib(arcade::Console::LIBS);
+		openLib(arcade::Console::GAME);
+		if (_getLib and _getGame) {
+			_lib = _getLib();
+			_game = _getGame();
+		}
 		else
 			throw std::runtime_error("Error: lib: bad format of library.");
 	} catch (std::runtime_error &e) {
 		return std::cerr << e.what() << std::endl, Macro::ERROR;
 	}
-	writeMenu();
+	loopConsole();
 	return Macro::SUCCESS;
 }
 
@@ -146,4 +166,24 @@ void N_Console::showList()
 	std::cout << "LIBS GRAPHICS" << std::endl;
 	for (auto &c : _listLibs)
 		std::cout << c << std::endl;
+}
+
+void N_Console::setGameName(const std::string &game)
+{
+	_gameName = game;
+}
+
+void N_Console::setLibName(const std::string &lib)
+{
+	_libName = lib;
+}
+
+const std::string &N_Console::getLibName() const
+{
+	return _libName;
+}
+
+const std::string &N_Console::getGameName() const
+{
+	return _gameName;
 }
