@@ -39,6 +39,7 @@ namespace arcade {
 		void setGameName(const std::string &);
 		const std::string &getLibName() const;
 		const std::string &getGameName() const;
+		std::string epureName(const std::string &);
 		int launch();
 		int writeMenu();
 		void drawBox();

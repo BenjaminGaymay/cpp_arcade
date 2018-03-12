@@ -50,14 +50,21 @@ void N_Console::loadLibs(const std::string &path, Type type)
 		_gameName = _listGames[0];
 }
 
+std::string N_Console::epureName(const std::string &name)
+{
+	std::string str(name);
+
+	std::size_t pos = str.find_last_of("_");
+	std::size_t end = str.find_last_of(".");
+	return str.substr(0, end).substr(pos+1);
+}
+
 void N_Console::openLib(const Type &type)
 {
 	std::string lib = type == LIBS ? _libName : _gameName;
 
-	std::cout << lib << std::endl;
 	_handle = dlopen(lib.c_str(), RTLD_LAZY);
 	char *err = dlerror();
-
 	if (err)
 		throw std::runtime_error("Error: lib: " + std::string(err));
 	if (type == LIBS)
@@ -88,6 +95,7 @@ void N_Console::drawListLibs()
 	int i = 10;
 
 	for (auto &c : _listLibs) {
+		c = epureName(c);
 		_lib->drawText(c,_lib->getWidth()/2 - c.size()/2 ,i, BLUE);
 		i+=2;
 	}
@@ -98,6 +106,7 @@ void N_Console::drawListGames()
 	int i = 16;
 
 	for (auto &c : _listGames) {
+		c = epureName(c);
 		_lib->drawText(c,_lib->getWidth() / 2 - c.size()/2 ,i, BLUE);
 		i+=2;
 	}
