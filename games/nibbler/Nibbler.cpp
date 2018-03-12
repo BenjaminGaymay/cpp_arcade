@@ -42,7 +42,7 @@ void arcade::Nibbler::initMap()
 	_map.push_back("W WWWWWWWW WWWWWWWWW WWWWWWWW W");
 	_map.push_back("WR     R               R     RW");
 	_map.push_back("WWWWW WWWWWWWWWRWWWWWWWWW WWWWW");
-	_map.push_back("WR     R     GGGG      R     RW");
+	_map.push_back("WR     R GGGG          R     RW");
 	_map.push_back("W WWWWWWWWWWWWW WWWWWWWWWWWWW W");
 	_map.push_back("W  R          W W          R  W");
 	_map.push_back("W WWWWWWWWWWW  R  WWWWWWWWWWW W");
@@ -182,7 +182,7 @@ bool arcade::Nibbler::doLoop()
 {
 	auto period = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::system_clock::now() - _previousLoop).count();
 
-	if (period < 150)
+	if (period < 300)
 		return false;
 
 	_previousLoop = std::chrono::system_clock::now();
