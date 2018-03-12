@@ -22,7 +22,6 @@ namespace arcade {
 		void drawSquare(const int &, const int &, const Color &);
 		void clearWindow();
 		void refreshWindow();
-		void display(std::vector<std::string> &lol) {};
 		Key getKey();
 		void closeWindow();
 		void openWindow();

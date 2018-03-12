@@ -41,7 +41,6 @@ namespace arcade {
 		virtual void drawSquare(const int &, const int &, const Color &) = 0;
 		virtual void clearWindow() = 0;
 		virtual void refreshWindow() = 0;
-		virtual void display(std::vector<std::string> &) = 0;
 		virtual Key getKey() = 0;
 		virtual void closeWindow() = 0;
 		virtual void openWindow() = 0;
