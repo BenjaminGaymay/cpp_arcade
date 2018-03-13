@@ -38,8 +38,6 @@ namespace arcade {
 			int _x;
 			int _y;
 			std::vector<std::pair<std::size_t, std::size_t>> _nibblerPos;
-			std::vector<std::pair<std::size_t, std::size_t>> _applePos;
-			std::vector<std::pair<std::size_t, std::size_t>> _wallPos;
 			std::chrono::time_point<std::chrono::system_clock> _previousLoop;
 			Key _key;
 			bool _pause;

@@ -80,6 +80,10 @@ arcade::Color N_LibNcurses::setColor(char c)
 			return arcade::BG_GREEN;
 		case 'R':
 			return arcade::BG_RED;
+		case 'B':
+			return arcade::BG_BLUE;
+		case 'Y':
+			return arcade::BG_RED;
 		default:
 			return arcade::BG_BLACK;
 	}
