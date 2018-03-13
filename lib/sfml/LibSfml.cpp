@@ -34,6 +34,8 @@ N_LibSfml::LibSfml() :
 	_keyMatch[sf::Keyboard::Key::P] = PAUSE;
 
 	_text.setFont(_font);
+	_sx = _width/40;
+	_sy = _sx;
 }
 
 N_LibSfml::~LibSfml()
@@ -44,7 +46,10 @@ void N_LibSfml::drawText(const std::string &text, const int &x, const int &y, co
 {
 	_text.setString(text);
 	_text.setFillColor(_colorsMatch[color]);
-	_text.setPosition(sf::Vector2f(x, y));
+	// std::cout << x*_sx << std::endl;
+	// std::cout << y*_sy << std::endl;
+	// exit(0);
+	_text.setPosition(sf::Vector2f(x*_sx, y*_sy));
 	_window.draw(_text);
 }
 
@@ -65,8 +70,8 @@ void N_LibSfml::drawSquare(const int &x, const int &y, const Color &color)
 {
 	sf::RectangleShape rect;
 	rect.setFillColor(_colorsMatch[color]);
-	rect.setSize(sf::Vector2f(10,10));
-	rect.setPosition(sf::Vector2f(x*10, y*10));
+	rect.setSize(sf::Vector2f(_sx,_sy));
+	rect.setPosition(sf::Vector2f(x*_sx, y*_sy));
 	_window.draw(rect);
 }
 
@@ -92,18 +97,18 @@ int N_LibSfml::getWidth()
 
 int N_LibSfml::getHeight()
 {
-	return _height;
+	return _height - _sy*10;
 }
 
 arcade::Key N_LibSfml::getKey()
 {
-	while (_window.pollEvent(_event))
-		if (_event.type == sf::Event::KeyPressed) {
-			if (_keyMatch.find(_event.key.code) != _keyMatch.end())
-				return _keyMatch[_event.key.code];
-			else
-				return NONE;
-		}
+	_window.pollEvent(_event);
+	if (_event.type == sf::Event::KeyPressed) {
+		if (_keyMatch.find(_event.key.code) == _keyMatch.end())
+			return NONE;
+		else
+			return _keyMatch[_event.key.code];
+	}
 	return NONE;
 }
 

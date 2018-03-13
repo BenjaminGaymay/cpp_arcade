@@ -160,10 +160,10 @@ void arcade::Nibbler::showMap(std::unique_ptr<IGraphics> &lib)
 {
 	arcade::Color color;
 
-	for (unsigned i = 0 ; i < _map.size() ; i++) {
-		for (unsigned f = 0 ; f < (_map[i].size() * 2) - 1 ; f++) {
-			color = setColor(_map[i][f / 2]);
-			lib->drawSquare(COLS / 2 - _map[i].size() + f, LINES / 2 - (_map.size() / 2) + i, color);
+	for (unsigned i = 0 ; i < _map.size(); i++) {
+		for (unsigned f = 0 ; f < (_map[i].size()) ; f++) {
+			color = setColor(_map[i][f]);
+			lib->drawSquare(_map[i].size() + f+2, LINES / 2 - (_map.size()/2) + i, color);
 		}
 	}
 }

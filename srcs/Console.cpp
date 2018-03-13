@@ -77,17 +77,22 @@ void N_Console::openLib(const Type &type)
 
 void N_Console::drawBox()
 {
-	for (int i = 0; i < _lib->getWidth(); i++)
+	for (int i = 0; i < 40; i++) {
 		_lib->drawSquare(i, 0, arcade::BG_RED);
-
-	for (int i = 0; i < _lib->getWidth(); i++)
-		_lib->drawSquare(i, _lib->getHeight(), arcade::BG_RED);
-
-	for (int i = 0; i < _lib->getHeight(); i++)
 		_lib->drawSquare(0, i, arcade::BG_RED);
+	}
+	// for (int i = 0; i < _lib->getWidth(); i++)
+	// 	_lib->drawSquare(i, 0, arcade::BG_RED);
 
-	for (int i = 0; i < _lib->getHeight(); i++)
-		_lib->drawSquare(_lib->getWidth(), i, arcade::BG_RED);
+	// for (int i = 0; i < _lib->getWidth(); i++)
+	// 	_lib->drawSquare(i, _lib->getHeight(), arcade::BG_RED);
+
+	// for (int i = 0; i < _lib->getHeight(); i++)
+	// 	_lib->drawSquare(0, i, arcade::BG_RED);
+
+	// for (int i = 0; i < _lib->getHeight(); i++)
+	// 	_lib->drawSquare(_lib->getWidth()/2, i, arcade::BG_RED);
+	// _lib->drawText("salut", 10, 10, arcade::BG_RED);
 }
 
 void N_Console::drawListLibs()

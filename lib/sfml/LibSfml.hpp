@@ -31,6 +31,8 @@ namespace arcade {
 	private:
 		int _width;
 		int _height;
+		int _sx;
+		int _sy;
 
 		sf::RenderWindow _window;
 		sf::Font _font;

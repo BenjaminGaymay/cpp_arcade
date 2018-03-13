@@ -74,7 +74,7 @@ void N_LibNcurses::drawText(const std::string &text, const int &x, const int &y,
 void N_LibNcurses::drawSquare(const int &x, const int &y, const Color &color)
 {
 	attron(COLOR_PAIR(color));
-	mvprintw(y, x, "XX");
+	mvprintw(y, x * 2, "XX");
 	attroff(COLOR_PAIR(color));
 }
 
@@ -85,7 +85,7 @@ int N_LibNcurses::getHeight()
 
 int N_LibNcurses::getWidth()
 {
-	return _width - 1;
+	return _width - 2;
 }
 
 arcade::Key N_LibNcurses::getKey()
