@@ -1,22 +1,11 @@
-# Fonctionnement du programme
+# TODO
+	- TEXTURE BG EN SFML
+	- CHANGER DE LIB EN COURS DE PROGRAMME
+	- VOILA ASKIP
 
-   On récupére la lib graphique à l'aide de la lib toussa.
-Chaque class qui herite de IGame aura un object IGraphics qu'il utilisera pour faire ses jolies dessins.
-Par ex:
+# TEXTURE SFML
+	- MACRO DE COULEUR POUR MATCHER DES TEXTUER
+		- GRASS <=> ./ressources/grass.png / en ncurses -> GRASS <=> GREEN
+		- etc ...
 
-    void drawSnake()
-    {
-	    _lib->drawSquare(this->x, this->y);
-	    _lib->drawText("salut");
-	    ...
-    }
-
-Ces jeux auront un setter de lib askip et boom on peut changer de lib assez facilement.
-
-TODO:
-
- - Vector de jeux
- - Vector de lib
-	 - On les recupere avec dirent en ourant les dossier 'lib' et 'games'
- - Changer de jeux / lib
- - boomboom
+	- AJOUTER DES COULEURS

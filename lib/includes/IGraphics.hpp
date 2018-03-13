@@ -20,7 +20,10 @@ namespace arcade {
 		BG_GREEN,
 		WHITE,
 		BG_WHITE,
-		BG_BLACK
+		BG_BLACK,
+		APPLE,
+		GRASS,
+		BRICK
 	};
 
 	enum Key {
@@ -31,6 +34,7 @@ namespace arcade {
 		ESC,
 		ENTER,
 		PAUSE,
+		RESET,
 		NONE
 	};
 	class IGraphics {
