@@ -29,6 +29,7 @@ namespace arcade {
 		int getWidth();
 		int getHeight();
 		bool isOpen();
+		void loadTexture(const std::string &);
 
 	private:
 		int _width;
@@ -43,5 +44,8 @@ namespace arcade {
 
 		std::map<Color, sf::Color> _colorsMatch;
 		std::map<sf::Keyboard::Key, Key> _keyMatch;
+		std::map<Color, sf::Texture> _textureMatch;
+
+		std::vector<sf::Texture> _texture;
 	};
 }

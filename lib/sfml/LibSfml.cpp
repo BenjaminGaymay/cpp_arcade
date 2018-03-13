@@ -40,10 +40,25 @@ N_LibSfml::LibSfml() :
 	_text.setFont(_font);
 	_sx = 20;
 	_sy = _sx;
+
+	loadTexture("./ressources/images/grass.png");
+	loadTexture("./ressources/images/brick.png");
+
+	_textureMatch[GREEN] = _texture[0];
+	_textureMatch[WHITE] = _texture[1];
+	_textureMatch[RED] = _texture[1];
 }
 
 N_LibSfml::~LibSfml()
+{}
+
+void N_LibSfml::loadTexture(const std::string &path)
 {
+	sf::Texture texture;
+
+	if (texture.loadFromFile(path) == false)
+		throw std::runtime_error("Error: ressources: Can't load sprites");
+	_texture.push_back(texture);
 }
 
 void N_LibSfml::drawText(const std::string &text, const int &x, const int &y, const Color &color)
@@ -70,9 +85,14 @@ void N_LibSfml::openWindow()
 void N_LibSfml::drawSquare(const int &x, const int &y, const Color &color)
 {
 	sf::RectangleShape rect;
-	rect.setFillColor(_colorsMatch[color]);
 	rect.setSize(sf::Vector2f(_sx,_sy));
 	rect.setPosition(sf::Vector2f(x*_sx, y*_sy));
+
+	if (_textureMatch.find(color) == _textureMatch.end())
+		rect.setTexture(&_textureMatch[color]);
+	else
+		rect.setFillColor(_colorsMatch[color]);
+
 	_window.draw(rect);
 }
 
