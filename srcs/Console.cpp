@@ -56,7 +56,7 @@ std::string N_Console::epureName(const std::string &name)
 
 	std::size_t pos = str.find_last_of("_");
 	std::size_t end = str.find_last_of(".");
-	return str.substr(0, end).substr(pos+1);
+	return str.substr(pos + 1, end - pos);
 }
 
 void N_Console::openLib(const Type &type)
