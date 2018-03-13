@@ -41,12 +41,19 @@ N_LibSfml::LibSfml() :
 	_sx = 20;
 	_sy = _sx;
 
-	loadTexture("./ressources/images/grass.png");
-	loadTexture("./ressources/images/brick.png");
+	loadTexture("./ressources/images/grass.png"); // 0
+	loadTexture("./ressources/images/brick.png"); // 1
+	loadTexture("./ressources/images/apple.png"); // 2
+	// _textureMatch[GREEN] = _texture[0];
 
-	_textureMatch[GREEN] = _texture[0];
-	_textureMatch[WHITE] = _texture[1];
-	_textureMatch[RED] = _texture[1];
+	// _textureMatch[BG_GREEN] = _texture[0];
+	_textureMatch[BG_BLACK] = _texture[0];
+	_textureMatch[BG_WHITE] = _texture[1];
+	_textureMatch[BG_RED] = _texture[2];
+
+	_textureMatch[GRASS] = _texture[0];
+	_textureMatch[BRICK] = _texture[1];
+	_textureMatch[APPLE] = _texture[2];
 }
 
 N_LibSfml::~LibSfml()
@@ -88,7 +95,7 @@ void N_LibSfml::drawSquare(const int &x, const int &y, const Color &color)
 	rect.setSize(sf::Vector2f(_sx,_sy));
 	rect.setPosition(sf::Vector2f(x*_sx, y*_sy));
 
-	if (_textureMatch.find(color) == _textureMatch.end())
+	if (_textureMatch.find(color) != _textureMatch.end())
 		rect.setTexture(&_textureMatch[color]);
 	else
 		rect.setFillColor(_colorsMatch[color]);
