@@ -43,6 +43,9 @@ void N_LibNcurses::openWindow()
 	init_pair(7, COLOR_WHITE, COLOR_BLACK);
 	init_pair(8, COLOR_WHITE, COLOR_WHITE);
 	init_pair(9, COLOR_BLACK, COLOR_BLACK);
+	init_pair(10, COLOR_RED, COLOR_RED);
+	init_pair(11, COLOR_GREEN, COLOR_GREEN);
+	init_pair(12, COLOR_WHITE, COLOR_WHITE);
 }
 
 bool N_LibNcurses::isOpen()
