@@ -16,6 +16,15 @@ CPPFLAGS +=	-W -Wall -Wextra
 
 all:	$(NAME)
 
+core:
+	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+
+games:
+	make -C ./games/
+
+graphicals:
+	make -C ./lib/
+
 $(NAME):$(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
 	make -C ./lib/
@@ -33,4 +42,4 @@ fclean:	clean
 
 re: 	fclean all
 
-.PHONY:	all clean fclean re
+.PHONY:	all clean fclean re games graphicals core

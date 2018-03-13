@@ -64,6 +64,7 @@ void arcade::Snake::getNewSide()
 		case PAUSE:
 			_pause = _pause ? false : true; break;
 		case ESC:
+		case RESET:
 			initMap(); break;
 		default:
 			break;

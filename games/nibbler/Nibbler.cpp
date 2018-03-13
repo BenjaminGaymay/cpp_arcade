@@ -89,6 +89,7 @@ void arcade::Nibbler::getNewSide()
 			_y = 0;	_x = (_x != -1 ? 1 : _x); break;
 		case PAUSE:
 			_pause = _pause ? false : true; break;
+		case RESET:
 		case ESC:
 			initMap(); break;
 		default:

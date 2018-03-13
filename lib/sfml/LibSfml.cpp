@@ -35,6 +35,7 @@ N_LibSfml::LibSfml() :
 	_keyMatch[sf::Keyboard::Key::A] = ESC;
 	_keyMatch[sf::Keyboard::Key::E] = ENTER;
 	_keyMatch[sf::Keyboard::Key::P] = PAUSE;
+	_keyMatch[sf::Keyboard::Key::R] = RESET;
 
 	_text.setFont(_font);
 	_sx = 20;

@@ -18,6 +18,7 @@ N_LibNcurses::LibNcurses()
 	_keyMatch['d'] = RIGHT;
 	_keyMatch['e'] = ENTER;
 	_keyMatch['p'] = PAUSE;
+	_keyMatch['r'] = RESET;
 }
 
 N_LibNcurses::~LibNcurses()

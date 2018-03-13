@@ -31,6 +31,7 @@ namespace arcade {
 		ESC,
 		ENTER,
 		PAUSE,
+		RESET,
 		NONE
 	};
 	class IGraphics {
