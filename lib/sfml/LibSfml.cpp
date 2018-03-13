@@ -65,8 +65,8 @@ void N_LibSfml::drawSquare(const int &x, const int &y, const Color &color)
 {
 	sf::RectangleShape rect;
 	rect.setFillColor(_colorsMatch[color]);
-	rect.setSize(sf::Vector2f(20,20));
-	rect.setPosition(sf::Vector2f(x, y));
+	rect.setSize(sf::Vector2f(10,10));
+	rect.setPosition(sf::Vector2f(x*10, y*10));
 	_window.draw(rect);
 }
 

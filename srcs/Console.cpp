@@ -128,6 +128,8 @@ int N_Console::writeMenu()
 
 void N_Console::loopConsole()
 {
+	_state = IN_MENU;
+
 	_lib->openWindow();
 	while (_lib->isOpen()) {
 		_lib->clearWindow();
