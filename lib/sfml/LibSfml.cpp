@@ -61,7 +61,7 @@ bool N_LibSfml::isOpen()
 void N_LibSfml::openWindow()
 {
 	_window.setVerticalSyncEnabled(true);
-	_window.setFramerateLimit(10);
+	_window.setFramerateLimit(60);
 	if (_font.loadFromFile("./ressources/Lato.ttf") == false)
 		throw std::runtime_error("Error: sfml: can't load font.");
 }
@@ -118,10 +118,10 @@ void N_LibSfml::drawMap(const std::vector<std::string> &map)
 {
 	arcade::Color color;
 
-	for (unsigned i = 0; i < map.size(); i++) {
-		for (unsigned j = 0; j < map[i].size(); j++) {
+	for (unsigned i = 0 ; i < map.size() ; i++) {
+		for (unsigned j = 0 ; j < map[i].size() ; j++) {
 			color = setColor(map[i][j]);
-			drawSquare(getWidth() / 2 - (map[i].size() - 1) + j, getHeight() / 2 - (map.size() - 1) + i, color);
+			drawSquare(getWidth() / 2 - (map[i].size() / 2 - 1) + j, getHeight() / 2 - (map.size() / 2) + i, color);
 		}
 	}
 }
@@ -131,36 +131,14 @@ arcade::Key N_LibSfml::getKey()
 	sf::Event event;
 
 	while (_window.pollEvent(event)) {
-		for (auto &c : _keyMatch)
-			if (sf::Keyboard::isKeyPressed(c.first))
-				return c.second;
-		return NONE;
+		if (event.type == sf::Event::KeyPressed)
+			return _keyMatch[event.key.code];
 	}
 	return NONE;
-	// while (_window.pollEvent(event)) {
-	// 	// if (event.type == sf::Event::KeyPressed) {
-	// 	// 	return _keyMatch[event.key.code];
-	// 	// }
-	// }
-	// _window.pollEvent(event);
-	// if (event.type == sf::Event::KeyPressed)
-	// 	return _keyMatch[event.key.code];
-	// return NONE;
-	// if (_event.type == sf::Event::KeyPressed) {
-	// 	if (_keyMatch.find(_event.key.code) == _keyMatch.end())
-	// 			return NONE;
-	// 	return _keyMatch[_event.key.code];
-	// }
-	// return NONE;
-	// while (_window.pollEvent(_event)) {
-	// 	if (_event.type == sf::Event::KeyPressed) {
-	// 		if (_keyMatch.find(_event.key.code) == _keyMatch.end())
-	// 			return NONE;
-	// 		else
-	// 			return _keyMatch[_event.key.code];
-	// 	}
-	// }
-	// return NONE;
+	_window.pollEvent(event);
+	if (event.type == sf::Event::KeyPressed)
+		return _keyMatch[event.key.code];
+	return NONE;
 }
 
 extern "C" std::unique_ptr<arcade::IGraphics> launch()

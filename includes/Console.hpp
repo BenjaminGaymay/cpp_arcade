@@ -39,13 +39,14 @@ namespace arcade {
 		const std::string &getLibName() const;
 		const std::string &getGameName() const;
 		std::string epureName(const std::string &);
-		int launch();
-		int writeMenu();
-		void drawBox();
-		void drawListLibs();
 		void drawListGames();
+		void drawListLibs();
+		int writeMenu();
+		int launch();
+		void drawBox();
 		void showList();
 		void loopConsole();
+		void changeLibs(const Type &);
 
 	private:
 		void *_handle;
@@ -60,6 +61,7 @@ namespace arcade {
 
 		std::vector<std::string> _listLibs;
 		std::vector<std::string> _listGames;
+
 		std::size_t _currLib;
 		std::size_t _currGame;
 

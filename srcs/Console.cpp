@@ -16,10 +16,14 @@ N_Console::Console(const std::string &lib) :
 	_libName(lib)
 {
 	_state = IN_MENU;
+	_currGame = 0;
 }
 
 N_Console::Console()
-{}
+{
+	_state = IN_MENU;
+	_currGame = 0;
+}
 
 N_Console::~Console()
 {}
@@ -47,7 +51,7 @@ void N_Console::loadLibs(const std::string &path, Type type)
 			++i;
 		}
 	} else
-		_gameName = _listGames[1];
+		_gameName = _listGames[_currGame];
 }
 
 std::string N_Console::epureName(const std::string &name)
@@ -83,6 +87,7 @@ void N_Console::drawBox()
 		_lib->drawSquare(i, 40, arcade::BG_RED);
 		_lib->drawSquare(40, i, arcade::BG_RED);
 	}
+
 	// for (int i = 0; i < _lib->getWidth(); i++)
 	// 	_lib->drawSquare(i, 0, arcade::BG_RED);
 
@@ -101,7 +106,7 @@ void N_Console::drawListLibs()
 {
 	int i = 10;
 
-	for (auto &c : _listLibs) {
+	for (auto c : _listLibs) {
 		c = epureName(c);
 		_lib->drawText(c,20 - c.size() / 2 ,i, BLUE);
 		i+=2;
@@ -111,11 +116,18 @@ void N_Console::drawListLibs()
 void N_Console::drawListGames()
 {
 	int i = 16;
+	std::size_t index = 0;
+	Color color;
 
-	for (auto &c : _listGames) {
+	for (auto c : _listGames) {
 		c = epureName(c);
-		_lib->drawText(c,20 - c.size() / 2,i, BLUE);
+		if (index == _currGame)
+			color = GREEN;
+		else
+			color = BLUE;
+		_lib->drawText(c,20 - c.size() / 2,i, color);
 		i+=2;
+		index++;
 	}
 }
 
@@ -126,17 +138,29 @@ int N_Console::writeMenu()
 	drawListGames();
 	_lib->drawSquare(0, 0, BG_RED);
 	_lib->drawText("PORCHERET FDP", 20-(13/2), 5, GREEN);
-	if (_key == ENTER)
-		_state = IN_GAME;
-	else if (_key == ESC)
-		return Macro::EXIT;
+	switch (_key) {
+		case ENTER:
+			_gameName = _listGames[_currGame];
+			openLib(GAME);
+			changeLibs(GAME);
+			_state = IN_GAME;
+			break;
+		case ESC:
+			return Macro::EXIT;
+		case UP:
+			_currGame = _currGame == 0 ? _currGame : _currGame - 1;
+			break;
+		case DOWN:
+			_currGame = _currGame == _listGames.size() - 1 ? _currGame : _currGame + 1;
+			break;
+		default:
+			break;
+	}
 	return Macro::SUCCESS;
 }
 
 void N_Console::loopConsole()
 {
-	_state = IN_MENU;
-
 	_lib->openWindow();
 	while (_lib->isOpen()) {
 		_lib->clearWindow();
@@ -154,6 +178,14 @@ void N_Console::loopConsole()
 		_key = _lib->getKey();
 	}
 	_lib->closeWindow();
+}
+
+void N_Console::changeLibs(const Type &type)
+{
+	if (type == LIBS)
+		_lib = _getLib();
+	else
+		_game = _getGame();
 }
 
 int N_Console::launch()
