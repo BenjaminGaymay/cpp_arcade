@@ -19,11 +19,14 @@ N_LibSfml::LibSfml() :
 	_text()
 {
 	_colorsMatch[RED] = sf::Color::Red;
-	_colorsMatch[BG_RED] = sf::Color::Red;
 	_colorsMatch[BLUE] = sf::Color::Blue;
-	_colorsMatch[BG_BLUE] = sf::Color::Blue;
 	_colorsMatch[GREEN] = sf::Color::Green;
+	_colorsMatch[BG_RED] = sf::Color::Red;
+	_colorsMatch[BG_BLUE] = sf::Color::Blue;
 	_colorsMatch[BG_GREEN] = sf::Color::Green;
+	_colorsMatch[BG_WHITE] = sf::Color::White;
+	_colorsMatch[WHITE] = sf::Color::White;
+	_colorsMatch[BG_BLACK] = sf::Color::Black;
 
 	_keyMatch[sf::Keyboard::Key::Z] = UP;
 	_keyMatch[sf::Keyboard::Key::S] = DOWN;
@@ -34,7 +37,7 @@ N_LibSfml::LibSfml() :
 	_keyMatch[sf::Keyboard::Key::P] = PAUSE;
 
 	_text.setFont(_font);
-	_sx = _width/40;
+	_sx = 20;
 	_sy = _sx;
 }
 
@@ -46,9 +49,6 @@ void N_LibSfml::drawText(const std::string &text, const int &x, const int &y, co
 {
 	_text.setString(text);
 	_text.setFillColor(_colorsMatch[color]);
-	// std::cout << x*_sx << std::endl;
-	// std::cout << y*_sy << std::endl;
-	// exit(0);
 	_text.setPosition(sf::Vector2f(x*_sx, y*_sy));
 	_window.draw(_text);
 }
@@ -92,24 +92,75 @@ void N_LibSfml::refreshWindow()
 
 int N_LibSfml::getWidth()
 {
-	return _width;
+	return _width / _sx;
 }
 
 int N_LibSfml::getHeight()
 {
-	return _height - _sy*10;
+	return _height / _sy;
+}
+
+arcade::Color N_LibSfml::setColor(char c)
+{
+	switch (c) {
+		case 'W':
+			return arcade::BG_WHITE;
+		case 'G':
+			return arcade::BG_GREEN;
+		case 'R':
+			return arcade::BG_RED;
+		default:
+			return arcade::BG_BLACK;
+	}
+}
+
+void N_LibSfml::drawMap(const std::vector<std::string> &map)
+{
+	arcade::Color color;
+
+	for (unsigned i = 0; i < map.size(); i++) {
+		for (unsigned j = 0; j < map[i].size(); j++) {
+			color = setColor(map[i][j]);
+			drawSquare(getWidth() / 2 - (map[i].size() - 1) + j, getHeight() / 2 - (map.size() - 1) + i, color);
+		}
+	}
 }
 
 arcade::Key N_LibSfml::getKey()
 {
-	_window.pollEvent(_event);
-	if (_event.type == sf::Event::KeyPressed) {
-		if (_keyMatch.find(_event.key.code) == _keyMatch.end())
-			return NONE;
-		else
-			return _keyMatch[_event.key.code];
+	sf::Event event;
+
+	while (_window.pollEvent(event)) {
+		for (auto &c : _keyMatch)
+			if (sf::Keyboard::isKeyPressed(c.first))
+				return c.second;
+		return NONE;
 	}
 	return NONE;
+	// while (_window.pollEvent(event)) {
+	// 	// if (event.type == sf::Event::KeyPressed) {
+	// 	// 	return _keyMatch[event.key.code];
+	// 	// }
+	// }
+	// _window.pollEvent(event);
+	// if (event.type == sf::Event::KeyPressed)
+	// 	return _keyMatch[event.key.code];
+	// return NONE;
+	// if (_event.type == sf::Event::KeyPressed) {
+	// 	if (_keyMatch.find(_event.key.code) == _keyMatch.end())
+	// 			return NONE;
+	// 	return _keyMatch[_event.key.code];
+	// }
+	// return NONE;
+	// while (_window.pollEvent(_event)) {
+	// 	if (_event.type == sf::Event::KeyPressed) {
+	// 		if (_keyMatch.find(_event.key.code) == _keyMatch.end())
+	// 			return NONE;
+	// 		else
+	// 			return _keyMatch[_event.key.code];
+	// 	}
+	// }
+	// return NONE;
 }
 
 extern "C" std::unique_ptr<arcade::IGraphics> launch()

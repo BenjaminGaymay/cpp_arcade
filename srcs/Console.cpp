@@ -77,9 +77,11 @@ void N_Console::openLib(const Type &type)
 
 void N_Console::drawBox()
 {
-	for (int i = 0; i < 40; i++) {
+	for (int i = 0; i <= 40; i++) {
 		_lib->drawSquare(i, 0, arcade::BG_RED);
 		_lib->drawSquare(0, i, arcade::BG_RED);
+		_lib->drawSquare(i, 40, arcade::BG_RED);
+		_lib->drawSquare(40, i, arcade::BG_RED);
 	}
 	// for (int i = 0; i < _lib->getWidth(); i++)
 	// 	_lib->drawSquare(i, 0, arcade::BG_RED);
@@ -101,7 +103,7 @@ void N_Console::drawListLibs()
 
 	for (auto &c : _listLibs) {
 		c = epureName(c);
-		_lib->drawText(c,_lib->getWidth()/2 - c.size()/2 ,i, BLUE);
+		_lib->drawText(c,20 - c.size() / 2 ,i, BLUE);
 		i+=2;
 	}
 }
@@ -112,7 +114,7 @@ void N_Console::drawListGames()
 
 	for (auto &c : _listGames) {
 		c = epureName(c);
-		_lib->drawText(c,_lib->getWidth() / 2 - c.size()/2 ,i, BLUE);
+		_lib->drawText(c,20 - c.size() / 2,i, BLUE);
 		i+=2;
 	}
 }
@@ -123,7 +125,7 @@ int N_Console::writeMenu()
 	drawListLibs();
 	drawListGames();
 	_lib->drawSquare(0, 0, BG_RED);
-	_lib->drawText("Welcome in Arcade", _lib->getWidth() / 2 - 17/2, 5, GREEN);
+	_lib->drawText("PORCHERET FDP", 20-(13/2), 5, GREEN);
 	if (_key == ENTER)
 		_state = IN_GAME;
 	else if (_key == ESC)
@@ -148,8 +150,8 @@ void N_Console::loopConsole()
 			if (_key == ESC)
 				_state = IN_MENU;
 		}
-		_key = _lib->getKey();
 		_lib->refreshWindow();
+		_key = _lib->getKey();
 	}
 	_lib->closeWindow();
 }

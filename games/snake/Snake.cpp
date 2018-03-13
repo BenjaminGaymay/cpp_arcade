@@ -54,13 +54,13 @@ void arcade::Snake::getNewSide()
 {
 	switch (_key) {
 		case UP:
-			_x = 0; _y = -1; break;
+			_x = 0; _y = (_y != 1 ? -1 : _y); break;
 		case LEFT:
-			_y = 0;	_x = -1; break;
+			_y = 0;	_x = (_x != 1 ? -1 : _x); break;
 		case DOWN:
-			_x = 0; _y = 1; break;
+			_x = 0; _y = (_y != -1 ? 1 : _y); break;
 		case RIGHT:
-			_y = 0;	_x = 1; break;
+			_y = 0;	_x = (_x != -1 ? 1 : _x); break;
 		case PAUSE:
 			_pause = _pause ? false : true; break;
 		case ESC:

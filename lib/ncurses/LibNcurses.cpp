@@ -90,9 +90,9 @@ void N_LibNcurses::drawMap(const std::vector<std::string> &map)
 	arcade::Color color;
 
 	for (unsigned i = 0 ; i < map.size() ; i++) {
-		for (unsigned f = 0 ; f < (map[i].size() * 2) ; f++) {
-			color = setColor(map[i][f / 2]);
-			drawSquare(getWidth() / 2 - (map[i].size() - 1) + f, getHeight() / 2 - (map.size() / 2) + i, color);
+		for (unsigned j = 0 ; j < (map[i].size() * 2) ; j++) {
+			color = setColor(map[i][j / 2]);
+			drawSquare(getWidth() / 2 - (map[i].size() - 1) + j, getHeight() / 2 - (map.size() / 2) + i, color);
 		}
 	}
 }
