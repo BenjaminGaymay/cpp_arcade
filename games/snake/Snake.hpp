@@ -2,7 +2,7 @@
 // EPITECH PROJECT, 2018
 // cpp_arcade
 // File description:
-// Nibbler
+// Snake
 //
 
 #pragma once
@@ -15,20 +15,21 @@
 // #include "ncurses.hpp"
 
 namespace arcade {
-	class Nibbler : public IGame {
+	class Snake : public IGame {
 		public:
 			void start(std::unique_ptr<arcade::IGraphics> &);
 			void setKey(const Key &);
 		public:
-			Nibbler();
+			Snake();
 			void initMap();
 			void initColor();
 			void getNewSide();
-			void moveNibbler();
+			void moveSnake();
 			void fillMap();
 			void clearMap();
 			void startChrono();
 			bool doLoop();
+			void addApple();
 			bool checkApple(std::pair<std::size_t, std::size_t> &pos);
 			void checkCollision(std::pair<std::size_t, std::size_t> &pos);
 
@@ -37,7 +38,7 @@ namespace arcade {
 			std::vector<std::string> _map;
 			int _x;
 			int _y;
-			std::vector<std::pair<std::size_t, std::size_t>> _nibblerPos;
+			std::vector<std::pair<std::size_t, std::size_t>> _snakePos;
 			std::vector<std::pair<std::size_t, std::size_t>> _applePos;
 			std::vector<std::pair<std::size_t, std::size_t>> _wallPos;
 			std::chrono::time_point<std::chrono::system_clock> _previousLoop;

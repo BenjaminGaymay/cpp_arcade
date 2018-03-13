@@ -7,7 +7,7 @@
 
 NIBBLER		=	lib_arcade_nibbler.so
 
-# NCURSES		=	libncurses.so
+SNAKE		=	lib_arcade_snake.so
 
 CC		=	g++
 
@@ -15,30 +15,30 @@ RM		=	rm -f
 
 SRCNIBBLER	=	./nibbler/Nibbler.cpp
 
-# SRCNCURSES	=	./ncurses/LibNcurses.cpp
+SRCSNAKE	=	./snake/Snake.cpp
 
 OBJNIBBLER	=	$(SRCNIBBLER:.cpp=.o)
 
-# OBJNCURSES	=	$(SRCNCURSES:.cpp=.o)
+OBJSNAKE	=	$(SRCSNAKE:.cpp=.o)
 
 CPPFLAGS	=	-I ./includes/ -I../lib/includes
 CPPFLAGS	+=	-W -Wall -Wextra -fPIC
 
 LDFLAGS		=	-shared -lncurses
 
-all:		$(NIBBLER) #$(NCURSES)
+all:		$(NIBBLER) $(SNAKE)
 
 $(NIBBLER):	$(OBJNIBBLER)
 		$(CC) $(OBJNIBBLER) -o $(NIBBLER) $(LDFLAGS)
 
-# $(NCURSES):	$(OBJNCURSES)
-# 		$(CC) $(OBJNCURSES) -o $(NCURSES) $(LDFLAGS)
+$(SNAKE):	$(OBJSNAKE)
+		$(CC) $(OBJSNAKE) -o $(SNAKE) $(LDFLAGS)
 
 clean:
 		$(RM) $(OBJSNIBBLER)
 
 fclean: 	clean
-		$(RM) $(NIBBLER) #$(NCURSES)
+		$(RM) $(NIBBLER) $(SNAKE)
 
 re:		fclean all
 

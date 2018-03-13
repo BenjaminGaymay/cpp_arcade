@@ -142,36 +142,10 @@ bool arcade::Nibbler::doLoop()
 	return true;
 }
 
-arcade::Color arcade::Nibbler::setColor(char c)
-{
-	switch (c) {
-		case 'W':
-			return arcade::BG_WHITE;
-		case 'G':
-			return arcade::BG_GREEN;
-		case 'R':
-			return arcade::BG_RED;
-		default:
-			return arcade::BG_BLACK;
-	}
-}
-
-void arcade::Nibbler::showMap(std::unique_ptr<IGraphics> &lib)
-{
-	arcade::Color color;
-
-	for (unsigned i = 0 ; i < _map.size(); i++) {
-		for (unsigned f = 0 ; f < (_map[i].size()) ; f++) {
-			color = setColor(_map[i][f]);
-			lib->drawSquare(_map[i].size() + f+2, LINES / 2 - (_map.size()/2) + i, color);
-		}
-	}
-}
-
 void arcade::Nibbler::start(std::unique_ptr<arcade::IGraphics> &lib)
 {
 	fillMap();
-	showMap(lib);
+	lib->drawMap(_map);
 	clearMap();
 	if (doLoop() && !_pause)
 		moveNibbler();

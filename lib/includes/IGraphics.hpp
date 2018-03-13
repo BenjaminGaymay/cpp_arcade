@@ -39,6 +39,8 @@ namespace arcade {
 
 		virtual void drawText(const std::string &, const int &, const int &, const Color &) = 0;
 		virtual void drawSquare(const int &, const int &, const Color &) = 0;
+		virtual void drawMap(const std::vector<std::string> &) = 0;
+		virtual Color setColor(char) = 0;
 		virtual void clearWindow() = 0;
 		virtual void refreshWindow() = 0;
 		virtual Key getKey() = 0;

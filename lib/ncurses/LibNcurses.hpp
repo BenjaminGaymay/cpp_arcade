@@ -20,6 +20,8 @@ namespace arcade {
 
 		void drawText(const std::string &, const int &x, const int &y, const Color &);
 		void drawSquare(const int &, const int &, const Color &);
+		void drawMap(const std::vector<std::string> &);
+		arcade::Color setColor(char);
 		void clearWindow();
 		void refreshWindow();
 		Key getKey();

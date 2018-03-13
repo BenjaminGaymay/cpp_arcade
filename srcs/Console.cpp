@@ -47,7 +47,7 @@ void N_Console::loadLibs(const std::string &path, Type type)
 			++i;
 		}
 	} else
-		_gameName = _listGames[0];
+		_gameName = _listGames[1];
 }
 
 std::string N_Console::epureName(const std::string &name)

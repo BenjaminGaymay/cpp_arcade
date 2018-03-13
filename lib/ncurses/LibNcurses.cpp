@@ -71,21 +71,47 @@ void N_LibNcurses::drawText(const std::string &text, const int &x, const int &y,
 	attroff(COLOR_PAIR(color));
 }
 
+arcade::Color N_LibNcurses::setColor(char c)
+{
+	switch (c) {
+		case 'W':
+			return arcade::BG_WHITE;
+		case 'G':
+			return arcade::BG_GREEN;
+		case 'R':
+			return arcade::BG_RED;
+		default:
+			return arcade::BG_BLACK;
+	}
+}
+
+void N_LibNcurses::drawMap(const std::vector<std::string> &map)
+{
+	arcade::Color color;
+
+	for (unsigned i = 0 ; i < map.size() ; i++) {
+		for (unsigned f = 0 ; f < (map[i].size() * 2) ; f++) {
+			color = setColor(map[i][f / 2]);
+			drawSquare(getWidth() / 2 - (map[i].size() - 1) + f, getHeight() / 2 - (map.size() / 2) + i, color);
+		}
+	}
+}
+
 void N_LibNcurses::drawSquare(const int &x, const int &y, const Color &color)
 {
 	attron(COLOR_PAIR(color));
-	mvprintw(y, x * 2, "XX");
+	mvprintw(y, x, "X");
 	attroff(COLOR_PAIR(color));
 }
 
 int N_LibNcurses::getHeight()
 {
-	return _height - 1;
+	return _height;
 }
 
 int N_LibNcurses::getWidth()
 {
-	return _width - 2;
+	return _width;
 }
 
 arcade::Key N_LibNcurses::getKey()
