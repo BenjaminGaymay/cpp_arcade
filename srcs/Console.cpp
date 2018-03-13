@@ -54,9 +54,9 @@ std::string N_Console::epureName(const std::string &name)
 {
 	std::string str(name);
 
-	std::size_t pos = str.find_last_of("_");
+	std::size_t pos = str.find_last_of("_") + 1;
 	std::size_t end = str.find_last_of(".");
-	return str.substr(pos + 1, end - pos);
+	return str.substr(pos, end - pos);
 }
 
 void N_Console::openLib(const Type &type)
@@ -128,8 +128,6 @@ int N_Console::writeMenu()
 
 void N_Console::loopConsole()
 {
-	_state = IN_MENU;
-
 	_lib->openWindow();
 	while (_lib->isOpen()) {
 		_lib->clearWindow();

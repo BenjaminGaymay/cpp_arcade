@@ -25,7 +25,6 @@ namespace arcade {
 
 		enum State {
 			IN_MENU,
-			IN_PAUSE,
 			IN_GAME
 		};
 
