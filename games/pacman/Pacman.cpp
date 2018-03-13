@@ -23,13 +23,17 @@ void arcade::Pacman::initMap()
 	_y = 0;
 
 	_map.clear();
+	for (unsigned i = 0 ; i < _ghostPos.size() ; i++)
+		delete _ghostPos[i];
+	_ghostPos.clear();
+
 	_map.push_back("BBBBBBBBBBBBBBBBBBBBB");
 	_map.push_back("BWWWWWWWWWBWWWWWWWWWB");
 	_map.push_back("BWBBWBBBBWBWBBBBWBBWB");
 	_map.push_back("BWWWWWWWWWWWWWWWWWWWB");
 	_map.push_back("BWBBWBWBBBBBBBWBWBBWB");
 	_map.push_back("BWWWWBWWWWBWWWWBWWWWB");
-	_map.push_back("BBBBWBBBBWWWBBBBWBBBB");
+	_map.push_back("BBBBWBBBBWBWBBBBWBBBB");
 	_map.push_back("   BWBWWWWWWWWWBWB   ");
 	_map.push_back("BBBBWBWBBB-BBBWBWBBBB");
 	_map.push_back("WWWWWWWB-----BWWWWWWW");
@@ -45,18 +49,28 @@ void arcade::Pacman::initMap()
 	_map.push_back("BWWWWWWWWWWWWWWWWWWWB");
 	_map.push_back("BBBBBBBBBBBBBBBBBBBBB");
 
-	_pacmanPos = {6, 10};
+	_pacmanPos = {7, 10};
+	_ghostPos.push_back(new Ghost('-', {9, 12}));
+	_ghostPos.push_back(new Ghost('-', {9, 11}));
+	_ghostPos.push_back(new Ghost('-', {9, 9}));
+	_ghostPos.push_back(new Ghost('-', {9, 8}));
 	_pause = false;
 }
 
 void arcade::Pacman::fillMap()
 {
 	_map[_pacmanPos.first][_pacmanPos.second] = 'Y';
+
+	for (auto &ghost : _ghostPos)
+		_map[ghost->_pos.first][ghost->_pos.second] = '^';
 }
 
 void arcade::Pacman::clearMap()
 {
 	_map[_pacmanPos.first][_pacmanPos.second] = ' ';
+
+	for (auto &ghost : _ghostPos)
+		_map[ghost->_pos.first][ghost->_pos.second] = ghost->_prevChar;
 }
 
 void arcade::Pacman::getNewSide()
@@ -97,6 +111,17 @@ void arcade::Pacman::movePacman()
 
 	if (_map[pos.first][pos.second] != 'B' && _map[pos.first][pos.second] != '-')
 		_pacmanPos = pos;
+
+	for (auto &ghost : _ghostPos) {
+		if (ghost->_pos == _pacmanPos)
+			initMap();
+	}
+}
+
+void arcade::Pacman::moveGhosts()
+{
+	for (auto &ghost : _ghostPos)
+		ghost->move(_map);
 }
 
 void arcade::Pacman::startChrono()
@@ -121,8 +146,13 @@ void arcade::Pacman::start(std::unique_ptr<arcade::IGraphics> &lib)
 	fillMap();
 	lib->drawMap(_map);
 	clearMap();
-	if (doLoop() && !_pause)
+	for (unsigned i = 0 ; i < _ghostPos.size() ; i++) {
+		lib->drawText(std::to_string(_ghostPos[i]->_pos.first) + " " + std::to_string(_ghostPos[i]->_pos.second) + " " + std::to_string(_ghostPos[i]->_y) + " " + std::to_string(_ghostPos[i]->_x), 10, 10 + i, BLUE);
+	}
+	if (doLoop() && !_pause) {
+		moveGhosts();
 		movePacman();
+	}
 	getNewSide();
 	lib->refreshWindow();
 }

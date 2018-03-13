@@ -11,8 +11,7 @@
 #include <algorithm>
 #include <ncurses.h>
 #include "IGame.hpp"
-
-// #include "ncurses.hpp"
+#include "Ghost.hpp"
 
 namespace arcade {
 	class Pacman : public IGame {
@@ -25,6 +24,7 @@ namespace arcade {
 			void initColor();
 			void getNewSide();
 			void movePacman();
+			void moveGhosts();
 			void fillMap();
 			void clearMap();
 			void startChrono();
@@ -35,6 +35,7 @@ namespace arcade {
 			int _x;
 			int _y;
 			std::pair<int, int> _pacmanPos;
+			std::vector<Ghost *> _ghostPos;
 			std::chrono::time_point<std::chrono::system_clock> _previousLoop;
 			Key _key;
 			bool _pause;
