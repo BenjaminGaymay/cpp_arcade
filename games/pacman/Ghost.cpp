@@ -7,6 +7,14 @@
 
 #include "Ghost.hpp"
 
+arcade::Ghost::Ghost (const char &c, const std::pair<int, int> &pos) :
+	_canMove(false), _x(0), _y(0), _prevChar(c),
+	_state(GhostState::ALIVE), _pos(pos),
+	_lifeTime(std::chrono::system_clock::now()),
+	_deadTime(std::chrono::system_clock::now())
+{
+}
+
 std::pair<int, int> arcade::Ghost::choseSide(std::vector<std::string> map)
 {
 	std::vector<std::pair<int, int>> possibilities;
@@ -39,7 +47,7 @@ bool arcade::Ghost::canMove(std::vector<std::string> map)
 
 	auto period = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::system_clock::now() - _lifeTime).count();
 
-	if (period > rand()  % 10000) {
+	if (period > rand()  % 50000) {
 		_canMove = true;
 		auto side = choseSide(map);
 

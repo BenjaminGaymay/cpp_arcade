@@ -21,6 +21,8 @@ void arcade::Pacman::initMap()
 {
 	_x = 1;
 	_y = 0;
+	_state = PacmanState::NORMAL;
+	_score = 0;
 
 	_map.clear();
 	for (unsigned i = 0 ; i < _ghostPos.size() ; i++)
@@ -34,7 +36,7 @@ void arcade::Pacman::initMap()
 	_map.push_back("BWBBWBWBBBBBBBWBWBBWB");
 	_map.push_back("BWWWWBWWWWBWWWWBWWWWB");
 	_map.push_back("BBBBWBBBBWBWBBBBWBBBB");
-	_map.push_back("   BWBWWWWWWWWWBWB   ");
+	_map.push_back("   BWBWWWWWWWWSBWB   ");
 	_map.push_back("BBBBWBWBBB-BBBWBWBBBB");
 	_map.push_back("WWWWWWWB-----BWWWWWWW");
 	_map.push_back("BBBBWBWBBBBBBBWBWBBBB");
@@ -46,7 +48,7 @@ void arcade::Pacman::initMap()
 	_map.push_back("BBWBWBWBBBBBBBWBWBWBB");
 	_map.push_back("BWWWWBWWWWBWWWWBWWWWB");
 	_map.push_back("BWBBBBBBBWBWBBBBBBBWB");
-	_map.push_back("BWWWWWWWWWWWWWWWWWWWB");
+	_map.push_back("BWWWWWWWWWSWWWWWWWWWB");
 	_map.push_back("BBBBBBBBBBBBBBBBBBBBB");
 
 	_pacmanPos = {7, 10};
@@ -59,10 +61,18 @@ void arcade::Pacman::initMap()
 
 void arcade::Pacman::fillMap()
 {
-	_map[_pacmanPos.first][_pacmanPos.second] = 'Y';
+	_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'b' : 'Y');
 
-	for (auto &ghost : _ghostPos)
-		_map[ghost->_pos.first][ghost->_pos.second] = '^';
+	for (auto &ghost : _ghostPos) {
+		switch (ghost->_state) {
+			case GhostState::ALIVE:
+				_map[ghost->_pos.first][ghost->_pos.second] = '^'; break;
+			case GhostState::EATABLE:
+				_map[ghost->_pos.first][ghost->_pos.second] = 'v'; break;
+			case GhostState::DEAD:
+				_map[ghost->_pos.first][ghost->_pos.second] = 'x'; break;
+		}
+	}
 }
 
 void arcade::Pacman::clearMap()
@@ -93,10 +103,46 @@ void arcade::Pacman::getNewSide()
 	}
 }
 
+void arcade::Pacman::manageSuperMod(std::pair<int, int> &pos)
+{
+	if (_state == PacmanState::SUPER) {
+		auto period = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::system_clock::now() - _superMod).count();
+
+		if (period > 7500) {
+			_state = PacmanState::NORMAL;
+			for (auto &ghost : _ghostPos)
+				ghost->_state = (ghost->_state == GhostState::EATABLE ? GhostState::ALIVE : ghost->_state);
+		}
+	}
+	if (_map[pos.first][pos.second] == 'S') {
+		_state = PacmanState::SUPER;
+		for (auto &ghost : _ghostPos)
+			ghost->_state = (ghost->_state == GhostState::ALIVE ? GhostState::EATABLE : ghost->_state);
+		_superMod = std::chrono::system_clock::now();
+	}
+}
+
+
+bool arcade::Pacman::checkGhostCollision()
+{
+	for (auto &ghost : _ghostPos) {
+		if (ghost->_pos == _pacmanPos && ghost->_state == GhostState::EATABLE) {
+			ghost->_state = GhostState::DEAD;
+			ghost->_deadTime = std::chrono::system_clock::now();
+			_score += 5000;
+		}
+		else if (ghost->_pos == _pacmanPos && ghost->_state == GhostState::ALIVE)
+			return initMap(), true;
+	}
+	return false;
+}
+
 void arcade::Pacman::movePacman()
 {
 	std::pair<int, int> pos;
 
+	if (checkGhostCollision())
+		return ;
 	pos.first = _pacmanPos.first + _y;
 	if (pos.first >= static_cast<int>(_map.size()))
 		pos.first = 0;
@@ -109,19 +155,25 @@ void arcade::Pacman::movePacman()
 	else if (pos.second > static_cast<int>(_map[pos.first].size()) - 1)
 		pos.second = 0;
 
-	if (_map[pos.first][pos.second] != 'B' && _map[pos.first][pos.second] != '-')
+	if (_map[pos.first][pos.second] != 'B' && _map[pos.first][pos.second] != '-') {
 		_pacmanPos = pos;
-
-	for (auto &ghost : _ghostPos) {
-		if (ghost->_pos == _pacmanPos)
-			initMap();
+		_score += (_map[pos.first][pos.second] == 'W' ? 100 : 0);
 	}
+
+	manageSuperMod(_pacmanPos);
+	checkGhostCollision();
 }
 
 void arcade::Pacman::moveGhosts()
 {
-	for (auto &ghost : _ghostPos)
+	int period;
+
+	for (auto &ghost : _ghostPos) {
+		period = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::system_clock::now() - ghost->_deadTime).count();
+		if (ghost->_state == GhostState::DEAD and period > 5000)
+			ghost->_state = GhostState::ALIVE;
 		ghost->move(_map);
+	}
 }
 
 void arcade::Pacman::startChrono()
@@ -146,8 +198,18 @@ void arcade::Pacman::start(std::unique_ptr<arcade::IGraphics> &lib)
 	fillMap();
 	lib->drawMap(_map);
 	clearMap();
+	lib->drawText("Score : " + std::to_string(_score), 30, 10, BLUE);
 	for (unsigned i = 0 ; i < _ghostPos.size() ; i++) {
-		lib->drawText(std::to_string(_ghostPos[i]->_pos.first) + " " + std::to_string(_ghostPos[i]->_pos.second) + " " + std::to_string(_ghostPos[i]->_y) + " " + std::to_string(_ghostPos[i]->_x), 10, 10 + i, BLUE);
+		std::string state;
+		switch (_ghostPos[i]->_state) {
+			case GhostState::ALIVE:
+				state = "Alive"; break;
+			case GhostState::EATABLE:
+				state = "Eatable"; break;
+			case GhostState::DEAD:
+				state = "Dead"; break;
+		}
+		lib->drawText("State : " + state, 10, 10 + i * 2, BLUE);
 	}
 	if (doLoop() && !_pause) {
 		moveGhosts();

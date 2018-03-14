@@ -14,6 +14,11 @@
 #include "Ghost.hpp"
 
 namespace arcade {
+	enum PacmanState {
+		SUPER,
+		NORMAL
+	};
+
 	class Pacman : public IGame {
 		public:
 			void start(std::unique_ptr<arcade::IGraphics> &);
@@ -29,15 +34,20 @@ namespace arcade {
 			void clearMap();
 			void startChrono();
 			bool doLoop();
+			bool checkGhostCollision();
+			void manageSuperMod(std::pair<int, int> &);
 			std::vector<std::string> &getMap() { return _map; }
 		private:
 			std::vector<std::string> _map;
 			int _x;
 			int _y;
 			std::pair<int, int> _pacmanPos;
+			PacmanState _state;
 			std::vector<Ghost *> _ghostPos;
 			std::chrono::time_point<std::chrono::system_clock> _previousLoop;
+			std::chrono::time_point<std::chrono::system_clock> _superMod;
 			Key _key;
 			bool _pause;
+			int _score;
 	};
 }

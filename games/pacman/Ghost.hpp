@@ -13,11 +13,15 @@
 #include <ncurses.h>
 
 namespace arcade {
+	enum GhostState {
+		ALIVE,
+		EATABLE,
+		DEAD
+	};
+
 	class Ghost {
 		public:
-			Ghost (const char &c, const std::pair<int, int> &pos):
-				_canMove(false), _x(0), _y(0), _prevChar(c),
-				_lifeTime(std::chrono::system_clock::now()),  _pos(pos) {}
+			Ghost (const char &, const std::pair<int, int> &);
 			bool canMove(std::vector<std::string>);
 			void move(std::vector<std::string>);
 			std::pair<int, int> choseSide(std::vector<std::string>);
@@ -26,7 +30,9 @@ namespace arcade {
 			int _x;
 			int _y;
 			char _prevChar;
-			std::chrono::time_point<std::chrono::system_clock> _lifeTime;
+			GhostState _state;
 			std::pair<int, int> _pos;
+			std::chrono::time_point<std::chrono::system_clock> _lifeTime;
+			std::chrono::time_point<std::chrono::system_clock> _deadTime;
 	};
 }
