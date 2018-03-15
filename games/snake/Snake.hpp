@@ -32,6 +32,8 @@ namespace arcade {
 			void addApple();
 			bool checkApple(std::pair<std::size_t, std::size_t> &pos);
 			void checkCollision(std::pair<std::size_t, std::size_t> &pos);
+			void headSide(std::pair<int, int> const &);
+			void bodySide(std::pair<int, int> &, std::pair<int, int> const &);
 
 			std::vector<std::string> &getMap() { return _map; }
 		private:
@@ -42,5 +44,6 @@ namespace arcade {
 			std::chrono::time_point<std::chrono::system_clock> _previousLoop;
 			Key _key;
 			bool _pause;
+			int _score;
 	};
 }

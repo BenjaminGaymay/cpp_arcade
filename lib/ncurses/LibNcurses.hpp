@@ -35,6 +35,6 @@ namespace arcade {
 		int _width;
 		int _height;
 
-		std::map<char, Key> _keyMatch;
+		std::map<int, Key> _keyMatch;
 	};
 }

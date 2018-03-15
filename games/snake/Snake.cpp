@@ -21,14 +21,15 @@ void arcade::Snake::initMap()
 {
 	_x = 1;
 	_y = 0;
+	_score = 0;
 
 	_map.clear();
 	_snakePos.clear();
 
-	_map.push_back("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+	_map.push_back("##############################");
 	for (auto i = 0 ; i < 30 ; i++)
-		_map.push_back("W                            W");
-	_map.push_back("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+		_map.push_back("#                            #");
+	_map.push_back("##############################");
 
 	_snakePos.push_back({15, 16});
 	_snakePos.push_back({15, 15});
@@ -38,10 +39,44 @@ void arcade::Snake::initMap()
 	_pause = false;
 }
 
+void arcade::Snake::headSide(std::pair<int, int> const &pos) {
+	if (_x == 1)
+		_map[pos.first][pos.second] = '1';
+	else if (_x == -1)
+		_map[pos.first][pos.second] = '2';
+	else if (_y == -1)
+		_map[pos.first][pos.second] = '3';
+	else
+		_map[pos.first][pos.second] = '4';
+}
+
+void arcade::Snake::bodySide(std::pair<int, int> &prevPos, std::pair<int, int> const &pos) {
+	int y = prevPos.first - pos.first;
+	int x = prevPos.second - pos.second;
+
+	if (x == 1)
+		_map[pos.first][pos.second] = '5';
+	else if (x == -1)
+		_map[pos.first][pos.second] = '6';
+	else if (y == -1)
+		_map[pos.first][pos.second] = '7';
+	else
+		_map[pos.first][pos.second] = '8';
+}
+
 void arcade::Snake::fillMap()
 {
-	for (auto &pos : _snakePos)
-		_map[pos.first][pos.second] = 'G';
+	std::size_t i = 0;
+	std::pair<int, int> prevPos;
+
+	for (auto &pos : _snakePos) {
+		if (i == 0)
+			headSide(pos);
+		else
+			bodySide(prevPos, pos);
+		i++;
+		prevPos = pos;
+	}
 }
 
 void arcade::Snake::clearMap()
@@ -89,12 +124,13 @@ void arcade::Snake::addApple()
 		snake = find(_snakePos.begin(), _snakePos.end(), pos);
 	}
 
-	_map[pos.first][pos.second] = 'R';
+	_map[pos.first][pos.second] = 'o';
 }
 
 bool arcade::Snake::checkApple(std::pair<std::size_t, std::size_t> &pos)
 {
-	if (_map[pos.first][pos.second] == 'R') {
+	if (_map[pos.first][pos.second] == 'o') {
+		_score += 100;
 		addApple();
 		return false;
 	}
@@ -147,6 +183,7 @@ void arcade::Snake::start(std::unique_ptr<arcade::IGraphics> &lib)
 	fillMap();
 	lib->drawMap(_map);
 	clearMap();
+	lib->drawText("Score : " + std::to_string(_score), 30, 10, BLUE);
 	if (doLoop() && !_pause)
 		moveSnake();
 	getNewSide();

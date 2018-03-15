@@ -19,18 +19,18 @@ std::pair<int, int> arcade::Ghost::choseSide(std::vector<std::string> map)
 {
 	std::vector<std::pair<int, int>> possibilities;
 
-	if (map[_pos.first + 1][_pos.second] != 'B')
+	if (map[_pos.first + 1][_pos.second] != '#')
 		possibilities.push_back({1, 0});
-	if (map[_pos.first - 1][_pos.second] != 'B')
+	if (map[_pos.first - 1][_pos.second] != '#')
 		possibilities.push_back({-1, 0});
-	if (map[_pos.first][_pos.second + 1] != 'B')
+	if (map[_pos.first][_pos.second + 1] != '#')
 		possibilities.push_back({0, 1});
-	if (map[_pos.first][_pos.second - 1] != 'B')
+	if (map[_pos.first][_pos.second - 1] != '#')
 		possibilities.push_back({0, -1});
 
 	if (possibilities.size() == 0)
 		return {0, 0};
-	else if (possibilities.size() == 2 and map[_pos.first + _y][_pos.second + _x] != 'B' and !(_y == 0 and _x == 0))
+	else if (possibilities.size() == 2 and map[_pos.first + _y][_pos.second + _x] != '#' and !(_y == 0 and _x == 0))
 		return {_y, _x};
 
 	auto tmp = possibilities[rand() % possibilities.size()];
@@ -47,7 +47,7 @@ bool arcade::Ghost::canMove(std::vector<std::string> map)
 
 	auto period = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::system_clock::now() - _lifeTime).count();
 
-	if (period > rand()  % 50000) {
+	if (period > rand()  % 30000) {
 		_canMove = true;
 		auto side = choseSide(map);
 

@@ -31,6 +31,8 @@ namespace arcade {
 			bool doLoop();
 			bool checkApple(std::pair<std::size_t, std::size_t> &pos);
 			void checkCollision(std::pair<std::size_t, std::size_t> &pos);
+			void headSide(std::pair<int, int> const &);
+			void bodySide(std::pair<int, int> &, std::pair<int, int> const &);
 
 			std::vector<std::string> &getMap() { return _map; }
 		private:

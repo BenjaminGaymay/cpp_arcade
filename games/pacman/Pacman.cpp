@@ -29,27 +29,27 @@ void arcade::Pacman::initMap()
 		delete _ghostPos[i];
 	_ghostPos.clear();
 
-	_map.push_back("BBBBBBBBBBBBBBBBBBBBB");
-	_map.push_back("BWWWWWWWWWBWWWWWWWWWB");
-	_map.push_back("BWBBWBBBBWBWBBBBWBBWB");
-	_map.push_back("BWWWWWWWWWWWWWWWWWWWB");
-	_map.push_back("BWBBWBWBBBBBBBWBWBBWB");
-	_map.push_back("BWWWWBWWWWBWWWWBWWWWB");
-	_map.push_back("BBBBWBBBBWBWBBBBWBBBB");
-	_map.push_back("   BWBWWWWWWWWSBWB   ");
-	_map.push_back("BBBBWBWBBB-BBBWBWBBBB");
-	_map.push_back("WWWWWWWB-----BWWWWWWW");
-	_map.push_back("BBBBWBWBBBBBBBWBWBBBB");
-	_map.push_back("   BWBWWWWWWWWWBWB   ");
-	_map.push_back("BBBBWBWBBBBBBBWBWBBBB");
-	_map.push_back("BWWWWWWWWWBWWWWWWWWWB");
-	_map.push_back("BWBBBWBBBWBWBBBWBBBWB");
-	_map.push_back("BWWBWWWWWWWWWWWWWBWWB");
-	_map.push_back("BBWBWBWBBBBBBBWBWBWBB");
-	_map.push_back("BWWWWBWWWWBWWWWBWWWWB");
-	_map.push_back("BWBBBBBBBWBWBBBBBBBWB");
-	_map.push_back("BWWWWWWWWWSWWWWWWWWWB");
-	_map.push_back("BBBBBBBBBBBBBBBBBBBBB");
+	_map.push_back("#####################");
+	_map.push_back("#.........#.........#");
+  	_map.push_back("#.##.####.#.####.##.#");
+	_map.push_back("#...M...........M...#");
+	_map.push_back("#.##.#.#######.#.##.#");
+	_map.push_back("#....#....#....#....#");
+	_map.push_back("####.####.#.####.####");
+	_map.push_back("   #.#.........#.#   ");
+	_map.push_back("####.#.###-###.#.####");
+	_map.push_back(".......#-----#.......");
+	_map.push_back("####.#.#######.#.####");
+	_map.push_back("   #.#.........#.#   ");
+	_map.push_back("####.#.#######.#.####");
+	_map.push_back("#.........#.........#");
+	_map.push_back("#.###.###.#.###.###.#");
+	_map.push_back("#..#.............#..#");
+	_map.push_back("##.#.#.#######.#.#.##");
+	_map.push_back("#.M..#....#....#.M..#");
+	_map.push_back("#.#######.#.#######.#");
+	_map.push_back("#...................#");
+	_map.push_back("#####################");
 
 	_pacmanPos = {7, 10};
 	_ghostPos.push_back(new Ghost('-', {9, 12}));
@@ -61,16 +61,16 @@ void arcade::Pacman::initMap()
 
 void arcade::Pacman::fillMap()
 {
-	_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'b' : 'Y');
+	_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'M' : 'Y');
 
 	for (auto &ghost : _ghostPos) {
 		switch (ghost->_state) {
 			case GhostState::ALIVE:
-				_map[ghost->_pos.first][ghost->_pos.second] = '^'; break;
+				_map[ghost->_pos.first][ghost->_pos.second] = 'G'; break;
 			case GhostState::EATABLE:
-				_map[ghost->_pos.first][ghost->_pos.second] = 'v'; break;
+				_map[ghost->_pos.first][ghost->_pos.second] = 'R'; break;
 			case GhostState::DEAD:
-				_map[ghost->_pos.first][ghost->_pos.second] = 'x'; break;
+				_map[ghost->_pos.first][ghost->_pos.second] = 'C'; break;
 		}
 	}
 }
@@ -114,7 +114,7 @@ void arcade::Pacman::manageSuperMod(std::pair<int, int> &pos)
 				ghost->_state = (ghost->_state == GhostState::EATABLE ? GhostState::ALIVE : ghost->_state);
 		}
 	}
-	if (_map[pos.first][pos.second] == 'S') {
+	if (_map[pos.first][pos.second] == 'M') {
 		_state = PacmanState::SUPER;
 		for (auto &ghost : _ghostPos)
 			ghost->_state = (ghost->_state == GhostState::ALIVE ? GhostState::EATABLE : ghost->_state);
@@ -155,9 +155,9 @@ void arcade::Pacman::movePacman()
 	else if (pos.second > static_cast<int>(_map[pos.first].size()) - 1)
 		pos.second = 0;
 
-	if (_map[pos.first][pos.second] != 'B' && _map[pos.first][pos.second] != '-') {
+	if (_map[pos.first][pos.second] != '#' && _map[pos.first][pos.second] != '-') {
 		_pacmanPos = pos;
-		_score += (_map[pos.first][pos.second] == 'W' ? 100 : 0);
+		_score += (_map[pos.first][pos.second] == '.' ? 100 : 0);
 	}
 
 	manageSuperMod(_pacmanPos);

@@ -11,12 +11,12 @@ using N_LibNcurses = arcade::LibNcurses;
 
 N_LibNcurses::LibNcurses()
 {
-	_keyMatch['a'] = ESC;
-	_keyMatch['z'] = UP;
-	_keyMatch['s'] = DOWN;
-	_keyMatch['q'] = LEFT;
-	_keyMatch['d'] = RIGHT;
-	_keyMatch['e'] = ENTER;
+	_keyMatch[27] = ESC;
+	_keyMatch[KEY_UP] = UP;
+	_keyMatch[KEY_DOWN] = DOWN;
+	_keyMatch[KEY_LEFT] = LEFT;
+	_keyMatch[KEY_RIGHT] = RIGHT;
+	_keyMatch[10] = ENTER;
 	_keyMatch['p'] = PAUSE;
 	_keyMatch['r'] = RESET;
 }
@@ -37,15 +37,20 @@ void N_LibNcurses::openWindow()
 	init_pair(1, COLOR_RED, COLOR_BLACK);
 	init_pair(2, COLOR_BLUE, COLOR_BLACK);
 	init_pair(3, COLOR_GREEN, COLOR_BLACK);
-	init_pair(4, COLOR_RED, COLOR_RED);
-	init_pair(5, COLOR_BLUE, COLOR_BLUE);
-	init_pair(6, COLOR_GREEN, COLOR_GREEN);
-	init_pair(7, COLOR_WHITE, COLOR_BLACK);
-	init_pair(8, COLOR_WHITE, COLOR_WHITE);
-	init_pair(9, COLOR_BLACK, COLOR_BLACK);
-	init_pair(10, COLOR_RED, COLOR_RED);
+	init_pair(4, COLOR_WHITE, COLOR_BLACK);
+	init_pair(5, COLOR_BLACK, COLOR_BLACK);
+	init_pair(6, COLOR_CYAN, COLOR_BLACK);
+	init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(8, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(9, COLOR_RED, COLOR_RED);
+	init_pair(10, COLOR_BLUE, COLOR_BLUE);
 	init_pair(11, COLOR_GREEN, COLOR_GREEN);
 	init_pair(12, COLOR_WHITE, COLOR_WHITE);
+	init_pair(13, COLOR_BLACK, COLOR_BLACK);
+	init_pair(14, COLOR_CYAN, COLOR_CYAN);
+	init_pair(15, COLOR_MAGENTA, COLOR_MAGENTA);
+	init_pair(16, COLOR_YELLOW, COLOR_YELLOW);
+
 }
 
 bool N_LibNcurses::isOpen()
@@ -78,18 +83,42 @@ void N_LibNcurses::drawText(const std::string &text, const int &x, const int &y,
 arcade::Color N_LibNcurses::setColor(char c)
 {
 	switch (c) {
-		case 'W':
-			return arcade::BG_WHITE;
-		case 'G':
-			return arcade::BG_GREEN;
 		case 'R':
 			return arcade::BG_RED;
 		case 'B':
 			return arcade::BG_BLUE;
-		case 'Y':
-			return arcade::BG_RED;
-		case '^':
+		case 'G':
 			return arcade::BG_GREEN;
+		case 'W':
+			return arcade::BG_WHITE;
+		case 'C':
+			return arcade::BG_CYAN;
+		case 'M':
+			return arcade::BG_MAGENTA;
+		case 'Y':
+			return arcade::BG_YELLOW;
+		case '#':
+			return arcade::BG_BLUE;
+		case 'o':
+			return arcade::BG_RED;
+		case '.':
+			return arcade::BG_WHITE;
+		case '1':
+			return arcade::BG_BLUE;
+		case '2':
+			return arcade::BG_BLUE;
+		case '3':
+			return arcade::BG_BLUE;
+		case '4':
+			return arcade::BG_BLUE;
+		case '5':
+			return arcade::BG_CYAN;
+		case '6':
+			return arcade::BG_CYAN;
+		case '7':
+			return arcade::BG_CYAN;
+		case '8':
+			return arcade::BG_CYAN;
 		default:
 			return arcade::BG_BLACK;
 	}
@@ -126,7 +155,7 @@ int N_LibNcurses::getWidth()
 
 arcade::Key N_LibNcurses::getKey()
 {
-	char key = getch();
+	int key = getch();
 
 	if (_keyMatch.find(key) != _keyMatch.end())
 		return _keyMatch[key];

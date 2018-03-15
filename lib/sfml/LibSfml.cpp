@@ -21,29 +21,47 @@ N_LibSfml::LibSfml() :
 	_colorsMatch[RED] = sf::Color::Red;
 	_colorsMatch[BLUE] = sf::Color::Blue;
 	_colorsMatch[GREEN] = sf::Color::Green;
+	_colorsMatch[WHITE] = sf::Color::White;
+	_colorsMatch[BLACK] = sf::Color::Black;
+	_colorsMatch[CYAN] = sf::Color::Cyan;
+	_colorsMatch[MAGENTA] = sf::Color::Magenta;
+	_colorsMatch[YELLOW] = sf::Color::Yellow;
 	_colorsMatch[BG_RED] = sf::Color::Red;
 	_colorsMatch[BG_BLUE] = sf::Color::Blue;
 	_colorsMatch[BG_GREEN] = sf::Color::Green;
 	_colorsMatch[BG_WHITE] = sf::Color::White;
-	_colorsMatch[WHITE] = sf::Color::White;
 	_colorsMatch[BG_BLACK] = sf::Color::Black;
+	_colorsMatch[BG_CYAN] = sf::Color::Cyan;
+	_colorsMatch[BG_MAGENTA] = sf::Color::Magenta;
+	_colorsMatch[BG_YELLOW] = sf::Color::Yellow;
 
-	_keyMatch[sf::Keyboard::Key::Z] = UP;
-	_keyMatch[sf::Keyboard::Key::S] = DOWN;
-	_keyMatch[sf::Keyboard::Key::Q] = LEFT;
-	_keyMatch[sf::Keyboard::Key::D] = RIGHT;
-	_keyMatch[sf::Keyboard::Key::A] = ESC;
-	_keyMatch[sf::Keyboard::Key::E] = ENTER;
+	_keyMatch[sf::Keyboard::Key::Up] = UP;
+	_keyMatch[sf::Keyboard::Key::Down] = DOWN;
+	_keyMatch[sf::Keyboard::Key::Left] = LEFT;
+	_keyMatch[sf::Keyboard::Key::Right] = RIGHT;
+	_keyMatch[sf::Keyboard::Key::Escape] = ESC;
+	_keyMatch[sf::Keyboard::Key::Return] = ENTER;
 	_keyMatch[sf::Keyboard::Key::P] = PAUSE;
 	_keyMatch[sf::Keyboard::Key::R] = RESET;
 
 	_text.setFont(_font);
-	_sx = 20;
+	_sx = 32;
 	_sy = _sx;
 
 	loadTexture("./ressources/images/grass.png"); // 0
 	loadTexture("./ressources/images/brick.png"); // 1
 	loadTexture("./ressources/images/apple.png"); // 2
+	loadTexture("./ressources/images/brick_head.png"); // 3
+	loadTexture("./ressources/images/gum.png"); // 4
+	loadTexture("./ressources/images/wood.png"); // 5
+	loadTexture("./ressources/images/head_right.png"); // 6
+	loadTexture("./ressources/images/head_left.png"); // 7
+	loadTexture("./ressources/images/head_top.png"); // 8
+	loadTexture("./ressources/images/head_down.png"); // 9
+	loadTexture("./ressources/images/body_right.png"); // 10
+	loadTexture("./ressources/images/body_left.png"); // 11
+	loadTexture("./ressources/images/body_top.png"); // 12
+	loadTexture("./ressources/images/body_down.png"); // 13
 	// _textureMatch[GREEN] = _texture[0];
 
 	// _textureMatch[BG_GREEN] = _texture[0];
@@ -54,6 +72,19 @@ N_LibSfml::LibSfml() :
 	_textureMatch[GRASS] = _texture[0];
 	_textureMatch[BRICK] = _texture[1];
 	_textureMatch[APPLE] = _texture[2];
+	_textureMatch[BRICK_HEAD] = _texture[3];
+	_textureMatch[GUM] = _texture[4];
+	_textureMatch[WOOD] = _texture[5];
+
+	_textureMatch[HEAD_RIGHT] = _texture[6];
+	_textureMatch[HEAD_LEFT] = _texture[7];
+	_textureMatch[HEAD_TOP] = _texture[8];
+	_textureMatch[HEAD_DOWN] = _texture[9];
+
+	_textureMatch[BODY_RIGHT] = _texture[10];
+	_textureMatch[BODY_LEFT] = _texture[11];
+	_textureMatch[BODY_TOP] = _texture[12];
+	_textureMatch[BODY_DOWN] = _texture[13];
 }
 
 N_LibSfml::~LibSfml()
@@ -83,7 +114,6 @@ bool N_LibSfml::isOpen()
 
 void N_LibSfml::openWindow()
 {
-	_window.setVerticalSyncEnabled(true);
 	_window.setFramerateLimit(60);
 	if (_font.loadFromFile("./ressources/Lato.ttf") == false)
 		throw std::runtime_error("Error: sfml: can't load font.");
@@ -94,6 +124,7 @@ void N_LibSfml::drawSquare(const int &x, const int &y, const Color &color)
 	sf::RectangleShape rect;
 	rect.setSize(sf::Vector2f(_sx,_sy));
 	rect.setPosition(sf::Vector2f(x*_sx, y*_sy));
+
 
 	if (_textureMatch.find(color) != _textureMatch.end())
 		rect.setTexture(&_textureMatch[color]);
@@ -131,12 +162,42 @@ int N_LibSfml::getHeight()
 arcade::Color N_LibSfml::setColor(char c)
 {
 	switch (c) {
-		case 'W':
-			return arcade::BG_WHITE;
-		case 'G':
-			return arcade::BG_GREEN;
 		case 'R':
 			return arcade::BG_RED;
+		case 'B':
+			return arcade::BG_BLUE;
+		case 'G':
+			return arcade::BG_GREEN;
+		case 'W':
+			return arcade::BG_WHITE;
+		case 'C':
+			return arcade::BG_CYAN;
+		case 'M':
+			return arcade::BG_MAGENTA;
+		case 'Y':
+			return arcade::BG_YELLOW;
+		case '#':
+			return arcade::BRICK;
+		case 'o':
+			return arcade::APPLE;
+		case '.':
+			return arcade::GUM;
+		case '1':
+			return arcade::HEAD_RIGHT;
+		case '2':
+			return arcade::HEAD_LEFT;
+		case '3':
+			return arcade::HEAD_TOP;
+		case '4':
+			return arcade::HEAD_DOWN;
+		case '5':
+			return arcade::BODY_RIGHT;
+		case '6':
+			return arcade::BODY_LEFT;
+		case '7':
+			return arcade::BODY_TOP;
+		case '8':
+			return arcade::BODY_DOWN;
 		default:
 			return arcade::BG_BLACK;
 	}
@@ -149,6 +210,8 @@ void N_LibSfml::drawMap(const std::vector<std::string> &map)
 	for (unsigned i = 0 ; i < map.size() ; i++) {
 		for (unsigned j = 0 ; j < map[i].size() ; j++) {
 			color = setColor(map[i][j]);
+			if (i + 1 < map.size() and color == arcade::BRICK and setColor(map[i + 1][j]) == arcade::BRICK)
+				color = arcade::BRICK_HEAD;
 			drawSquare(getWidth() / 2 - (map[i].size() / 2 - 1) + j, getHeight() / 2 - (map.size() / 2) + i, color);
 		}
 	}

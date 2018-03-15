@@ -15,15 +15,37 @@ namespace arcade {
 		RED = 1,
 		BLUE,
 		GREEN,
+		WHITE,
+		BLACK,
+		CYAN,
+		MAGENTA,
+		YELLOW,
+
 		BG_RED,
 		BG_BLUE,
 		BG_GREEN,
-		WHITE,
 		BG_WHITE,
 		BG_BLACK,
+		BG_CYAN,
+		BG_MAGENTA,
+		BG_YELLOW,
+
 		APPLE,
 		GRASS,
-		BRICK
+		BRICK,
+		BRICK_HEAD,
+		GUM,
+		WOOD,
+
+		HEAD_RIGHT,
+		HEAD_LEFT,
+		HEAD_TOP,
+		HEAD_DOWN,
+
+		BODY_RIGHT,
+		BODY_LEFT,
+		BODY_TOP,
+		BODY_DOWN
 	};
 
 	enum Key {

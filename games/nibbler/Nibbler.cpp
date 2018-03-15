@@ -25,37 +25,37 @@ void arcade::Nibbler::initMap()
 	_map.clear();
 	_nibblerPos.clear();
 
-	_map.push_back("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
-	_map.push_back("W  R         R   R         R  W");
-	_map.push_back("W WWWWWWWWWWW W W WWWWWWWWWWW W");
-	_map.push_back("WR        R   W W   R        RW");
-	_map.push_back("W WWWWWWWW WWWW WWWW WWWWWWWW W");
-	_map.push_back("W W      W  R     R  W      W W");
-	_map.push_back("W W      W WWWWWWWWW W      W W");
-	_map.push_back("W W      W     R     W      W W");
-	_map.push_back("W W      W WWWWWWWWW W      W W");
-	_map.push_back("W W      W  R  W  R  W      W W");
-	_map.push_back("W W      WWWWW W WWWWW      W W");
-	_map.push_back("W W      W     W     W      W W");
-	_map.push_back("W WWWWWWWW WWWWWWWWW WWWWWWWW W");
-	_map.push_back("WR     R               R     RW");
-	_map.push_back("WWWWW WWWWWWWWWRWWWWWWWWW WWWWW");
-	_map.push_back("WR     R               R     RW");
-	_map.push_back("W WWWWWWWWWWWWW WWWWWWWWWWWWW W");
-	_map.push_back("W  R          W W          R  W");
-	_map.push_back("W WWWWWWWWWWW  R  WWWWWWWWWWW W");
-	_map.push_back("W     W     W W W W     W     W");
-	_map.push_back("WRW W R WWW R W W R WWW R W WRW");
-	_map.push_back("W W WWWWWWWWWWWRWWWWWWWWWWW W W");
-	_map.push_back("W  R                       R  W");
-	_map.push_back("W WWWWWWWWW W WWW W WWWWWWWWW W");
-	_map.push_back("W   W     W W     W W     W  RW");
-	_map.push_back("W W R W W R W  W  W R W W R W W");
-	_map.push_back("W WWWWW WWWWW WWW WWWWW WWWWW W");
-	_map.push_back("W  R          W W          R  W");
-	_map.push_back("W WWWWWWWWWWW WWW WWWWWWWWWWW W");
-	_map.push_back("WR        R         R        RW");
-	_map.push_back("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+	 _map.push_back("###############################");
+	_map.push_back("#  o         o   o         o  #");
+	_map.push_back("# ########### # # ########### #");
+	_map.push_back("#o        o   # #   o        o#");
+	_map.push_back("# ######## #### #### ######## #");
+	_map.push_back("# #      #  o     o  #      # #");
+	_map.push_back("# #      # ######### #      # #");
+	_map.push_back("# #      #     o     #      # #");
+	_map.push_back("# #      # ######### #      # #");
+	_map.push_back("# #      #  o  #  o  #      # #");
+	_map.push_back("# #      ##### # #####      # #");
+	_map.push_back("# #      #     #     #      # #");
+	_map.push_back("# ######## ######### ######## #");
+	_map.push_back("#o     o               o     o#");
+	_map.push_back("##### #########o######### #####");
+	_map.push_back("#o     o               o     o#");
+	_map.push_back("# ############# ############# #");
+	_map.push_back("#  o          # #          o  #");
+	_map.push_back("# ###########  o  ########### #");
+	_map.push_back("#     #     # # # #     #     #");
+	_map.push_back("#o# # o ### o # # o ### o # #o#");
+	_map.push_back("# # ###########o########### # #");
+	_map.push_back("#  o                       o  #");
+	_map.push_back("# ######### # ### # ######### #");
+	_map.push_back("#   #     # #     # #     #  o#");
+	_map.push_back("# # o # # o #  #  # o # # o # #");
+	_map.push_back("# ##### ##### ### ##### ##### #");
+	_map.push_back("#  o          # #          o  #");
+	_map.push_back("# ########### ### ########### #");
+	_map.push_back("#o        o         o        o#");
+	_map.push_back("###############################");
 
 	_nibblerPos.push_back({15, 12});
 	_nibblerPos.push_back({15, 11});
@@ -64,10 +64,44 @@ void arcade::Nibbler::initMap()
 	_pause = false;
 }
 
+void arcade::Nibbler::headSide(std::pair<int, int> const &pos) {
+	if (_x == 1)
+		_map[pos.first][pos.second] = '1';
+	else if (_x == -1)
+		_map[pos.first][pos.second] = '2';
+	else if (_y == -1)
+		_map[pos.first][pos.second] = '3';
+	else
+		_map[pos.first][pos.second] = '4';
+}
+
+void arcade::Nibbler::bodySide(std::pair<int, int> &prevPos, std::pair<int, int> const &pos) {
+	int y = prevPos.first - pos.first;
+	int x = prevPos.second - pos.second;
+
+	if (x == 1)
+		_map[pos.first][pos.second] = '5';
+	else if (x == -1)
+		_map[pos.first][pos.second] = '6';
+	else if (y == -1)
+		_map[pos.first][pos.second] = '7';
+	else
+		_map[pos.first][pos.second] = '8';
+}
+
 void arcade::Nibbler::fillMap()
 {
-	for (auto &pos : _nibblerPos)
-		_map[pos.first][pos.second] = 'G';
+	std::size_t i = 0;
+	std::pair<int, int> prevPos;
+
+	for (auto &pos : _nibblerPos) {
+		if (i == 0)
+			headSide(pos);
+		else
+			bodySide(prevPos, pos);
+		i++;
+		prevPos = pos;
+	}
 }
 
 void arcade::Nibbler::clearMap()
@@ -101,13 +135,13 @@ void arcade::Nibbler::checkCollision(std::pair<std::size_t, std::size_t> &pos)
 {
 	auto nibbler = find(_nibblerPos.begin() + 1, _nibblerPos.end(), pos);
 
-	if (_map[pos.first][pos.second] == 'W' or nibbler != _nibblerPos.end())
+	if (_map[pos.first][pos.second] == '#' or nibbler != _nibblerPos.end())
 		initMap();
 }
 
 bool arcade::Nibbler::checkApple(std::pair<std::size_t, std::size_t> &pos)
 {
-	if (_map[pos.first][pos.second] == 'R')
+	if (_map[pos.first][pos.second] == 'o')
 		return false;
 
 	return true;
