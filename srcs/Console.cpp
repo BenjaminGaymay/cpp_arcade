@@ -136,7 +136,7 @@ int N_Console::writeMenu()
 	drawBox();
 	drawListLibs();
 	drawListGames();
-	_lib->drawSquare(0, 0, BG_RED);
+	// _lib->drawSquare(0, 0, BG_RED);
 	_lib->drawText("PORCHERET FDP", 20-(13/2), 5, GREEN);
 	switch (_key) {
 		case ENTER:

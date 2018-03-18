@@ -45,7 +45,7 @@ N_LibSfml::LibSfml() :
 	_keyMatch[sf::Keyboard::Key::R] = RESET;
 
 	_text.setFont(_font);
-	_sx = 32;
+	_sx = 30;
 	_sy = _sx;
 
 	loadTexture("./ressources/images/grass.png"); // 0
@@ -221,13 +221,10 @@ arcade::Key N_LibSfml::getKey()
 	sf::Event event;
 
 	while (_window.pollEvent(event)) {
-		if (event.type == sf::Event::KeyPressed)
+		if (event.type == sf::Event::KeyPressed
+			and _keyMatch.find(event.key.code) != _keyMatch.end())
 			return _keyMatch[event.key.code];
 	}
-	return NONE;
-	_window.pollEvent(event);
-	if (event.type == sf::Event::KeyPressed)
-		return _keyMatch[event.key.code];
 	return NONE;
 }
 

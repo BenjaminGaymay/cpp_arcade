@@ -16,7 +16,7 @@ CPPFLAGS +=	-W -Wall -Wextra
 
 all:	$(NAME)
 
-core:
+core:	$(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 games:
