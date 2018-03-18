@@ -122,10 +122,9 @@ void N_LibSfml::openWindow()
 void N_LibSfml::drawSquare(const int &x, const int &y, const Color &color)
 {
 	sf::RectangleShape rect;
+
 	rect.setSize(sf::Vector2f(_sx,_sy));
 	rect.setPosition(sf::Vector2f(x*_sx, y*_sy));
-
-
 	if (_textureMatch.find(color) != _textureMatch.end())
 		rect.setTexture(&_textureMatch[color]);
 	else
