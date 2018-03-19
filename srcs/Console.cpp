@@ -142,13 +142,12 @@ void N_Console::drawListGames()
 
 void N_Console::enterAction()
 {
-	arcade::Console PS4;
-
 	if (_index < _listLibs.size()) {
 		_lib->closeWindow();
 		_libName = _listLibs[_index];
-		_key = _lib->getKey();
-		launch();
+		openLib(LIBS);
+		_lib = _getLib();
+		_lib->openWindow();
 	}
 	else{
 		_gameName = _listGames[_currGame];
