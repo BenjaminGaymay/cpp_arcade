@@ -17,12 +17,14 @@ N_Console::Console(const std::string &lib) :
 {
 	_state = IN_MENU;
 	_currGame = 0;
+	_index = 0;
 }
 
 N_Console::Console()
 {
 	_state = IN_MENU;
 	_currGame = 0;
+	_index = 0;
 }
 
 N_Console::~Console()
@@ -105,30 +107,69 @@ void N_Console::drawBox()
 void N_Console::drawListLibs()
 {
 	int i = 10;
+	std::size_t j = 0;
+	Color color;
 
 	for (auto c : _listLibs) {
 		c = epureName(c);
-		_lib->drawText(c,20 - c.size() / 2 ,i, BLUE);
+		if (_index == j)
+			color = GREEN;
+		else
+			color = BLUE;
+		_lib->drawText(c,20 - c.size() / 2 ,i, color);
 		i+=2;
+		j++;
 	}
 }
 
 void N_Console::drawListGames()
 {
 	int i = 16;
-	std::size_t index = 0;
+	std::size_t j = _listLibs.size();
 	Color color;
 
 	for (auto c : _listGames) {
 		c = epureName(c);
-		if (index == _currGame)
+		if (_index == j)
 			color = GREEN;
 		else
 			color = BLUE;
 		_lib->drawText(c,20 - c.size() / 2,i, color);
 		i+=2;
-		index++;
+		j++;
 	}
+}
+
+void N_Console::enterAction()
+{
+	arcade::Console PS4;
+
+	if (_index < _listLibs.size()) {
+		_lib->closeWindow();
+		_libName = _listLibs[_index];
+		_key = _lib->getKey();
+		launch();
+	}
+	else{
+		_gameName = _listGames[_currGame];
+		openLib(GAME);
+		changeLibs(GAME);
+		_state = IN_GAME;
+	}
+}
+
+void N_Console::upAction()
+{
+	_index = (_index == 0 ? 0 : _index - 1);
+	if (_index >= _listLibs.size())
+		_currGame--;
+}
+
+void N_Console::downAction()
+{
+	_index = (_index == (_listGames.size() + _listLibs.size()) - 1 ? (_listGames.size() + _listLibs.size()) - 1 : _index + 1);
+	if (_index > _listLibs.size())
+		_currGame = (_listGames.size() - 1 == _currGame ? _listGames.size() - 1 : _currGame + 1);
 }
 
 int N_Console::writeMenu()
@@ -140,18 +181,15 @@ int N_Console::writeMenu()
 	_lib->drawText("PORCHERET FDP", 20-(13/2), 5, GREEN);
 	switch (_key) {
 		case ENTER:
-			_gameName = _listGames[_currGame];
-			openLib(GAME);
-			changeLibs(GAME);
-			_state = IN_GAME;
+			enterAction();
 			break;
 		case ESC:
 			return Macro::EXIT;
 		case UP:
-			_currGame = _currGame == 0 ? _currGame : _currGame - 1;
+			upAction();
 			break;
 		case DOWN:
-			_currGame = _currGame == _listGames.size() - 1 ? _currGame : _currGame + 1;
+			downAction();
 			break;
 		default:
 			break;
