@@ -41,6 +41,9 @@ namespace arcade {
 		std::string epureName(const std::string &);
 		void drawListGames();
 		void drawListLibs();
+		void enterAction();
+		void upAction();
+		void downAction();
 		int writeMenu();
 		int launch();
 		void drawBox();
@@ -64,6 +67,7 @@ namespace arcade {
 
 		std::size_t _currLib;
 		std::size_t _currGame;
+		std::size_t _index;
 
 		State _state;
 		Key _key;
