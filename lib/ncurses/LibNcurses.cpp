@@ -22,8 +22,7 @@ N_LibNcurses::LibNcurses()
 }
 
 N_LibNcurses::~LibNcurses()
-{
-}
+{}
 
 void N_LibNcurses::openWindow()
 {
