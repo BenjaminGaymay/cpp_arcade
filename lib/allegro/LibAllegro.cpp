@@ -11,8 +11,10 @@ using N_LibAllegro = arcade::LibAllegro;
 
 N_LibAllegro::LibAllegro::LibAllegro()
 {
-	_sx = 24;
+	_sx = 30;
 	_sy = _sx;
+	_fps = 30.0f;
+
 	_keyMatch[ALLEGRO_KEY_UP] = UP;
 	_keyMatch[ALLEGRO_KEY_DOWN] = DOWN;
 	_keyMatch[ALLEGRO_KEY_LEFT] = LEFT;
@@ -52,8 +54,10 @@ void N_LibAllegro::openWindow()
 		!al_install_keyboard() || !al_get_monitor_info(0, &info))
 		throw std::runtime_error("Error: an error occured while loading the allegro5 library.");
 	_eventQueue = al_create_event_queue();
-	//al_register_event_source(_eventQueue, al_get_display_event_source(_window));
+	_timer = al_create_timer(1.0f/_fps);
 	al_register_event_source(_eventQueue, al_get_keyboard_event_source());
+	al_register_event_source(_eventQueue, al_get_timer_event_source(_timer));
+	al_start_timer(_timer);
 	_width = info.x2 - info.x1;
 	_height = info.y2 - info.y1;
 	std::cout << _width << "\n" << _height << std::endl;
@@ -85,7 +89,8 @@ void N_LibAllegro::clearWindow()
 
 void N_LibAllegro::refreshWindow()
 {
-	al_flip_display();
+	if (_event.timer.source == _timer)
+		al_flip_display();
 }
 
 bool N_LibAllegro::isOpen()
@@ -119,11 +124,9 @@ void N_LibAllegro::drawMap(const std::vector<std::string> &map)
 
 arcade::Key N_LibAllegro::getKey()
 {
-	ALLEGRO_EVENT events;
-
-	al_get_next_event(_eventQueue, &events);
-	if (events.type == ALLEGRO_EVENT_KEY_DOWN)
-		return _keyMatch[events.keyboard.keycode];
+	al_wait_for_event(_eventQueue, &_event);
+	if (_event.type == ALLEGRO_EVENT_KEY_DOWN)
+		return _keyMatch[_event.keyboard.keycode];
 	return NONE;
 }
 

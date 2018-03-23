@@ -40,10 +40,13 @@ namespace arcade {
 		int _height;
 		int _sx;
 		int _sy;
+		float _fps;
 
 		ALLEGRO_DISPLAY *_window;
 		ALLEGRO_FONT *_font;
 		ALLEGRO_EVENT_QUEUE *_eventQueue;
+		ALLEGRO_TIMER *_timer;
+		ALLEGRO_EVENT _event;
 
 		std::map<int, Key> _keyMatch;
 		std::map<Color, ALLEGRO_COLOR> _colorsMatch;
