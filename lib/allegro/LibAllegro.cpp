@@ -105,7 +105,7 @@ void N_LibAllegro::drawText(const std::string &text, const int &x, const int &y,
 
 void N_LibAllegro::drawSquare(const int &x, const int &y, const Color &color)
 {
-	al_draw_rectangle(x*_sx, y*_sy, x*_sx+_sx, y*_sy+_sy, _colorsMatch[color], 1);
+	al_draw_filled_rectangle(x*_sx, y*_sy, x*_sx+_sx, y*_sy+_sy, _colorsMatch[color]);
 }
 
 void N_LibAllegro::drawMap(const std::vector<std::string> &map)
