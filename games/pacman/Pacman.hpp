@@ -37,13 +37,15 @@ namespace arcade {
 			bool checkGhostCollision();
 			void manageSuperMod(std::pair<int, int> &);
 			std::vector<std::string> &getMap() { return _map; }
+			void refreshPCPos();
+
 		private:
 			std::vector<std::string> _map;
 			int _x;
 			int _y;
 			std::pair<int, int> _pacmanPos;
 			PacmanState _state;
-			std::vector<Ghost *> _ghostPos;
+			std::vector<std::unique_ptr<Ghost>> _ghostPos;
 			std::chrono::time_point<std::chrono::system_clock> _previousLoop;
 			std::chrono::time_point<std::chrono::system_clock> _superMod;
 			Key _key;

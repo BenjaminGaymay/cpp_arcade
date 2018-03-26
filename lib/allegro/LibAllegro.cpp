@@ -51,7 +51,8 @@ void N_LibAllegro::openWindow()
 
 	if (!al_init() || !al_init_primitives_addon() ||
 		!al_init_font_addon() || !al_init_ttf_addon() ||
-		!al_install_keyboard() || !al_get_monitor_info(0, &info))
+		!al_init_image_addon() || !al_install_keyboard() ||
+		!al_get_monitor_info(0, &info))
 		throw std::runtime_error("Error: an error occured while loading the allegro5 library.");
 	_eventQueue = al_create_event_queue();
 	_timer = al_create_timer(1.0f/_fps);
@@ -62,14 +63,18 @@ void N_LibAllegro::openWindow()
 	_height = info.y2 - info.y1;
 	std::cout << _width << "\n" << _height << std::endl;
 	_window = al_create_display(_width, _height);
-	if ((_font = al_load_font("./ressources/Lato.ttf", 36, 0)) == nullptr)
-		throw std::runtime_error("Error: can't load font");
+	if ((_font = al_load_font("./ressources/Lato.ttf", 36, 0)) == nullptr ||
+		(_background = al_load_bitmap("./ressources/images/arcade_bg.jpg")) == nullptr)
+		throw std::runtime_error("Error: can't load ressources.");
 }
 
 void N_LibAllegro::closeWindow()
 {
 	al_destroy_display(_window);
 	al_destroy_font(_font);
+	al_destroy_timer(_timer);
+	al_destroy_event_queue(_eventQueue);
+	al_destroy_bitmap(_background);
 }
 
 int N_LibAllegro::getHeight()
@@ -89,8 +94,10 @@ void N_LibAllegro::clearWindow()
 
 void N_LibAllegro::refreshWindow()
 {
-	if (_event.timer.source == _timer)
+	if (_event.timer.source == _timer) {
 		al_flip_display();
+		al_draw_bitmap(_background, 0, 0, 0);
+	}
 }
 
 bool N_LibAllegro::isOpen()
@@ -115,8 +122,6 @@ void N_LibAllegro::drawMap(const std::vector<std::string> &map)
 	for (unsigned i = 0 ; i < map.size() ; i++) {
 		for (unsigned j = 0 ; j < map[i].size() ; j++) {
 			color = setColor(map[i][j]);
-			// if (i + 1 < map.size() and color == arcade::BRICK and setColor(map[i + 1][j]) == arcade::BRICK)
-			// 	color = arcade::BRICK_HEAD;
 			drawSquare(getWidth() / 2 - (map[i].size() / 2 - 1) + j, getHeight() / 2 - (map.size() / 2) + i, color);
 		}
 	}

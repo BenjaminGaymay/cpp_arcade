@@ -71,12 +71,29 @@ bool arcade::Ghost::canMove(std::vector<std::string> map)
 	return false;
 }
 
+void arcade::Ghost::setPacMan(const Pos &pos)
+{
+	_pacmanPos = pos;
+}
+
+void arcade::Ghost::setPacMan(const std::pair<int, int> &pos)
+{
+	_pacmanPos.y = pos.first;
+	_pacmanPos.x = pos.second;
+}
 
 void arcade::Ghost::move(std::vector<std::string> map)
 {
+	std::vector<Pos> nextPos;
+	Path path(map);
+	Pos pos;
+
+	pos.y = _pos.first;
+	pos.x = _pos.second;
+	//VECTOR OF POS TO THE PACMAN
+	nextPos = path.findPath(pos, _pacmanPos);
 	if (canMove(map) == false)
 		return ;
-
 	map[_pos.first][_pos.second] = _prevChar;
 
 	auto side = choseSide(map);

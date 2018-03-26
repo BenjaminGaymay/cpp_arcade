@@ -12,6 +12,7 @@
 #include <map>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_image.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
 #include "IGraphics.hpp"
@@ -46,6 +47,7 @@ namespace arcade {
 		ALLEGRO_FONT *_font;
 		ALLEGRO_EVENT_QUEUE *_eventQueue;
 		ALLEGRO_TIMER *_timer;
+		ALLEGRO_BITMAP *_background;
 		ALLEGRO_EVENT _event;
 
 		std::map<int, Key> _keyMatch;

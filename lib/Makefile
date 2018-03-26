@@ -23,7 +23,7 @@ OBJALLEGRO	=	$(SRCALLEGRO:.cpp=.o)
 CPPFLAGS	=	-I ./includes/
 CPPFLAGS	+=	-W -Wall -Wextra -fPIC
 
-LDFLAGS		=	-shared -lncurses -lsfml-graphics -lallegro -lallegro_primitives -lallegro_font -lallegro_ttf
+LDFLAGS		=	-shared -lncurses -lsfml-graphics -lallegro -lallegro_primitives -lallegro_font -lallegro_ttf -lallegro_image
 
 all:		$(SFML) $(NCURSES) $(ALLEGRO)
 
