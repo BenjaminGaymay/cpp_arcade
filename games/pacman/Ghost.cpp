@@ -91,37 +91,28 @@ void arcade::Ghost::move(std::vector<std::string> map)
 	pos.y = _pos.first;
 	pos.x = _pos.second;
 	nextPos = path.findPath(pos, _pacmanPos);
+	if (nextPos.size() < 2)
+		return ;
+
 	std::reverse(nextPos.begin(), nextPos.end());
 
-	// if (canMove(map) == false)
-	// 	return ;
 	map[_pos.first][_pos.second] = _prevChar;
 
-	// auto side = choseSide(map);
-
-	// _y = side.first;
-	// _x = side.second;
 	_y = nextPos[1].y;
 	_x = nextPos[1].x;
 	_pos.first = _y;
 	_pos.second = _x;
-	// if (_pos.first == 9 and _pos.second == 10) {
-	// 	_y = -1;
-	// 	_x = 0;
-	// }
 
-	// _pos.first += _y;
-	// if (_pos.first >= static_cast<int>(map.size()))
-	// 	_pos.first = 0;
-	// else if (_pos.first == 0)
+	if (_pos.first >= static_cast<int>(map.size()))
+		_pos.first = 0;
+	else if (_pos.first == 0)
 
-	// 	_pos.first = map.size() - 1;
+		_pos.first = map.size() - 1;
 
-	// _pos.second += _x;
-	// if (_pos.second < 0)
-	// 	_pos.second = map[_pos.first].size() - 1;
-	// else if (_pos.second > static_cast<int>(map[_pos.first].size()) - 1)
-	// 	_pos.second = 0;
+	if (_pos.second < 0)
+		_pos.second = map[_pos.first].size() - 1;
+	else if (_pos.second > static_cast<int>(map[_pos.first].size()) - 1)
+		_pos.second = 0;
 
-	// _prevChar = map[_pos.first][_pos.second];
+	_prevChar = map[_pos.first][_pos.second];
 }
