@@ -85,13 +85,14 @@ void arcade::Ghost::setPacMan(const std::pair<int, int> &pos)
 void arcade::Ghost::move(std::vector<std::string> map)
 {
 	std::vector<Pos> nextPos;
-	Path path(map);
+	Astar path(map);
 	Pos pos;
 
 	pos.y = _pos.first;
 	pos.x = _pos.second;
 	//VECTOR OF POS TO THE PACMAN
 	nextPos = path.findPath(pos, _pacmanPos);
+
 	if (canMove(map) == false)
 		return ;
 	map[_pos.first][_pos.second] = _prevChar;
@@ -100,6 +101,9 @@ void arcade::Ghost::move(std::vector<std::string> map)
 
 	_y = side.first;
 	_x = side.second;
+
+	// _y = nextPos[0].y;
+	// _x = nextPos[0].x;
 
 	if (_pos.first == 9 and _pos.second == 10) {
 		_y = -1;
@@ -110,6 +114,7 @@ void arcade::Ghost::move(std::vector<std::string> map)
 	if (_pos.first >= static_cast<int>(map.size()))
 		_pos.first = 0;
 	else if (_pos.first == 0)
+
 		_pos.first = map.size() - 1;
 
 	_pos.second += _x;

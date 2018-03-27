@@ -11,7 +11,7 @@
 #include <vector>
 #include <map>
 #include <ncurses.h>
-#include "Path.hpp"
+#include "Astar.hpp"
 
 namespace arcade {
 	enum GhostState {

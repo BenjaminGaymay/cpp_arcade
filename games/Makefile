@@ -21,7 +21,7 @@ SRCSNAKE	=	./snake/Snake.cpp
 
 SRCPACMAN	=	./pacman/Pacman.cpp	\
 			./pacman/Ghost.cpp	\
-			./pacman/Path.cpp
+			./pacman/Astar.cpp
 
 OBJNIBBLER	=	$(SRCNIBBLER:.cpp=.o)
 
