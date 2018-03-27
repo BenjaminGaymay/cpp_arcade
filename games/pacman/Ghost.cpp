@@ -15,7 +15,7 @@ arcade::Ghost::Ghost (const char &c, const std::pair<int, int> &pos) :
 {
 }
 
-std::pair<int, int> arcade::Ghost::choseSide(std::vector<std::string> map)
+std::pair<int, int> arcade::Ghost::choseSide(std::vector<std::string> &map)
 {
 	std::vector<std::pair<int, int>> possibilities;
 
@@ -40,7 +40,7 @@ std::pair<int, int> arcade::Ghost::choseSide(std::vector<std::string> map)
 	return tmp;
 }
 
-bool arcade::Ghost::canMove(std::vector<std::string> map)
+bool arcade::Ghost::canMove(std::vector<std::string> &map)
 {
 	if (_canMove)
 		return true;
@@ -82,31 +82,59 @@ void arcade::Ghost::setPacMan(const std::pair<int, int> &pos)
 	_pacmanPos.x = pos.second;
 }
 
-void arcade::Ghost::move(std::vector<std::string> map)
+void arcade::Ghost::moveAlive(std::vector<std::string> &map, Pos &pos)
 {
 	std::vector<Pos> nextPos;
 	Astar path(map);
-	Pos pos;
 
-	pos.y = _pos.first;
-	pos.x = _pos.second;
 	nextPos = path.findPath(pos, _pacmanPos);
 	if (nextPos.size() < 2)
 		return ;
 
 	std::reverse(nextPos.begin(), nextPos.end());
 
-	map[_pos.first][_pos.second] = _prevChar;
+	_y = nextPos[1].y - _pos.first;
+	_x = nextPos[1].x - _pos.second;
+	_pos.first = nextPos[1].y;
+	_pos.second = nextPos[1].x;
+}
 
-	_y = nextPos[1].y;
-	_x = nextPos[1].x;
-	_pos.first = _y;
-	_pos.second = _x;
+void arcade::Ghost::moveEatable(std::vector<std::string> &map)
+{
+	auto side = choseSide(map);
+
+	_pos.first += side.first;
+	_pos.second += side.second;
+	_x = side.second;
+	_y = side.first;
+}
+
+void arcade::Ghost::moveDead(std::vector<std::string> &map, Pos &pos)
+{
+	map = map;
+	pos = pos;
+}
+
+void arcade::Ghost::move(std::vector<std::string> &map)
+{
+	Pos pos;
+	pos.y = _pos.first;
+	pos.x = _pos.second;
+
+	switch (_state) {
+		case EATABLE:
+			moveEatable(map); break;
+		case ALIVE:
+			moveAlive(map, pos); break;
+		case DEAD:
+			moveDead(map, pos); break;
+	}
+	map[pos.y][pos.x] = _prevChar;
+
 
 	if (_pos.first >= static_cast<int>(map.size()))
 		_pos.first = 0;
 	else if (_pos.first == 0)
-
 		_pos.first = map.size() - 1;
 
 	if (_pos.second < 0)

@@ -23,9 +23,12 @@ namespace arcade {
 	class Ghost {
 		public:
 			Ghost (const char &, const std::pair<int, int> &);
-			bool canMove(std::vector<std::string>);
-			void move(std::vector<std::string>);
-			std::pair<int, int> choseSide(std::vector<std::string>);
+			bool canMove(std::vector<std::string> &);
+			void move(std::vector<std::string> &);
+			void moveEatable(std::vector<std::string> &);
+			void moveAlive(std::vector<std::string> &, Pos &);
+			void moveDead(std::vector<std::string> &, Pos &);
+			std::pair<int, int> choseSide(std::vector<std::string> &);
 			void setPacMan(const Pos &);
 			void setPacMan(const std::pair<int, int> &);
 
