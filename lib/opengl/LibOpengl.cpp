@@ -27,6 +27,9 @@ N_LibOpengl::LibOpengl() :
 	_keyMatch[sf::Keyboard::Key::P] = PAUSE;
 	_keyMatch[sf::Keyboard::Key::R] = RESET;
 
+	_mapHeight = 30;
+	_mapWidth = 30;
+
 	_text.setFont(_font);
 	_sx = 30;
 	_sy = _sx;
@@ -55,53 +58,47 @@ void N_LibOpengl::openWindow()
 		throw std::runtime_error("Error: openGl: can't load font.");
 }
 
-void N_LibOpengl::drawCube(float x, float y, const float size, const std::vector<int> &rgb)
+void N_LibOpengl::drawCube(float x, float y, const GLfloat size, const std::vector<int> &rgb)
 {
 	x = _mapWidth / 2 - x - size;
 	y = _mapHeight / 2 - y - size;
 
 	glTranslatef(-x, -y, size + 0.1);
-	glBegin(GL_QUADS);
 
+	glBegin(GL_QUADS);
 	glColor3ub(rgb[0], rgb[1], rgb[2]);
 
-	// FRONT
-	glVertex3f(-size,-size,size);
-	glVertex3f(size,-size,size);
-	glVertex3f(size,size,size);
-	glVertex3f(-size,size,size);
-
 	// BACK
-	glVertex3f(-size,-size,-size);
-	glVertex3f(-size,size,-size);
-	glVertex3f(size,size,-size);
-	glVertex3f(size,-size,-size);
-
-	// LEFT
-	glVertex3f(-size,-size,size);
-	glVertex3f(-size,size,size);
-	glVertex3f(-size,size,-size);
-	glVertex3f(-size,-size,-size);
+	glVertex3f(size, -size, size);
+	glVertex3f(size, size, size);
+	glVertex3f(-size, size, size);
+	glVertex3f(-size, -size, size);
 
 	// RIGHT
-	glVertex3f(size,-size,-size);
-	glVertex3f(size,size,-size);
-	glVertex3f(size,size,size);
-	glVertex3f(size,-size,size);
+	glVertex3f(size, -size, -size);
+	glVertex3f(size, size, -size);
+	glVertex3f(size, size, size);
+	glVertex3f(size, -size, size);
+
+	// LEFT
+	glVertex3f(-size, -size, size);
+	glVertex3f(-size, size, size);
+	glVertex3f(-size, size, -size);
+	glVertex3f(-size, -size, -size);
 
 	// TOP
-	glVertex3f(-size,size,size);
-	glVertex3f(size,size,size);
-	glVertex3f(size,size,-size);
-	glVertex3f(-size,size,-size);
+	glVertex3f(size, size, size);
+	glVertex3f(size, size, -size);
+	glVertex3f(-size, size, -size);
+	glVertex3f(-size, size, size);
 
-	// BOTTON
-	glVertex3f(-size,-size,size);
-	glVertex3f(-size,-size,-size);
-	glVertex3f(size,-size,-size);
-	glVertex3f(size,-size,size);
+	// BOTTOM
+	glVertex3f(size, -size, -size);
+	glVertex3f(size, -size, size);
+	glVertex3f(-size, -size, size);
+	glVertex3f(-size, -size, -size);
 
-    	glEnd();
+	glEnd();
 	glTranslatef(x, y, -(size + 0.1));
 }
 
@@ -120,23 +117,25 @@ void N_LibOpengl::closeWindow()
 
 void N_LibOpengl::clearWindow()
 {
-	_window.clear(sf::Color::Black);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
     	glLoadIdentity();
+	_window.clear(sf::Color::Black);
 }
 
 void N_LibOpengl::refreshWindow()
 {
-	_window.display();
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(70,(double)getWidth()/getHeight(),1,1000);
 	glEnable(GL_DEPTH_TEST);
-	gluLookAt(0, _mapHeight / 4, _mapHeight, 0, 0, 0, 0, 0, 1);
+	glDepthFunc(GL_LESS);
+	gluPerspective(70, static_cast<double>(getWidth()) / static_cast<double>(getHeight()), 1, 1000);
+	gluLookAt(0, _mapHeight / 4, _mapWidth, 0, 0, 0, 0, 0, 1);
 	glRotatef(90, 0, 0, 1);
 	glRotatef(-20, 0, 1, 0);
 	glFlush();
+	_window.display();
+	_window.resetGLStates();
 }
 
 int N_LibOpengl::getWidth()
@@ -178,57 +177,33 @@ arcade::Color N_LibOpengl::setColor(char c)
 {
 	switch (c) {
 		case 'R':
+		case 'o':
 			return arcade::BG_RED;
 		case 'B':
+		case '#':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
 			return arcade::BG_BLUE;
 		case 'G':
 			return arcade::BG_GREEN;
 		case 'W':
+		case '.':
 			return arcade::BG_WHITE;
 		case 'C':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
 			return arcade::BG_CYAN;
 		case 'M':
 			return arcade::BG_MAGENTA;
 		case 'Y':
 			return arcade::BG_YELLOW;
-		case '#':
-			return arcade::BG_BLUE;
-		case 'o':
-			return arcade::BG_RED;
-		case '.':
-			return arcade::BG_WHITE;
-		case '1':
-			return arcade::BG_BLUE;
-		case '2':
-			return arcade::BG_BLUE;
-		case '3':
-			return arcade::BG_BLUE;
-		case '4':
-			return arcade::BG_BLUE;
-		case '5':
-			return arcade::BG_CYAN;
-		case '6':
-			return arcade::BG_CYAN;
-		case '7':
-			return arcade::BG_CYAN;
-		case '8':
-			return arcade::BG_CYAN;
 		default:
 			return arcade::BG_BLACK;
 	}
-}
-
-void N_LibOpengl::drawArena()
-{
-	glBegin(GL_QUADS);
-
-	glColor3ub(50,50,50);
-	glVertex3d((_mapHeight + 2) / 2, -(_mapWidth + 2) / 2, 0);
-	glVertex3d((_mapHeight + 2) / 2, (_mapWidth + 2) / 2, 0);
-	glVertex3d(-(_mapHeight + 2) / 2, (_mapWidth + 2) / 2, 0);
-	glVertex3d(-(_mapHeight + 2) / 2, -(_mapWidth + 2) / 2, 0);
-
-    	glEnd();
 }
 
 void N_LibOpengl::drawMap(const std::vector<std::string> &map)
