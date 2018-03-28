@@ -50,6 +50,7 @@ namespace arcade {
 		void showList();
 		void loopConsole();
 		void changeLibs(const Type &);
+		void setHighScore(const std::size_t &);
 
 	private:
 		void *_handle;

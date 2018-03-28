@@ -34,6 +34,8 @@ namespace arcade {
 		void openWindow();
 		int getHeight();
 		int getWidth();
+		int getScaleHeight();
+		int getScaleWidth();
 		bool isOpen();
 
 	private:

@@ -79,10 +79,20 @@ void N_LibAllegro::closeWindow()
 
 int N_LibAllegro::getHeight()
 {
-	return _height / _sy;
+	return _height;
 }
 
 int N_LibAllegro::getWidth()
+{
+	return _width;
+}
+
+int N_LibAllegro::getScaleHeight()
+{
+	return _height / _sy;
+}
+
+int N_LibAllegro::getScaleWidth()
 {
 	return _width / _sx;
 }
@@ -122,7 +132,7 @@ void N_LibAllegro::drawMap(const std::vector<std::string> &map)
 	for (unsigned i = 0 ; i < map.size() ; i++) {
 		for (unsigned j = 0 ; j < map[i].size() ; j++) {
 			color = setColor(map[i][j]);
-			drawSquare(getWidth() / 2 - (map[i].size() / 2 - 1) + j, getHeight() / 2 - (map.size() / 2) + i, color);
+			drawSquare(getScaleWidth() / 2 - (map[i].size() / 2 - 1) + j, getScaleHeight() / 2 - (map.size() / 2) + i, color);
 		}
 	}
 }

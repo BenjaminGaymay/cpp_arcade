@@ -14,6 +14,7 @@ void arcade::Pacman::setKey(const Key &key)
 
 arcade::Pacman::Pacman()
 {
+	_gameName = "pacman";
 	initMap();
 };
 
@@ -229,6 +230,14 @@ void arcade::Pacman::start(std::unique_ptr<arcade::IGraphics> &lib)
 	}
 	getNewSide();
 	lib->refreshWindow();
+}
+
+void arcade::Pacman::setHighScore(const std::size_t &score)
+{
+	std::string fileName = "./ressources/saves/."+_gameName+".csv";
+	std::ofstream file(fileName);
+
+	file << "coucou";
 }
 
 extern "C" std::unique_ptr<arcade::IGame> launch()

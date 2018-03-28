@@ -150,10 +150,20 @@ void N_LibSfml::refreshWindow()
 
 int N_LibSfml::getWidth()
 {
-	return _width / _sx;
+	return _width;
 }
 
 int N_LibSfml::getHeight()
+{
+	return _height;
+}
+
+int N_LibSfml::getScaleWidth()
+{
+	return _width / _sx;
+}
+
+int N_LibSfml::getScaleHeight()
 {
 	return _height / _sy;
 }
@@ -211,7 +221,7 @@ void N_LibSfml::drawMap(const std::vector<std::string> &map)
 			color = setColor(map[i][j]);
 			if (i + 1 < map.size() and color == arcade::BRICK and setColor(map[i + 1][j]) == arcade::BRICK)
 				color = arcade::BRICK_HEAD;
-			drawSquare(getWidth() / 2 - (map[i].size() / 2 - 1) + j, getHeight() / 2 - (map.size() / 2) + i, color);
+			drawSquare(getScaleWidth() / 2 - (map[i].size() / 2 - 1) + j, getScaleHeight() / 2 - (map.size() / 2) + i, color);
 		}
 	}
 }

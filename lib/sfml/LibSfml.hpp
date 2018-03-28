@@ -28,6 +28,8 @@ namespace arcade {
 		void openWindow();
 		int getWidth();
 		int getHeight();
+		int getScaleWidth();
+		int getScaleHeight();
 		bool isOpen();
 		void loadTexture(const std::string &);
 

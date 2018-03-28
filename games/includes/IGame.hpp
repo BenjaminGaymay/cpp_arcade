@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 #include <map>
+#include <fstream>
 #include "IGraphics.hpp"
 
 namespace arcade {
@@ -19,5 +20,6 @@ namespace arcade {
 		~IGame() {};
 		virtual void start(std::unique_ptr<arcade::IGraphics> &) = 0;
 		virtual void setKey(const Key &) = 0;
+		// virtual void setHighScore(const std::size_t &) = 0;
 	};
 }

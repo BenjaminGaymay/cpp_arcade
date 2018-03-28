@@ -38,8 +38,10 @@ namespace arcade {
 			void manageSuperMod(std::pair<int, int> &);
 			std::vector<std::string> &getMap() { return _map; }
 			void refreshPCPos();
+			void setHighScore(const std::size_t &);
 
 		private:
+			std::string _gameName;
 			std::vector<std::string> _map;
 			int _x;
 			int _y;

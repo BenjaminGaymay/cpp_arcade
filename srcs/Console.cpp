@@ -70,7 +70,6 @@ void N_Console::openLib(const Type &type)
 	std::string lib = type == LIBS ? _libName : _gameName;
 	char *err;
 
-	std::cout << "try lib.so : " << lib << std::endl;
 	_handle = dlopen(lib.c_str(), RTLD_LAZY);
 	err = dlerror();
 	if (err)
