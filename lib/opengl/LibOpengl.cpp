@@ -60,6 +60,7 @@ void N_LibOpengl::openWindow()
 
 void N_LibOpengl::drawCube(float x, float y, const GLfloat size, const std::vector<int> &rgb)
 {
+	glEnable(GL_DEPTH_TEST);
 	x = _mapWidth / 2 - x - size;
 	y = _mapHeight / 2 - y - size;
 
@@ -127,7 +128,6 @@ void N_LibOpengl::refreshWindow()
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	gluPerspective(70, static_cast<double>(getWidth()) / static_cast<double>(getHeight()), 1, 1000);
 	gluLookAt(0, _mapHeight / 4, _mapWidth, 0, 0, 0, 0, 0, 1);
@@ -209,6 +209,7 @@ arcade::Color N_LibOpengl::setColor(char c)
 void N_LibOpengl::drawMap(const std::vector<std::string> &map)
 {
 	Color color;
+	unsigned lineSize;
 
 	_mapWidth = 0;
 	_mapHeight = map.size();
@@ -218,7 +219,12 @@ void N_LibOpengl::drawMap(const std::vector<std::string> &map)
 	}
 
 	for (unsigned i = 0 ; i < map.size() ; i++) {
-		for (unsigned j = 0 ; j < map[i].size() ; j++) {
+		lineSize = map[i].size();
+		for (unsigned j = map[i].size() - 1 ; j >= (lineSize - 1) / 2 ; j--) {
+			color = setColor(map[i][j]);
+			drawSquare(i, j, color);
+		}
+		for (unsigned j = 0 ; j < (lineSize - 1) / 2 ; j++) {
 			color = setColor(map[i][j]);
 			drawSquare(i, j, color);
 		}
