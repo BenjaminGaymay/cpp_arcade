@@ -57,9 +57,9 @@ void arcade::Pacman::initMap()
 	// _ghostPos.push_back(new Ghost('-', {9, 9}));
 	// _ghostPos.push_back(new Ghost('-', {9, 8}));
 	_ghostPos.emplace_back(new Ghost('-', {9, 12}));
-	// _ghostPos.emplace_back(new Ghost('-', {9, 11}));
-	// _ghostPos.emplace_back(new Ghost('-', {9, 9}));
-	// _ghostPos.emplace_back(new Ghost('-', {9, 8}));
+	_ghostPos.emplace_back(new Ghost('-', {9, 11}));
+	_ghostPos.emplace_back(new Ghost('-', {9, 9}));
+	_ghostPos.emplace_back(new Ghost('-', {9, 8}));
 	_pause = false;
 	refreshPCPos();
 }
