@@ -1,6 +1,6 @@
 NAME	=	arcade
 
-CC	=	g++ -std=c++17
+CC	=	g++
 
 RM	=	rm -f
 
