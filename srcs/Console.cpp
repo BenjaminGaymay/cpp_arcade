@@ -68,16 +68,19 @@ std::string N_Console::epureName(const std::string &name)
 void N_Console::openLib(const Type &type)
 {
 	std::string lib = type == LIBS ? _libName : _gameName;
+	char *err;
 
+	std::cout << "try lib.so : " << lib << std::endl;
 	_handle = dlopen(lib.c_str(), RTLD_LAZY);
-	char *err = dlerror();
+	err = dlerror();
 	if (err)
 		throw std::runtime_error("Error: lib: " + std::string(err));
 	if (type == LIBS)
 		_getLib = reinterpret_cast<std::unique_ptr<IGraphics>(*)()>(dlsym(_handle, "launch"));
 	else
 		_getGame = reinterpret_cast<std::unique_ptr<IGame>(*)()>(dlsym(_handle, "launch"));
-	if ((err = dlerror()))
+	err = dlerror();
+	if (err)
 		throw std::runtime_error("Error: lib: " + std::string(err));
 }
 
@@ -85,23 +88,12 @@ void N_Console::drawBox()
 {
 	for (int i = 0; i <= 40; i++) {
 		_lib->drawSquare(i, 0, arcade::BG_RED);
-		_lib->drawSquare(0, i, arcade::BG_RED);
-		_lib->drawSquare(i, 40, arcade::BG_RED);
-		_lib->drawSquare(40, i, arcade::BG_RED);
+		_lib->drawSquare(i, 30, arcade::BG_RED);
 	}
-
-	// for (int i = 0; i < _lib->getWidth(); i++)
-	// 	_lib->drawSquare(i, 0, arcade::BG_RED);
-
-	// for (int i = 0; i < _lib->getWidth(); i++)
-	// 	_lib->drawSquare(i, _lib->getHeight(), arcade::BG_RED);
-
-	// for (int i = 0; i < _lib->getHeight(); i++)
-	// 	_lib->drawSquare(0, i, arcade::BG_RED);
-
-	// for (int i = 0; i < _lib->getHeight(); i++)
-	// 	_lib->drawSquare(_lib->getWidth()/2, i, arcade::BG_RED);
-	// _lib->drawText("salut", 10, 10, arcade::BG_RED);
+	for (int i = 0; i <= 30; i++) {
+		_lib->drawSquare(40, i, arcade::BG_RED);
+		_lib->drawSquare(0, i, arcade::BG_RED);
+	}
 }
 
 void N_Console::drawListLibs()
@@ -116,7 +108,7 @@ void N_Console::drawListLibs()
 			color = GREEN;
 		else
 			color = BLUE;
-		_lib->drawText(c,20 - c.size() / 2 ,i, color);
+		_lib->drawText(c, 10,i, color);
 		i+=2;
 		j++;
 	}
@@ -124,7 +116,7 @@ void N_Console::drawListLibs()
 
 void N_Console::drawListGames()
 {
-	int i = 16;
+	int i = 10;
 	std::size_t j = _listLibs.size();
 	Color color;
 
@@ -134,7 +126,7 @@ void N_Console::drawListGames()
 			color = GREEN;
 		else
 			color = BLUE;
-		_lib->drawText(c,20 - c.size() / 2,i, color);
+		_lib->drawText(c,30,i, color);
 		i+=2;
 		j++;
 	}
@@ -145,13 +137,20 @@ void N_Console::enterAction()
 	if (_index < _listLibs.size()) {
 		_lib->closeWindow();
 		_libName = _listLibs[_index];
-		openLib(LIBS);
+		try {
+			openLib(LIBS);
+		} catch (std::runtime_error &e) {
+			throw e;
+		}
 		_lib = _getLib();
 		_lib->openWindow();
-	}
-	else{
+	} else {
 		_gameName = _listGames[_currGame];
-		openLib(GAME);
+		try {
+			openLib(GAME);
+		} catch (std::runtime_error &e) {
+			throw e;
+		}
 		changeLibs(GAME);
 		_state = IN_GAME;
 	}
@@ -177,7 +176,7 @@ int N_Console::writeMenu()
 	drawListLibs();
 	drawListGames();
 	// _lib->drawSquare(0, 0, BG_RED);
-	_lib->drawText("PORCHERET FDP", 20-(13/2), 5, GREEN);
+	_lib->drawText("PORCHERT BIG BOSS", 20-(13/2), 5, GREEN);
 	switch (_key) {
 		case ENTER:
 			enterAction();
@@ -239,7 +238,12 @@ int N_Console::launch()
 	} catch (std::runtime_error &e) {
 		return std::cerr << e.what() << std::endl, Macro::ERROR;
 	}
-	loopConsole();
+	try {
+		loopConsole();
+	} catch (std::runtime_error &e) {
+		std::cerr << e.what() << std::endl;
+		return Macro::ERROR;
+	}
 	return Macro::SUCCESS;
 }
 
