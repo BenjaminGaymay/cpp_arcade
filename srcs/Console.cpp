@@ -194,8 +194,41 @@ int N_Console::writeMenu()
 	return Macro::SUCCESS;
 }
 
+void N_Console::setScore(const int score)
+{
+	auto game = epureName(_gameName);
+
+	std::ifstream readScore("scoreboard/" + game + ".score");
+	std::string line;
+	std::vector<std::string> split;
+
+	if (! readScore)
+		return ;
+
+	while (readScore.eof()) {
+		getline(readScore, line);
+		if (! line.empty()) {
+			split = ManageStrings::splitString(line, ':');
+			// parsing du fichier de score
+		}
+	}
+	readScore.close();
+
+	std::ofstream writeScore("scoreboard/" + game + ".score");
+	if (! writeScore)
+		return ;
+
+	writeScore << "PSEUDO:" << score << std::endl;	// a priori on aura plutot une liste de scores récupéré dans le readScore
+							// on aura ajouté le nouveau score avec le pseudo, puis trié
+							// donc on ecrirait les lignes du tableau dans l'odre dans le fichier
+	writeScore.close();
+}
+
 void N_Console::loopConsole()
 {
+	int score = 0;
+	int highscore = 0;
+
 	_lib->openWindow();
 	while (_lib->isOpen()) {
 		_lib->clearWindow();
@@ -204,10 +237,14 @@ void N_Console::loopConsole()
 				break;
 		}
 		else {
-			_game->start(_lib);
+			score = _game->start(_lib);
+			highscore = (score > highscore ? score : highscore);
 			_game->setKey(_key);
-			if (_key == ESC)
+			if (_key == ESC) {
+				setScore(highscore);
+				highscore = 0;
 				_state = IN_MENU;
+			}
 		}
 		_lib->refreshWindow();
 		_key = _lib->getKey();

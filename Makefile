@@ -4,7 +4,8 @@ CC	=	g++
 
 RM	=	rm -f
 
-SRCS	=	./srcs/Console.cpp	\
+SRCS	=	./srcs/Console.cpp		\
+		./srcs/ManageStrings.cpp	\
 		./srcs/main.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)

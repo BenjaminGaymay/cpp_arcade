@@ -14,6 +14,7 @@
 #include "IGraphics.hpp"
 #include "IGame.hpp"
 #include "Macro.hpp"
+#include "ManageStrings.hpp"
 
 namespace arcade {
 	class Console {
@@ -51,6 +52,7 @@ namespace arcade {
 		void loopConsole();
 		void changeLibs(const Type &);
 		void setHighScore(const std::size_t &);
+		void setScore(const int);
 
 	private:
 		void *_handle;

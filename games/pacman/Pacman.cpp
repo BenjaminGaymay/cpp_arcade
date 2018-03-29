@@ -53,10 +53,6 @@ void arcade::Pacman::initMap()
 	_map.push_back("#####################");
 
 	_pacmanPos = {7, 10};
-	// _ghostPos.push_back(new Ghost('-', {9, 12}));
-	// _ghostPos.push_back(new Ghost('-', {9, 11}));
-	// _ghostPos.push_back(new Ghost('-', {9, 9}));
-	// _ghostPos.push_back(new Ghost('-', {9, 8}));
 	_ghostPos.emplace_back(new Ghost('-', {9, 12}));
 	_ghostPos.emplace_back(new Ghost('-', {9, 11}));
 	_ghostPos.emplace_back(new Ghost('-', {9, 9}));
@@ -204,14 +200,14 @@ bool arcade::Pacman::doLoop()
 	return true;
 }
 
-void arcade::Pacman::start(std::unique_ptr<arcade::IGraphics> &lib)
+int arcade::Pacman::start(std::unique_ptr<arcade::IGraphics> &lib)
 {
 	lib->clearWindow();
 	fillMap();
 	lib->drawMap(_map);
 	clearMap();
 	refreshPCPos();
-	lib->drawText("Score : " + std::to_string(_score), 30, 10, BLUE);
+	lib->drawText("Score : " + std::to_string(_score), 10, 10, BLUE);
 	for (unsigned i = 0 ; i < _ghostPos.size() ; i++) {
 		std::string state;
 		switch (_ghostPos[i]->_state) {
@@ -222,7 +218,6 @@ void arcade::Pacman::start(std::unique_ptr<arcade::IGraphics> &lib)
 			case GhostState::DEAD:
 				state = "Dead"; break;
 		}
-		lib->drawText("State : " + state, 10, 10 + i * 2, BLUE);
 	}
 	if (doLoop() && !_pause) {
 		moveGhosts();
@@ -230,6 +225,7 @@ void arcade::Pacman::start(std::unique_ptr<arcade::IGraphics> &lib)
 	}
 	getNewSide();
 	lib->refreshWindow();
+	return _score;
 }
 
 void arcade::Pacman::setHighScore(const std::size_t &score)

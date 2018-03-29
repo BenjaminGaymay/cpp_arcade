@@ -21,7 +21,7 @@ namespace arcade {
 
 	class Pacman : public IGame {
 		public:
-			void start(std::unique_ptr<arcade::IGraphics> &);
+			int start(std::unique_ptr<arcade::IGraphics> &);
 			void setKey(const Key &);
 		public:
 			Pacman();

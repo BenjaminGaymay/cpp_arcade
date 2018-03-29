@@ -17,7 +17,7 @@
 namespace arcade {
 	class Nibbler : public IGame {
 		public:
-			void start(std::unique_ptr<arcade::IGraphics> &);
+			int start(std::unique_ptr<arcade::IGraphics> &);
 			void setKey(const Key &);
 		public:
 			Nibbler();
@@ -43,5 +43,6 @@ namespace arcade {
 			std::chrono::time_point<std::chrono::system_clock> _previousLoop;
 			Key _key;
 			bool _pause;
+			int _score;
 	};
 }

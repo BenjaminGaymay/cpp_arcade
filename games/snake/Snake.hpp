@@ -17,7 +17,7 @@
 namespace arcade {
 	class Snake : public IGame {
 		public:
-			void start(std::unique_ptr<arcade::IGraphics> &);
+			int start(std::unique_ptr<arcade::IGraphics> &);
 			void setKey(const Key &);
 		public:
 			Snake();

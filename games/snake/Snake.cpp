@@ -177,17 +177,18 @@ bool arcade::Snake::doLoop()
 	return true;
 }
 
-void arcade::Snake::start(std::unique_ptr<arcade::IGraphics> &lib)
+int arcade::Snake::start(std::unique_ptr<arcade::IGraphics> &lib)
 {
 	lib->clearWindow();
 	fillMap();
 	lib->drawMap(_map);
 	clearMap();
-	lib->drawText("Score : " + std::to_string(_score), 30, 10, BLUE);
+	lib->drawText("Score : " + std::to_string(_score), 10, 10, BLUE);
 	if (doLoop() && !_pause)
 		moveSnake();
 	getNewSide();
 	lib->refreshWindow();
+	return _score;
 }
 
 extern "C" std::unique_ptr<arcade::IGame> launch()

@@ -24,6 +24,7 @@ void arcade::Nibbler::initMap()
 
 	_map.clear();
 	_nibblerPos.clear();
+	_score = 0;
 
 	 _map.push_back("###############################");
 	_map.push_back("#  o         o   o         o  #");
@@ -159,6 +160,8 @@ void arcade::Nibbler::moveNibbler()
 	checkCollision(pos);
 	if (checkApple(pos))
 		_nibblerPos.erase(_nibblerPos.end());
+	else
+		_score += 250;
 }
 
 void arcade::Nibbler::startChrono()
@@ -177,15 +180,17 @@ bool arcade::Nibbler::doLoop()
 	return true;
 }
 
-void arcade::Nibbler::start(std::unique_ptr<arcade::IGraphics> &lib)
+int arcade::Nibbler::start(std::unique_ptr<arcade::IGraphics> &lib)
 {
 	fillMap();
 	lib->drawMap(_map);
 	clearMap();
+	lib->drawText("Score : " + std::to_string(_score), 10, 10, BLUE);
 	if (doLoop() && !_pause)
 		moveNibbler();
 	getNewSide();
 	lib->refreshWindow();
+	return _score;
 }
 
 extern "C" std::unique_ptr<arcade::IGame> launch()
