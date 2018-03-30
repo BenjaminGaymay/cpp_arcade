@@ -40,14 +40,15 @@ namespace arcade {
 		const std::string &getLibName() const;
 		const std::string &getGameName() const;
 		std::string epureName(const std::string &);
-		void drawListGames();
-		void drawListLibs();
+		void drawListGames(int, int, int, int);
+		void drawListLibs(int, int, int, int);
 		void enterAction();
 		void upAction();
 		void downAction();
 		int writeMenu();
 		int launch();
-		void drawBox();
+		void drawBox(int, int, int);
+		void drawLibs();
 		void showList();
 		void loopConsole();
 		void changeLibs(const Type &);
