@@ -105,7 +105,7 @@ void N_LibAllegro::refreshWindow()
 {
 	if (_event.timer.source == _timer) {
 		al_flip_display();
-		al_draw_bitmap(_background, 0, 0, 0);
+		// al_draw_bitmap(_background, 0, 0, 0);
 	}
 }
 
