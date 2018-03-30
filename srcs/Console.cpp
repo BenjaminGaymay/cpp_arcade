@@ -25,6 +25,7 @@ N_Console::Console()
 	_state = IN_MENU;
 	_currGame = 0;
 	_index = 0;
+	_pseudo = "Bertrand";
 }
 
 N_Console::~Console()
@@ -200,27 +201,35 @@ void N_Console::setScore(const int score)
 
 	std::ifstream readScore("scoreboard/" + game + ".score");
 	std::string line;
+	std::string fileOutput;
 	std::vector<std::string> split;
+	std::vector<std::pair<int, std::string>> scoreboard;
 
 	if (! readScore)
 		return ;
 
-	while (readScore.eof()) {
-		getline(readScore, line);
+	while (std::getline(readScore, line)) {
 		if (! line.empty()) {
 			split = ManageStrings::splitString(line, ':');
-			// parsing du fichier de score
+			if (split.size() == 2)
+				scoreboard.push_back({std::atoi(split[1].c_str()), split[0]});
 		}
 	}
 	readScore.close();
+
+	scoreboard.push_back({score, _pseudo});
+	std::sort(scoreboard.begin(), scoreboard.end());
+	std::reverse(scoreboard.begin(), scoreboard.end());
+	if (scoreboard.size() > 10)
+		scoreboard.erase(scoreboard.begin() + 10, scoreboard.end());
 
 	std::ofstream writeScore("scoreboard/" + game + ".score");
 	if (! writeScore)
 		return ;
 
-	writeScore << "PSEUDO:" << score << std::endl;	// a priori on aura plutot une liste de scores récupéré dans le readScore
-							// on aura ajouté le nouveau score avec le pseudo, puis trié
-							// donc on ecrirait les lignes du tableau dans l'odre dans le fichier
+	for (auto &result : scoreboard)
+		writeScore << result.second << ':' << std::to_string(result.first) << std::endl;
+
 	writeScore.close();
 }
 

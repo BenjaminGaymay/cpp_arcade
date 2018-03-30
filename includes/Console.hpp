@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <iostream>
+#include <algorithm>
 #include <dlfcn.h>
 #include <dirent.h>
 #include "IGraphics.hpp"
@@ -74,5 +75,7 @@ namespace arcade {
 
 		State _state;
 		Key _key;
+
+		std::string _pseudo;
 	};
 }
