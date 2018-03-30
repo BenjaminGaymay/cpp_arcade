@@ -61,7 +61,6 @@ void N_LibAllegro::openWindow()
 	al_start_timer(_timer);
 	_width = info.x2 - info.x1;
 	_height = info.y2 - info.y1;
-	std::cout << _width << "\n" << _height << std::endl;
 	_window = al_create_display(_width, _height);
 	if ((_font = al_load_font("./ressources/Lato.ttf", 36, 0)) == nullptr ||
 		(_background = al_load_bitmap("./ressources/images/arcade_bg.jpg")) == nullptr)
