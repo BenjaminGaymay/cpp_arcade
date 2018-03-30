@@ -228,14 +228,6 @@ int arcade::Pacman::start(std::unique_ptr<arcade::IGraphics> &lib)
 	return _score;
 }
 
-void arcade::Pacman::setHighScore(const std::size_t &score)
-{
-	std::string fileName = "./ressources/saves/."+_gameName+".csv";
-	std::ofstream file(fileName);
-
-	file << "coucou";
-}
-
 extern "C" std::unique_ptr<arcade::IGame> launch()
 {
 	return std::make_unique<arcade::Pacman>();

@@ -20,6 +20,5 @@ namespace arcade {
 		~IGame() {};
 		virtual int start(std::unique_ptr<arcade::IGraphics> &) = 0;
 		virtual void setKey(const Key &) = 0;
-		// virtual void setHighScore(const std::size_t &) = 0;
 	};
 }
