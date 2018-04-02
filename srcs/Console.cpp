@@ -257,6 +257,9 @@ void N_Console::setScore(const int score)
 
 void N_Console::loopConsole()
 {
+	unsigned highscore = 0;
+	unsigned score;
+
 	_lib->openWindow();
 	while (_lib->isOpen()) {
 		_lib->clearWindow();
@@ -265,10 +268,14 @@ void N_Console::loopConsole()
 				break;
 		}
 		else {
-			_game->start(_lib);
+			score = _game->start(_lib);
+			if (score > highscore)
+				highscore = score;
 			_game->setKey(_key);
-			if (_key == ESC)
+			if (_key == ESC or _game->isWin()) {
 				_state = IN_MENU;
+				setScore(highscore);
+			}
 		}
 		_lib->refreshWindow();
 		_key = _lib->getKey();

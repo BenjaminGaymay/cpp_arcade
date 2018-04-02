@@ -28,6 +28,7 @@ namespace arcade {
 			void initMap();
 			void initColor();
 			void getNewSide();
+			bool isWin();
 			void movePacman();
 			void moveGhosts();
 			void fillMap();

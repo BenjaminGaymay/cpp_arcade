@@ -180,6 +180,19 @@ bool arcade::Nibbler::doLoop()
 	return true;
 }
 
+bool arcade::Nibbler::isWin()
+{
+	unsigned gum = 0;
+
+	for (unsigned y = 0 ; y < _map.size() ; y++) {
+		for (unsigned x = 0 ; x < _map[y].size() ; x++) {
+			if (_map[y][x] == 'o')
+				gum++;
+		}
+	}
+	return (gum == 0);
+}
+
 int arcade::Nibbler::start(std::unique_ptr<arcade::IGraphics> &lib)
 {
 	fillMap();

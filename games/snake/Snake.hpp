@@ -24,6 +24,7 @@ namespace arcade {
 			void initMap();
 			void initColor();
 			void getNewSide();
+			bool isWin();
 			void moveSnake();
 			void fillMap();
 			void clearMap();

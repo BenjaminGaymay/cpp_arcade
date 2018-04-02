@@ -177,6 +177,19 @@ bool arcade::Snake::doLoop()
 	return true;
 }
 
+bool arcade::Snake::isWin()
+{
+	unsigned emptyCase = 0;
+
+	for (unsigned y = 0 ; y < _map.size() ; y++) {
+		for (unsigned x = 0 ; x < _map[y].size() ; x++) {
+			if (_map[y][x] == ' ')
+				emptyCase++;
+		}
+	}
+	return (emptyCase - _snakePos.size() == 0);
+}
+
 int arcade::Snake::start(std::unique_ptr<arcade::IGraphics> &lib)
 {
 	lib->clearWindow();

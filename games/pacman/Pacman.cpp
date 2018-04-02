@@ -53,10 +53,10 @@ void arcade::Pacman::initMap()
 	_map.push_back("#####################");
 
 	_pacmanPos = {7, 10};
-	_ghostPos.emplace_back(new Ghost('-', {9, 12}));
-	_ghostPos.emplace_back(new Ghost('-', {9, 11}));
-	_ghostPos.emplace_back(new Ghost('-', {9, 9}));
-	_ghostPos.emplace_back(new Ghost('-', {9, 8}));
+	// _ghostPos.emplace_back(new Ghost('-', {9, 12}));
+	// _ghostPos.emplace_back(new Ghost('-', {9, 11}));
+	// _ghostPos.emplace_back(new Ghost('-', {9, 9}));
+	// _ghostPos.emplace_back(new Ghost('-', {9, 8}));
 	_pause = false;
 	refreshPCPos();
 }
@@ -198,6 +198,19 @@ bool arcade::Pacman::doLoop()
 
 	_previousLoop = std::chrono::system_clock::now();
 	return true;
+}
+
+bool arcade::Pacman::isWin()
+{
+	unsigned pacgum = 0;
+
+	for (unsigned y = 0 ; y < _map.size() ; y++) {
+		for (unsigned x = 0 ; x < _map[y].size() ; x++) {
+			if (_map[y][x] == '.' or _map[y][x] == 'M')
+				pacgum++;
+		}
+	}
+	return (pacgum == 0);
 }
 
 int arcade::Pacman::start(std::unique_ptr<arcade::IGraphics> &lib)
