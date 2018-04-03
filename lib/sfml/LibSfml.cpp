@@ -65,6 +65,7 @@ N_LibSfml::LibSfml() :
 	loadTexture("./ressources/images/body_left.png"); // 11
 	loadTexture("./ressources/images/body_top.png"); // 12
 	loadTexture("./ressources/images/body_down.png"); // 13
+
 	_textureMatch[GREEN] = _texture[0];
 
 	_textureMatch[BG_GREEN] = _texture[0];
@@ -125,15 +126,19 @@ void N_LibSfml::openWindow()
 void N_LibSfml::drawSquare(const int &x, const int &y, const Color &color)
 {
 	sf::RectangleShape rect;
+	sf::Sprite sprite;
 
 	rect.setSize(sf::Vector2f(_sx,_sy));
 	rect.setPosition(sf::Vector2f(x*_sx, y*_sy));
-	if (_textureMatch.find(color) != _textureMatch.end())
-		rect.setTexture(&_textureMatch[color]);
-	else
+	sprite.setPosition(sf::Vector2f(x*_sx, y*_sy));
+	if (_textureMatch.find(color) != _textureMatch.end()) {
+		sprite.setTexture(_textureMatch[color]);
+		_window.draw(sprite);
+	}
+	else {
 		rect.setFillColor(_colorsMatch[color]);
-
-	_window.draw(rect);
+		_window.draw(rect);
+	}
 }
 
 void N_LibSfml::closeWindow()
