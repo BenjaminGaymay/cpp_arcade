@@ -54,14 +54,19 @@ N_LibSfml::LibSfml() :
 	loadTexture("./ressources/images/brick_head.png"); // 3
 	loadTexture("./ressources/images/gum.png"); // 4
 	loadTexture("./ressources/images/wood.png"); // 5
-	loadTexture("./ressources/images/head_right.png"); // 6
-	loadTexture("./ressources/images/head_left.png"); // 7
-	loadTexture("./ressources/images/head_top.png"); // 8
-	loadTexture("./ressources/images/head_down.png"); // 9
+	loadTexture("./ressources/images/pacman_right.png"); // 6
+	loadTexture("./ressources/images/pacman_left.png"); // 7
+	loadTexture("./ressources/images/pacman_top.png"); // 8
+	loadTexture("./ressources/images/pacman_down.png"); // 9
 	loadTexture("./ressources/images/body_right.png"); // 10
 	loadTexture("./ressources/images/body_left.png"); // 11
 	loadTexture("./ressources/images/body_top.png"); // 12
 	loadTexture("./ressources/images/body_down.png"); // 13
+	loadTexture("./ressources/images/superpacman_right.png"); // 14
+	loadTexture("./ressources/images/superpacman_left.png"); // 15
+	loadTexture("./ressources/images/superpacman_top.png"); // 16
+	loadTexture("./ressources/images/superpacman_down.png"); // 17
+	loadTexture("./ressources/images/biggum.png"); // 18
 	// _textureMatch[GREEN] = _texture[0];
 
 	// _textureMatch[BG_GREEN] = _texture[0];
@@ -85,6 +90,13 @@ N_LibSfml::LibSfml() :
 	_textureMatch[BODY_LEFT] = _texture[11];
 	_textureMatch[BODY_TOP] = _texture[12];
 	_textureMatch[BODY_DOWN] = _texture[13];
+
+	_textureMatch[SHEAD_RIGHT] = _texture[14];
+	_textureMatch[SHEAD_LEFT] = _texture[15];
+	_textureMatch[SHEAD_TOP] = _texture[16];
+	_textureMatch[SHEAD_DOWN] = _texture[17];
+
+	_textureMatch[SUPERGUM] = _texture[18];
 }
 
 N_LibSfml::~LibSfml()
@@ -199,6 +211,14 @@ arcade::Color N_LibSfml::setColor(char c)
 			return arcade::HEAD_TOP;
 		case '4':
 			return arcade::HEAD_DOWN;
+		case 'a':
+			return arcade::SHEAD_RIGHT;
+		case 'b':
+			return arcade::SHEAD_LEFT;
+		case 'c':
+			return arcade::SHEAD_TOP;
+		case 'd':
+			return arcade::SHEAD_DOWN;
 		case '5':
 			return arcade::BODY_RIGHT;
 		case '6':
@@ -207,6 +227,8 @@ arcade::Color N_LibSfml::setColor(char c)
 			return arcade::BODY_TOP;
 		case '8':
 			return arcade::BODY_DOWN;
+		case 's':
+			return arcade::SUPERGUM;
 		default:
 			return arcade::BG_BLACK;
 	}

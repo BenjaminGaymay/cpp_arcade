@@ -45,7 +45,14 @@ namespace arcade {
 		BODY_RIGHT,
 		BODY_LEFT,
 		BODY_TOP,
-		BODY_DOWN
+		BODY_DOWN,
+
+		SHEAD_RIGHT,
+		SHEAD_LEFT,
+		SHEAD_TOP,
+		SHEAD_DOWN,
+
+		SUPERGUM
 	};
 
 	enum Key {

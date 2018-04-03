@@ -33,7 +33,7 @@ void arcade::Pacman::initMap()
 	_map.push_back("#####################");
 	_map.push_back("#.........#.........#");
   	_map.push_back("#.##.####.#.####.##.#");
-	_map.push_back("#...M...........M...#");
+	_map.push_back("#...s...........s...#");
 	_map.push_back("#.##.#.#######.#.##.#");
 	_map.push_back("#....#....#....#....#");
 	_map.push_back("####.####.#.####.####");
@@ -47,7 +47,7 @@ void arcade::Pacman::initMap()
 	_map.push_back("#.###.###.#.###.###.#");
 	_map.push_back("#..#.............#..#");
 	_map.push_back("##.#.#.#######.#.#.##");
-	_map.push_back("#.M..#....#....#.M..#");
+	_map.push_back("#.s..#....#....#.s..#");
 	_map.push_back("#.#######.#.#######.#");
 	_map.push_back("#...................#");
 	_map.push_back("#####################");
@@ -69,7 +69,14 @@ void arcade::Pacman::refreshPCPos()
 
 void arcade::Pacman::fillMap()
 {
-	_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'M' : 'Y');
+	if (_x == 1)
+		_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'a' : '1');
+	else if (_x == -1)
+		_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'b' : '2');
+	else if (_y == 1)
+		_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'd' : '4');
+	else
+		 _map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'c' : '3');
 
 	for (auto &ghost : _ghostPos) {
 		switch (ghost->_state) {
@@ -122,7 +129,7 @@ void arcade::Pacman::manageSuperMod(std::pair<int, int> &pos)
 				ghost->_state = (ghost->_state == GhostState::EATABLE ? GhostState::ALIVE : ghost->_state);
 		}
 	}
-	if (_map[pos.first][pos.second] == 'M') {
+	if (_map[pos.first][pos.second] == 's') {
 		_state = PacmanState::SUPER;
 		for (auto &ghost : _ghostPos)
 			ghost->_state = (ghost->_state == GhostState::ALIVE ? GhostState::EATABLE : ghost->_state);
