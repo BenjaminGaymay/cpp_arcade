@@ -20,7 +20,6 @@ This arcade console handles different graphics library
 
 
 ### Contact
-benoit.pingris@epitech.eu
-benjamin.gaymay@epitech.eu
-thomas.porcheret@epitech.eu (lewl)
-
+benoit.pingris@epitech.eu  
+benjamin.gaymay@epitech.eu  
+thomas.porcheret@epitech.eu
