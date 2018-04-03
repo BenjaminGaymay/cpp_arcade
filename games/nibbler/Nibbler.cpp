@@ -58,6 +58,7 @@ void arcade::Nibbler::initMap()
 	_map.push_back("#o        o         o        o#");
 	_map.push_back("###############################");
 
+	_nibblerPos.push_back({15, 13});
 	_nibblerPos.push_back({15, 12});
 	_nibblerPos.push_back({15, 11});
 	_nibblerPos.push_back({15, 10});

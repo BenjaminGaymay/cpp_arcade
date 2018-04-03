@@ -64,7 +64,10 @@ namespace arcade {
 		ENTER,
 		PAUSE,
 		RESET,
-		NONE
+		NONE,
+		SHOOT,
+		NEXT,
+		PREVIOUS
 	};
 	class IGraphics {
 	public:

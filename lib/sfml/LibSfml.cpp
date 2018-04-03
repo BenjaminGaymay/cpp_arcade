@@ -43,6 +43,9 @@ N_LibSfml::LibSfml() :
 	_keyMatch[sf::Keyboard::Key::Return] = ENTER;
 	_keyMatch[sf::Keyboard::Key::P] = PAUSE;
 	_keyMatch[sf::Keyboard::Key::R] = RESET;
+	_keyMatch[sf::Keyboard::Key::B] = PREVIOUS;
+	_keyMatch[sf::Keyboard::Key::N] = NEXT;
+	_keyMatch[sf::Keyboard::Key::S] = SHOOT;
 
 	_text.setFont(_font);
 	_sx = 30;
@@ -69,7 +72,9 @@ N_LibSfml::LibSfml() :
 	loadTexture("./ressources/images/biggum.png"); // 18
 	// _textureMatch[GREEN] = _texture[0];
 
-	// _textureMatch[BG_GREEN] = _texture[0];
+	_textureMatch[GREEN] = _texture[0];
+
+	_textureMatch[BG_GREEN] = _texture[0];
 	_textureMatch[BG_BLACK] = _texture[0];
 	_textureMatch[BG_WHITE] = _texture[1];
 	_textureMatch[BG_RED] = _texture[2];
@@ -134,15 +139,19 @@ void N_LibSfml::openWindow()
 void N_LibSfml::drawSquare(const int &x, const int &y, const Color &color)
 {
 	sf::RectangleShape rect;
+	sf::Sprite sprite;
 
 	rect.setSize(sf::Vector2f(_sx,_sy));
 	rect.setPosition(sf::Vector2f(x*_sx, y*_sy));
-	if (_textureMatch.find(color) != _textureMatch.end())
-		rect.setTexture(&_textureMatch[color]);
-	else
+	sprite.setPosition(sf::Vector2f(x*_sx, y*_sy));
+	if (_textureMatch.find(color) != _textureMatch.end()) {
+		sprite.setTexture(_textureMatch[color]);
+		_window.draw(sprite);
+	}
+	else {
 		rect.setFillColor(_colorsMatch[color]);
-
-	_window.draw(rect);
+		_window.draw(rect);
+	}
 }
 
 void N_LibSfml::closeWindow()
