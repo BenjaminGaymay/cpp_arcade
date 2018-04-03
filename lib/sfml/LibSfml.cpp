@@ -70,6 +70,11 @@ N_LibSfml::LibSfml() :
 	loadTexture("./ressources/images/superpacman_top.png"); // 16
 	loadTexture("./ressources/images/superpacman_down.png"); // 17
 	loadTexture("./ressources/images/biggum.png"); // 18
+	loadTexture("./ressources/images/ghost_green.png"); // 19
+	loadTexture("./ressources/images/ghost_pink.png"); // 20
+	loadTexture("./ressources/images/ghost_blue.png"); // 21
+	loadTexture("./ressources/images/ghost_red.png"); // 22
+	loadTexture("./ressources/images/ghost_dead.png"); // 23
 	// _textureMatch[GREEN] = _texture[0];
 
 	_textureMatch[GREEN] = _texture[0];
@@ -102,6 +107,11 @@ N_LibSfml::LibSfml() :
 	_textureMatch[SHEAD_DOWN] = _texture[17];
 
 	_textureMatch[SUPERGUM] = _texture[18];
+	_textureMatch[G_GREEN] = _texture[19];
+	_textureMatch[G_PINK] = _texture[20];
+	_textureMatch[G_BLUE] = _texture[21];
+	_textureMatch[G_RED] = _texture[22];
+	_textureMatch[G_DEAD] = _texture[23];
 }
 
 N_LibSfml::~LibSfml()
@@ -238,6 +248,16 @@ arcade::Color N_LibSfml::setColor(char c)
 			return arcade::BODY_DOWN;
 		case 's':
 			return arcade::SUPERGUM;
+		case 'e':
+			return arcade::G_GREEN;
+		case 'f':
+			return arcade::G_PINK;
+		case 'g':
+			return arcade::G_BLUE;
+		case 'h':
+			return arcade::G_RED;
+		case 'i':
+			return arcade::G_DEAD;
 		default:
 			return arcade::BG_BLACK;
 	}

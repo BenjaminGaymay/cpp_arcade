@@ -69,6 +69,8 @@ void arcade::Pacman::refreshPCPos()
 
 void arcade::Pacman::fillMap()
 {
+	char ghostColor = 'e';
+
 	if (_x == 1)
 		_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'a' : '1');
 	else if (_x == -1)
@@ -81,11 +83,11 @@ void arcade::Pacman::fillMap()
 	for (auto &ghost : _ghostPos) {
 		switch (ghost->_state) {
 			case GhostState::ALIVE:
-				_map[ghost->_pos.first][ghost->_pos.second] = 'G'; break;
+				_map[ghost->_pos.first][ghost->_pos.second] = ghostColor++; break;
 			case GhostState::EATABLE:
 				_map[ghost->_pos.first][ghost->_pos.second] = 'R'; break;
 			case GhostState::DEAD:
-				_map[ghost->_pos.first][ghost->_pos.second] = 'C'; break;
+				_map[ghost->_pos.first][ghost->_pos.second] = 'i'; break;
 		}
 	}
 }

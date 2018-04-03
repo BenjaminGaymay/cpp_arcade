@@ -52,7 +52,13 @@ namespace arcade {
 		SHEAD_TOP,
 		SHEAD_DOWN,
 
-		SUPERGUM
+		SUPERGUM,
+
+		G_GREEN,
+		G_PINK,
+		G_BLUE,
+		G_RED,
+		G_DEAD
 	};
 
 	enum Key {
