@@ -43,6 +43,9 @@ N_LibSfml::LibSfml() :
 	_keyMatch[sf::Keyboard::Key::Return] = ENTER;
 	_keyMatch[sf::Keyboard::Key::P] = PAUSE;
 	_keyMatch[sf::Keyboard::Key::R] = RESET;
+	_keyMatch[sf::Keyboard::Key::B] = PREVIOUS;
+	_keyMatch[sf::Keyboard::Key::N] = NEXT;
+	_keyMatch[sf::Keyboard::Key::S] = SHOOT;
 
 	_text.setFont(_font);
 	_sx = 30;
@@ -62,9 +65,9 @@ N_LibSfml::LibSfml() :
 	loadTexture("./ressources/images/body_left.png"); // 11
 	loadTexture("./ressources/images/body_top.png"); // 12
 	loadTexture("./ressources/images/body_down.png"); // 13
-	// _textureMatch[GREEN] = _texture[0];
+	_textureMatch[GREEN] = _texture[0];
 
-	// _textureMatch[BG_GREEN] = _texture[0];
+	_textureMatch[BG_GREEN] = _texture[0];
 	_textureMatch[BG_BLACK] = _texture[0];
 	_textureMatch[BG_WHITE] = _texture[1];
 	_textureMatch[BG_RED] = _texture[2];

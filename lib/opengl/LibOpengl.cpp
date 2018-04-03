@@ -26,6 +26,9 @@ N_LibOpengl::LibOpengl() :
 	_keyMatch[sf::Keyboard::Key::Return] = ENTER;
 	_keyMatch[sf::Keyboard::Key::P] = PAUSE;
 	_keyMatch[sf::Keyboard::Key::R] = RESET;
+	_keyMatch[sf::Keyboard::Key::B] = PREVIOUS;
+	_keyMatch[sf::Keyboard::Key::N] = NEXT;
+	_keyMatch[sf::Keyboard::Key::S] = SHOOT;
 
 	_mapHeight = 30;
 	_mapWidth = 30;
