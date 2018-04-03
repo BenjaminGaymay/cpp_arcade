@@ -63,6 +63,7 @@ public:
 	void showGrid();
 	bool isInList(const std::list<Node*> &, const Node &);
 	double heuristic(const Pos &, const Pos &);
+	void clearVector();
 	MapStr _map;
 	std::vector<Pos> _dirs = {{-1, 0},{0, -1},{1, 0},{0, 1}};
 	std::list<Node*> _openSet;

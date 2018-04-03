@@ -58,6 +58,16 @@ double Astar::heuristic(const Pos &p1, const Pos &p2)
 	return abs(p2.y - p1.y) + abs(p2.x + p1.x);
 }
 
+void Astar::clearVector()
+{
+	if (!_path.empty())
+		_path.clear();
+	if (!_openSet.empty())
+		_openSet.clear();
+	if (!_closedSet.empty())
+		_closedSet.clear();
+}
+
 std::vector<Pos> Astar::findPath(const Pos &start, const Pos &goal)
 {
 	Node *current = nullptr;
@@ -65,8 +75,7 @@ std::vector<Pos> Astar::findPath(const Pos &start, const Pos &goal)
 	Pos tmp;
 	int tempG;
 
-	if (!_path.empty())
-		_path.clear();
+	clearVector();
 	_openSet.push_back(&_grid[start.y][start.x]);
 	while (!_openSet.empty()) {
 		current = *_openSet.begin();
