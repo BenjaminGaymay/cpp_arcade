@@ -47,7 +47,7 @@ bool arcade::Ghost::canMove(std::vector<std::string> &map)
 
 	auto period = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::system_clock::now() - _lifeTime).count();
 
-	if (period > rand()  % 30000) {
+	if (period > rand()  % 60000) {
 		_canMove = true;
 		auto side = choseSide(map);
 
@@ -111,8 +111,24 @@ void arcade::Ghost::moveEatable(std::vector<std::string> &map)
 
 void arcade::Ghost::moveDead(std::vector<std::string> &map, Pos &pos)
 {
-	map = map;
-	pos = pos;
+	std::vector<Pos> nextPos;
+	Astar path(map);
+	auto house = Pos(10, 9);
+
+	if (pos == house) {
+		_state = ALIVE;
+		return ;
+	}
+	nextPos = path.findPath(pos, house);
+	if (nextPos.size() < 2)
+		return ;
+
+	std::reverse(nextPos.begin(), nextPos.end());
+
+	_y = nextPos[1].y - _pos.first;
+	_x = nextPos[1].x - _pos.second;
+	_pos.first = nextPos[1].y;
+	_pos.second = nextPos[1].x;
 }
 
 void arcade::Ghost::move(std::vector<std::string> &map)

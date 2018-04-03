@@ -11,6 +11,7 @@
 #include <vector>
 #include <map>
 #include <ncurses.h>
+#include <unistd.h>
 #include "Astar.hpp"
 
 namespace arcade {

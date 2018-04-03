@@ -53,10 +53,10 @@ void arcade::Pacman::initMap()
 	_map.push_back("#####################");
 
 	_pacmanPos = {7, 10};
-	// _ghostPos.emplace_back(new Ghost('-', {9, 12}));
-	// _ghostPos.emplace_back(new Ghost('-', {9, 11}));
-	// _ghostPos.emplace_back(new Ghost('-', {9, 9}));
-	// _ghostPos.emplace_back(new Ghost('-', {9, 8}));
+	_ghostPos.emplace_back(new Ghost('-', {9, 12}));
+	_ghostPos.emplace_back(new Ghost('-', {9, 11}));
+	_ghostPos.emplace_back(new Ghost('-', {9, 9}));
+	_ghostPos.emplace_back(new Ghost('-', {9, 8}));
 	_pause = false;
 	refreshPCPos();
 }
@@ -174,14 +174,8 @@ void arcade::Pacman::movePacman()
 
 void arcade::Pacman::moveGhosts()
 {
-	int period;
-
-	for (auto &ghost : _ghostPos) {
-		period = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::system_clock::now() - ghost->_deadTime).count();
-		if (ghost->_state == GhostState::DEAD and period > 5000)
-			ghost->_state = GhostState::ALIVE;
+	for (auto &ghost : _ghostPos)
 		ghost->move(_map);
-	}
 }
 
 void arcade::Pacman::startChrono()
