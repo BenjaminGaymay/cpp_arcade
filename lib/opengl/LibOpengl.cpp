@@ -18,6 +18,23 @@ N_LibOpengl::LibOpengl() :
 	_font(),
 	_text()
 {
+	_colorsMatch[RED] = sf::Color::Red;
+	_colorsMatch[BLUE] = sf::Color::Blue;
+	_colorsMatch[GREEN] = sf::Color::Green;
+	_colorsMatch[WHITE] = sf::Color::White;
+	_colorsMatch[BLACK] = sf::Color::Black;
+	_colorsMatch[CYAN] = sf::Color::Cyan;
+	_colorsMatch[MAGENTA] = sf::Color::Magenta;
+	_colorsMatch[YELLOW] = sf::Color::Yellow;
+	_colorsMatch[BG_RED] = sf::Color::Red;
+	_colorsMatch[BG_BLUE] = sf::Color::Blue;
+	_colorsMatch[BG_GREEN] = sf::Color::Green;
+	_colorsMatch[BG_WHITE] = sf::Color::White;
+	_colorsMatch[BG_BLACK] = sf::Color::Black;
+	_colorsMatch[BG_CYAN] = sf::Color::Cyan;
+	_colorsMatch[BG_MAGENTA] = sf::Color::Magenta;
+	_colorsMatch[BG_YELLOW] = sf::Color::Yellow;
+
 	_keyMatch[sf::Keyboard::Key::Up] = UP;
 	_keyMatch[sf::Keyboard::Key::Down] = DOWN;
 	_keyMatch[sf::Keyboard::Key::Left] = LEFT;
