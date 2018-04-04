@@ -153,41 +153,40 @@ arcade::Color N_LibAllegro::setColor(char c)
 {
 	switch (c) {
 		case 'R':
+		case 'o':
+		case 'h':
 			return arcade::BG_RED;
 		case 'B':
-			return arcade::BG_BLUE;
-		case 'G':
-			return arcade::BG_GREEN;
-		case 'W':
-			return arcade::BG_WHITE;
-		case 'C':
-			return arcade::BG_CYAN;
-		case 'M':
-			return arcade::BG_MAGENTA;
-		case 'Y':
-			return arcade::BG_YELLOW;
+		case 'g':
 		case '#':
 			return arcade::BG_BLUE;
-		case 'o':
-			return arcade::BG_RED;
+		case 'G':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case 'e':
+			return arcade::BG_GREEN;
+		case 'W':
 		case '.':
 			return arcade::BG_WHITE;
+		case 'C':
+		case 'i':
+			return arcade::BG_CYAN;
+		case 'M':
+		case 'a':
+		case 'b':
+		case 'c':
+		case 'd':
+		case 'f':
+			return arcade::BG_MAGENTA;
+		case 'Y':
 		case '1':
-			return arcade::BG_BLUE;
 		case '2':
-			return arcade::BG_BLUE;
 		case '3':
-			return arcade::BG_BLUE;
 		case '4':
-			return arcade::BG_BLUE;
-		case '5':
-			return arcade::BG_CYAN;
-		case '6':
-			return arcade::BG_CYAN;
-		case '7':
-			return arcade::BG_CYAN;
-		case '8':
-			return arcade::BG_CYAN;
+		case 's':
+			return arcade::BG_YELLOW;
 		default:
 			return arcade::BG_BLACK;
 	}
