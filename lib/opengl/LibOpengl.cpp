@@ -181,28 +181,38 @@ arcade::Color N_LibOpengl::setColor(char c)
 	switch (c) {
 		case 'R':
 		case 'o':
+		case 'h':
 			return arcade::BG_RED;
 		case 'B':
+		case 'g':
 		case '#':
-		case '1':
-		case '2':
-		case '3':
-		case '4':
 			return arcade::BG_BLUE;
 		case 'G':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case 'e':
 			return arcade::BG_GREEN;
 		case 'W':
 		case '.':
 			return arcade::BG_WHITE;
 		case 'C':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
+		case 'i':
 			return arcade::BG_CYAN;
 		case 'M':
+		case 'a':
+		case 'b':
+		case 'c':
+		case 'd':
+		case 'f':
 			return arcade::BG_MAGENTA;
 		case 'Y':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case 's':
 			return arcade::BG_YELLOW;
 		default:
 			return arcade::BG_BLACK;
