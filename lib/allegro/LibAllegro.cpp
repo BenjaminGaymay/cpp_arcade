@@ -13,7 +13,7 @@ N_LibAllegro::LibAllegro::LibAllegro()
 {
 	_sx = 30;
 	_sy = _sx;
-	_fps = 30.0f;
+	_fps = 24.0f;
 
 	_keyMatch[ALLEGRO_KEY_UP] = UP;
 	_keyMatch[ALLEGRO_KEY_DOWN] = DOWN;
