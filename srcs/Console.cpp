@@ -17,14 +17,15 @@ N_Console::Console(const std::string &lib) :
 {
 	_state = IN_MENU;
 	_currGame = 0;
-	_index = 0;
+	_currLib = 0;
+	_pseudo = "Bertrand";
 }
 
 N_Console::Console()
 {
 	_state = IN_MENU;
 	_currGame = 0;
-	_index = 0;
+	_currLib = 0;
 	_pseudo = "Bertrand";
 }
 
@@ -53,7 +54,7 @@ void N_Console::loadLibs(const std::string &path, Type type)
 				_currLib = i;
 			++i;
 		}
-		} else
+	} else
 		_gameName = _listGames[_currGame];
 }
 
@@ -103,7 +104,7 @@ void N_Console::drawListLibs(int i, int size_width, int size_height, int bonus)
 
 	for (auto c : _listLibs) {
 		c = epureName(c);
-		if (_index == j)
+		if (_currLib == j)
 			color = GREEN;
 		else
 			color = BLUE;
@@ -120,7 +121,7 @@ void N_Console::drawListGames(int i, int size_width, int size_height, int bonus)
 	Color color;
 	for (auto c : _listGames) {
 		c = epureName(c);
-		if (_index == j)
+		if (_currLib == j)
 			color = GREEN;
 		else
 			color = BLUE;
@@ -132,9 +133,9 @@ void N_Console::drawListGames(int i, int size_width, int size_height, int bonus)
 
 void N_Console::enterAction()
 {
-	if (_index < _listLibs.size()) {
+	if (_currLib < _listLibs.size()) {
 		_lib->closeWindow();
-		_libName = _listLibs[_index];
+		_libName = _listLibs[_currLib];
 		try {
 			openLib(LIBS);
 		} catch (std::runtime_error &e) {
@@ -156,15 +157,16 @@ void N_Console::enterAction()
 
 void N_Console::upAction()
 {
-	_index = (_index == 0 ? 0 : _index - 1);
-	if (_index >= _listLibs.size())
+	_currLib = (_currLib == 0 ? 0 : _currLib - 1);
+	if (_currLib >= _listLibs.size())
 		_currGame--;
 }
 
 void N_Console::downAction()
 {
-	_index = (_index == (_listGames.size() + _listLibs.size()) - 1 ? (_listGames.size() + _listLibs.size()) - 1 : _index + 1);
-	if (_index > _listLibs.size())
+	_currLib = (_currLib == (_listGames.size() + _listLibs.size()) - 1 ? (_listGames.size() + _listLibs.size()) - 1 : _currLib + 1);
+	// _currLib = _currLib == _listLibs.size() - 1 ? _currLib : _currLib + 1;
+	if (_currLib > _listLibs.size())
 		_currGame = (_listGames.size() - 1 == _currGame ? _listGames.size() - 1 : _currGame + 1);
 }
 
@@ -255,6 +257,31 @@ void N_Console::setScore(const int score)
 	writeScore.close();
 }
 
+void N_Console::handleKeys()
+{
+	if (_key == NEXT_LIB) {
+		_lib->closeWindow();
+		_currLib = _currLib >= _listLibs.size() - 1 ? 0 : _currLib + 1;
+		std::cout << _currLib << std::endl;
+		_libName = _listLibs[_currLib];
+		openLib(LIBS);
+		_lib = _getLib();
+		_lib->openWindow();
+	}
+	else if (_key == PREVIOUS_LIB) {
+		_lib->closeWindow();
+		_currLib = _currLib == 0 ? _listLibs.size() - 1 : _currLib - 1;
+		_libName = _listLibs[_currLib];
+		openLib(LIBS);
+		_lib = _getLib();
+		_lib->openWindow();
+	}
+	if (_key == NEXT_GAME)
+		_currGame = _currGame == _listGames.size() - 1 ? 0 : _currGame + 1;
+	else if (_key == PREVIOUS_GAME)
+		_currGame = _currGame == 0 ? _listGames.size() - 1 : _currGame - 1;
+}
+
 void N_Console::loopConsole()
 {
 	unsigned highscore = 0;
@@ -279,6 +306,7 @@ void N_Console::loopConsole()
 		}
 		_lib->refreshWindow();
 		_key = _lib->getKey();
+		handleKeys();
 	}
 	_lib->closeWindow();
 }
