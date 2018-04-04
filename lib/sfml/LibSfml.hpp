@@ -7,6 +7,11 @@
 
 #pragma once
 
+#include <memory>
+#include <map>
+#include <dlfcn.h>
+#include <dirent.h>
+#include <fstream>
 #include <SFML/Graphics.hpp>
 #include "IGraphics.hpp"
 
@@ -31,7 +36,13 @@ namespace arcade {
 		int getScaleWidth();
 		int getScaleHeight();
 		bool isOpen();
+		std::vector<std::string> splitString(std::string , char );
+		void printScore(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t );
+		std::string epureName(const std::string &);
+		void drawListLibs(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t );
+		void drawListGames(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t );
 		void loadTexture(const std::string &);
+		void drawMenu(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t);
 
 	private:
 		int _width;

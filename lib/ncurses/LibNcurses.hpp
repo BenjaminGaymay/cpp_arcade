@@ -8,8 +8,12 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 #include <ncurses.h>
+#include <memory>
 #include <map>
+#include <dlfcn.h>
+#include <dirent.h>
 #include "IGraphics.hpp"
 
 namespace arcade {
@@ -28,9 +32,14 @@ namespace arcade {
 		void closeWindow();
 		void openWindow();
 		int getHeight();
+		std::vector<std::string> splitString(std::string , char );
 		int getWidth();
 		bool isOpen();
-
+		void printScore(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t);
+		void drawMenu(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t);
+		std::string epureName(const std::string &);
+		void drawListLibs(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t);
+		void drawListGames(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t);
 	private:
 		int _width;
 		int _height;

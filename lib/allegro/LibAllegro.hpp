@@ -8,6 +8,11 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
+#include <map>
+#include <dlfcn.h>
+#include <dirent.h>
+#include <fstream>
 #include <ncurses.h>
 #include <map>
 #include <allegro5/allegro.h>
@@ -34,7 +39,13 @@ namespace arcade {
 		void openWindow();
 		int getHeight();
 		int getWidth();
+		std::vector<std::string> splitString(std::string , char );
+		void printScore(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t);
 		int getScaleHeight();
+		std::string epureName(const std::string &);
+		void drawListLibs(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t );
+		void drawListGames(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t );
+		void drawMenu(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t);
 		int getScaleWidth();
 		bool isOpen();
 

@@ -196,3 +196,109 @@ extern "C" std::unique_ptr<arcade::IGraphics> launch()
 {
 	return std::make_unique<arcade::LibAllegro>();
 }
+
+std::vector<std::string> N_LibAllegro::splitString(std::string str, char separator)
+{
+	std::string tmp = "";
+	std::vector<std::string> splited;
+
+	for (auto c: str) {
+		if (c != separator)
+			tmp += c;
+		else if (c == separator && tmp != "") {
+			splited.push_back(tmp);
+			tmp = "";
+		}
+	}
+	if (tmp != "")
+		splited.push_back(tmp);
+	return splited;
+}
+
+void N_LibAllegro::printScore(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
+{
+	std::string _gameName = games[_index - libs.size()];
+	auto game = epureName(_gameName);
+	int i = 0;
+
+	std::ifstream readScore("scoreboard/" + game + ".score");
+	std::string line;
+	std::string fileOutput;
+	std::vector<std::string> split;
+	std::vector<std::pair<int, std::string>> scoreboard;
+
+	if (!readScore)
+		return ;
+
+	while (std::getline(readScore, line) && i < 20) {
+		if (!line.empty()) {
+			split = std::vector<std::string> (splitString(line, ':'));
+			 if (split.size() == 2){
+				 drawText(split[0], 45, 10 + i,GREEN);
+				 drawText(split[1], 50 + split[0].size(), 10 + i, GREEN);
+			 }
+		}
+		i = i + 2;
+	}
+	readScore.close();
+}
+
+std::string N_LibAllegro::epureName(const std::string &name)
+{
+	std::string str(name);
+
+	std::size_t pos = str.find_last_of("_") + 1;
+	std::size_t end = str.find_last_of(".");
+	return str.substr(pos, end - pos);
+}
+
+void N_LibAllegro::drawListLibs(const std::vector<std::string> &libs, const std::vector<std::string> &games, int size_width, int size_height, std::size_t _index)
+{
+	int i = 0;
+	std::size_t j = 0;
+	Color color;
+
+	for (auto c : libs){
+		c = epureName(c);
+		if (_index == j){
+			color = RED;
+			drawSquare((size_width / 3) + 5, (size_height / 3) + i, arcade::BG_RED);
+		}
+		else
+			color = BLUE;
+		drawText(c, (size_width / 3) + 10, (size_height / 3) + i, color);
+		i+=5;
+		j++;
+	}
+}
+
+void N_LibAllegro::drawListGames(const std::vector<std::string> &libs, const std::vector<std::string> &games, int size_width, int size_height, std::size_t _index)
+{
+	int i = 0;
+	std::size_t j = libs.size();
+	Color color;
+
+	for (auto c : games){
+		c = epureName(c);
+		if (_index == j){
+			color = RED;
+			drawSquare((size_width / 2) + (c.size() + 10), (size_height / 3) + i, arcade::BG_RED);
+			printScore(libs, games, _index);
+		}
+		else
+			color = BLUE;
+		drawText(c, (size_width / 2) + 10, (size_height / 3) + i, color);
+		i+=5;
+		j++;
+	}
+}
+
+void N_LibAllegro::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
+{
+	drawText(",---.,---.,---.,---.,--. ,---.", 25, 4, RED);
+	drawText("    |---||---'|    |---||   ||--- ", 24, 5, GREEN);
+	drawText("    |   ||  \\ |    |   ||   ||   ", 24, 6, BLUE);
+	drawText("    `   '`   ``---'`   '`--' `---'", 24, 7, YELLOW);
+	drawListLibs(libs, games, 28, 27 + 10, _index);
+	drawListGames(libs, games, 28 + 20, 27 + 10, _index);
+}

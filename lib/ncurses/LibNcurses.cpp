@@ -27,7 +27,8 @@ N_LibNcurses::LibNcurses()
 }
 
 N_LibNcurses::~LibNcurses()
-{}
+{
+}
 
 void N_LibNcurses::openWindow()
 {
@@ -169,4 +170,112 @@ arcade::Key N_LibNcurses::getKey()
 extern "C" std::unique_ptr<arcade::IGraphics> launch()
 {
 	return std::make_unique<arcade::LibNcurses>();
+}
+
+std::string N_LibNcurses::epureName(const std::string &name)
+{
+	std::string str(name);
+
+	std::size_t pos = str.find_last_of("_") + 1;
+	std::size_t end = str.find_last_of(".");
+	return str.substr(pos, end - pos);
+}
+
+void N_LibNcurses::drawListLibs(const std::vector<std::string> &libs, const std::vector<std::string> &games, int size_width, int size_height, std::size_t _index)
+{
+	int i = 0;
+	std::size_t j = 0;
+	Color color;
+
+	for (auto c : libs){
+		c = epureName(c);
+		if (_index == j){
+			color = RED;
+			drawSquare((size_width / 3) + 5, (size_height / 3) + i, arcade::BG_RED);
+		}
+		else
+			color = BLUE;
+		drawText(c, (size_width / 3) + 10, (size_height / 3) + i, color);
+		i+=5;
+		j++;
+	}
+}
+
+void N_LibNcurses::drawListGames(const std::vector<std::string> &libs, const std::vector<std::string> &games, int size_width, int size_height, std::size_t _index)
+{
+	int i = 0;
+	std::size_t j = libs.size();
+	Color color;
+
+	for (auto c : games){
+		c = epureName(c);
+		if (_index == j){
+			color = RED;
+			drawSquare((size_width / 2) + (c.size() + 15), (size_height / 3) + i, arcade::BG_RED);
+			printScore(libs, games, _index);
+		}
+		else
+			color = BLUE;
+		drawText(c, (size_width / 2) + 10, (size_height / 3) + i, color);
+		i+=5;
+		j++;
+	}
+}
+
+std::vector<std::string> N_LibNcurses::splitString(std::string str, char separator)
+{
+	std::string tmp = "";
+	std::vector<std::string> splited;
+
+	for (auto c: str) {
+		if (c != separator)
+			tmp += c;
+		else if (c == separator && tmp != "") {
+			splited.push_back(tmp);
+			tmp = "";
+		}
+	}
+	if (tmp != "")
+		splited.push_back(tmp);
+	return splited;
+}
+
+void N_LibNcurses::printScore(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
+{
+	std::string _gameName = games[_index - libs.size()];
+	auto game = epureName(_gameName);
+	int i = 0;
+
+	std::ifstream readScore("scoreboard/" + game + ".score");
+	std::string line;
+	std::string fileOutput;
+	std::vector<std::string> split;
+	std::vector<std::pair<int, std::string>> scoreboard;
+
+	if (!readScore)
+		return ;
+
+	while (std::getline(readScore, line) && i < 30) {
+		if (!line.empty()) {
+			split = std::vector<std::string> (splitString(line, ':'));
+			 if (split.size() == 2){
+				 drawText(split[0], (getWidth() / 2) + 60, (getHeight() / 4) + i, GREEN);
+				 drawText(split[1], (getWidth() / 2) + (split[0].size() + 65), (getHeight() / 4) + i, GREEN);
+			 }
+		}
+		i = i + 3;
+	}
+	readScore.close();
+}
+
+void N_LibNcurses::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
+{
+	drawText("  ___  ______  _____   ___ ______ _____ ", (getWidth() / 3) + 15, (getHeight() / 3) -7, RED);
+	drawText(" / _ \\ | ___ \\/  __ \\ / _ \\|  _  \\  ___|", (getWidth() / 3) + 15, (getHeight() / 3) - 6, GREEN);
+	drawText("/ /_\\ \\| |_/ /| /  \\// /_\\ \\ | | | |__  ", (getWidth() / 3) + 15, (getHeight() / 3) - 5, BLUE);
+	drawText("|  _  ||    / | |    |  _  | | | |  __| ", (getWidth() / 3) + 15, (getHeight() / 3) - 4, YELLOW);
+	drawText("| | | || |\\ \\ | \\__/\\| | | | |/ /| |___ ", (getWidth() / 3) + 15, (getHeight() / 3) - 3, CYAN);
+	drawText("\\_| |_/\\_| \\_| \\____/\\_| |_/___/ \\____/ ", (getWidth() / 3) + 15, (getHeight() / 3) - 2, WHITE);
+	drawListLibs(libs, games, getWidth(), getHeight() + 10, _index);
+	drawListGames(libs, games, getWidth() + 20, getHeight() + 10, _index);
 }

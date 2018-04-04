@@ -17,7 +17,7 @@ N_Console::Console(const std::string &lib) :
 {
 	_state = IN_MENU;
 	_currGame = 0;
-	_currLib = 0;
+	_index = 0;
 	_pseudo = "Bertrand";
 }
 
@@ -25,7 +25,7 @@ N_Console::Console()
 {
 	_state = IN_MENU;
 	_currGame = 0;
-	_currLib = 0;
+	_index = 0;
 	_pseudo = "Bertrand";
 }
 
@@ -54,7 +54,7 @@ void N_Console::loadLibs(const std::string &path, Type type)
 				_currLib = i;
 			++i;
 		}
-	} else
+		} else
 		_gameName = _listGames[_currGame];
 }
 
@@ -85,57 +85,11 @@ void N_Console::openLib(const Type &type)
 		throw std::runtime_error("Error: lib: " + std::string(err));
 }
 
-void N_Console::drawBox(int size_width, int size_height, int bonus)
-{
-	for (int i = ((size_width / 3) - bonus) ; i <= (size_width + bonus) - (size_width / 3); i++) {
-		_lib->drawSquare(i, size_height / 3 - bonus, arcade::BG_RED);
-		_lib->drawSquare(i, size_height - (size_height / 3) + bonus, arcade::BG_RED);
-	}
-	for (int i = ((size_height / 3) - bonus); i <= (size_height + bonus) - (size_height / 3); i++) {
-		_lib->drawSquare(size_width - (size_width / 3) + bonus, i, arcade::BG_RED);
-		_lib->drawSquare(size_width / 3 - bonus, i, arcade::BG_RED);
-	}
-}
-
-void N_Console::drawListLibs(int i, int size_width, int size_height, int bonus)
-{
-	std::size_t j = 0;
-	Color color;
-
-	for (auto c : _listLibs) {
-		c = epureName(c);
-		if (_currLib == j)
-			color = GREEN;
-		else
-			color = BLUE;
-		_lib->drawText(c, (size_width / 3) + bonus, (size_height / 3) + i, color);
-		i+=2;
-		j++;
-	}
-}
-void N_Console::drawListGames(int i, int size_width, int size_height, int bonus)
-
-{
-	std::size_t j = _listLibs.size();
-
-	Color color;
-	for (auto c : _listGames) {
-		c = epureName(c);
-		if (_currLib == j)
-			color = GREEN;
-		else
-			color = BLUE;
-		_lib->drawText(c, (size_width / 2) + bonus, (size_height / 3) + i, color);
-		i+=2;
-		j++;
-	}
-}
-
 void N_Console::enterAction()
 {
-	if (_currLib < _listLibs.size()) {
+	if (_index < _listLibs.size()) {
 		_lib->closeWindow();
-		_libName = _listLibs[_currLib];
+		_libName = _listLibs[_index];
 		try {
 			openLib(LIBS);
 		} catch (std::runtime_error &e) {
@@ -155,52 +109,55 @@ void N_Console::enterAction()
 	}
 }
 
+void N_Console::leftAction()
+{
+	if (_index < _listLibs.size())
+		return;
+	else {
+		if (_listLibs.size() > _listGames.size() && (_currGame + 1) == _listGames.size()){
+			_index = _index - _listGames.size();
+			_currGame = 0;
+		}
+		else{
+			_index = _index - (_listLibs.size());
+			_currGame = 0;
+		}
+	}
+}
+
+void N_Console::rightAction()
+{
+	if ((_index + 1) > _listLibs.size())
+		return;
+	else{
+		if ( (_index + 1) == _listLibs.size()){
+			_index = _index + _listGames.size();
+			_currGame = _currGame + (_listGames.size() - 1);
+		}
+		else{
+			_currGame = _currGame + _index;
+			_index = _index + (_listLibs.size());
+		}
+	}
+}
+
 void N_Console::upAction()
 {
-	_currLib = (_currLib == 0 ? 0 : _currLib - 1);
-	if (_currLib >= _listLibs.size())
+	_index = (_index == 0 ? 0 : _index - 1);
+	if (_index >= _listLibs.size())
 		_currGame--;
 }
 
 void N_Console::downAction()
 {
-	_currLib = (_currLib == (_listGames.size() + _listLibs.size()) - 1 ? (_listGames.size() + _listLibs.size()) - 1 : _currLib + 1);
-	// _currLib = _currLib == _listLibs.size() - 1 ? _currLib : _currLib + 1;
-	if (_currLib > _listLibs.size())
+	_index = (_index == (_listGames.size() + _listLibs.size()) - 1 ? (_listGames.size() + _listLibs.size()) - 1 : _index + 1);
+	if (_index > _listLibs.size())
 		_currGame = (_listGames.size() - 1 == _currGame ? _listGames.size() - 1 : _currGame + 1);
-}
-
-void N_Console::drawLibs()
-{
-	if(_libName == "./lib/lib_arcade_ncurses.so"){
-		drawBox(_lib->getWidth(),_lib->getHeight(), 3);
-		drawListLibs(6,_lib->getWidth(),_lib->getHeight(),10);
-		drawListGames(6,_lib->getWidth(),_lib->getHeight(),10);
-		_lib->drawText("PORCHERT BIG BOSS", (_lib->getWidth() / 3) + 10, (_lib->getHeight() / 3) + 2, GREEN);
-	}
-	else if(_libName == "./lib/lib_arcade_sfml.so"){
-		drawBox(62,35, 2);
-		drawListLibs(6,45,28,10);
-		drawListGames(6,45,28,10);
-		_lib->drawText("PORCHERT BIG BOSS", (45 / 3) + 10, (30 / 3) + 2, GREEN);
-	}
-	else if(_libName == "./lib/lib_arcade_allegro.so"){
-		drawBox(62,35, 2);
-		drawListLibs(6,49,28,10);
-		drawListGames(6,49,28,10);
-		_lib->drawText("PORCHERT BIG BOSS", (62 / 3) + 10, (30 / 3) + 2, GREEN);
-	}
-	else{
-		drawBox(_lib->getWidth(),_lib->getHeight(), 10);
-		drawListLibs(6,_lib->getWidth(),_lib->getHeight(),10);
-		drawListGames(6,_lib->getWidth(),_lib->getHeight(),10);
-		_lib->drawText("PORCHERT BIG BOSS", (_lib->getWidth() / 3) + 10, (_lib->getHeight() / 3) + 2, GREEN);
-	}
 }
 
 int N_Console::writeMenu()
 {
-	drawLibs();
+	_lib->drawMenu(_listLibs, _listGames, _index);
 	switch (_key) {
 		case ENTER:
 			enterAction();
@@ -212,6 +169,12 @@ int N_Console::writeMenu()
 			break;
 		case DOWN:
 			downAction();
+			break;
+		case LEFT:
+			leftAction();
+			break;
+		case RIGHT:
+			rightAction();
 			break;
 		default:
 			break;
@@ -257,38 +220,6 @@ void N_Console::setScore(const int score)
 	writeScore.close();
 }
 
-void N_Console::handleKeys()
-{
-	if (_key == NEXT_LIB or _key == PREVIOUS_LIB) {
-		_lib->closeWindow();
-		if (_key == NEXT_LIB)
-			_currLib = _currLib >= _listLibs.size() - 1 ? 0 : _currLib + 1;
-		else
-			_currLib = _currLib == 0 or _currLib >= _listLibs.size() ? _listLibs.size() - 1 : _currLib - 1;
-		_libName = _listLibs[_currLib];
-		try {
-			openLib(LIBS);
-		} catch (std::exception &e) {
-			throw e;
-		}
-		changeLibs(LIBS);
-		_lib->openWindow();
-	}
-	if (_state == IN_GAME && (_key == NEXT_GAME or _key == PREVIOUS_GAME)) {
-		if (_key == NEXT_GAME)
-			_currGame = _currGame == _listGames.size() - 1 ? 0 : _currGame + 1;
-		else
-			_currGame = _currGame == 0 ? _listGames.size() - 1 : _currGame - 1;
-		_gameName = _listGames[_currGame];
-		try {
-			openLib(GAME);
-		} catch (std::exception &e) {
-			throw e;
-		}
-		changeLibs(GAME);
-	}
-}
-
 void N_Console::loopConsole()
 {
 	unsigned highscore = 0;
@@ -313,7 +244,6 @@ void N_Console::loopConsole()
 		}
 		_lib->refreshWindow();
 		_key = _lib->getKey();
-		handleKeys();
 	}
 	_lib->closeWindow();
 }
