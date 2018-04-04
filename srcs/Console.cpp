@@ -259,27 +259,34 @@ void N_Console::setScore(const int score)
 
 void N_Console::handleKeys()
 {
-	if (_key == NEXT_LIB) {
+	if (_key == NEXT_LIB or _key == PREVIOUS_LIB) {
 		_lib->closeWindow();
-		_currLib = _currLib >= _listLibs.size() - 1 ? 0 : _currLib + 1;
-		std::cout << _currLib << std::endl;
+		if (_key == NEXT_LIB)
+			_currLib = _currLib >= _listLibs.size() - 1 ? 0 : _currLib + 1;
+		else
+			_currLib = _currLib == 0 ? _listLibs.size() - 1 : _currLib - 1;
 		_libName = _listLibs[_currLib];
-		openLib(LIBS);
-		_lib = _getLib();
+		try {
+			openLib(LIBS);
+		} catch (std::exception &e) {
+			throw e;
+		}
+		changeLibs(LIBS);
 		_lib->openWindow();
 	}
-	else if (_key == PREVIOUS_LIB) {
-		_lib->closeWindow();
-		_currLib = _currLib == 0 ? _listLibs.size() - 1 : _currLib - 1;
-		_libName = _listLibs[_currLib];
-		openLib(LIBS);
-		_lib = _getLib();
-		_lib->openWindow();
+	if (_state == IN_GAME and (_key == NEXT_GAME or _key == PREVIOUS_GAME)) {
+		if (_key == NEXT_GAME)
+			_currGame = _currGame == _listGames.size() - 1 ? 0 : _currGame + 1;
+		else
+			_currGame = _currGame == 0 ? _listGames.size() - 1 : _currGame - 1;
+		_gameName = _listGames[_currGame];
+		try {
+			openLib(GAME);
+		} catch (std::exception &e) {
+			throw e;
+		}
+		changeLibs(GAME);
 	}
-	if (_key == NEXT_GAME)
-		_currGame = _currGame == _listGames.size() - 1 ? 0 : _currGame + 1;
-	else if (_key == PREVIOUS_GAME)
-		_currGame = _currGame == 0 ? _listGames.size() - 1 : _currGame - 1;
 }
 
 void N_Console::loopConsole()
