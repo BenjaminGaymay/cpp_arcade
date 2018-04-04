@@ -72,8 +72,10 @@ namespace arcade {
 		RESET,
 		NONE,
 		SHOOT,
-		NEXT,
-		PREVIOUS
+		NEXT_LIB,
+		PREVIOUS_LIB,
+		NEXT_GAME,
+		PREVIOUS_GAME
 	};
 	class IGraphics {
 	public:

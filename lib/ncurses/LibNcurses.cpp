@@ -19,8 +19,10 @@ N_LibNcurses::LibNcurses()
 	_keyMatch[10] = ENTER;
 	_keyMatch['p'] = PAUSE;
 	_keyMatch['r'] = RESET;
-	_keyMatch['n'] = NEXT;
-	_keyMatch['b'] = PREVIOUS;
+	_keyMatch['n'] = NEXT_LIB;
+	_keyMatch['b'] = PREVIOUS_LIB;
+	_keyMatch['m'] = NEXT_GAME;
+	_keyMatch['l'] = PREVIOUS_GAME;
 	_keyMatch['s'] = SHOOT;
 }
 

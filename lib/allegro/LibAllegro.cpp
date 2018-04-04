@@ -23,8 +23,10 @@ N_LibAllegro::LibAllegro::LibAllegro()
 	_keyMatch[ALLEGRO_KEY_ESCAPE] = ESC;
 	_keyMatch[ALLEGRO_KEY_P] = PAUSE;
 	_keyMatch[ALLEGRO_KEY_R] = RESET;
-	_keyMatch[ALLEGRO_KEY_N] = NEXT;
-	_keyMatch[ALLEGRO_KEY_B] = PREVIOUS;
+	_keyMatch[ALLEGRO_KEY_N] = NEXT_LIB;
+	_keyMatch[ALLEGRO_KEY_B] = PREVIOUS_LIB;
+	_keyMatch[ALLEGRO_KEY_M] = NEXT_GAME;
+	_keyMatch[ALLEGRO_KEY_L] = PREVIOUS_GAME;
 	_keyMatch[ALLEGRO_KEY_S] = SHOOT;
 
 	_colorsMatch[RED] = {255, 0, 0, 0};
