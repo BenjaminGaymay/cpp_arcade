@@ -287,9 +287,11 @@ arcade::Key N_LibSfml::getKey()
 	sf::Event event;
 
 	while (_window.pollEvent(event)) {
-		if (event.type == sf::Event::KeyPressed
-			and _keyMatch.find(event.key.code) != _keyMatch.end())
-			return _keyMatch[event.key.code];
+		if (event.type == sf::Event::KeyPressed){
+			_key = event.key.code;
+			if (_keyMatch.find(event.key.code) != _keyMatch.end())
+				return _keyMatch[event.key.code];
+		}
 	}
 	return NONE;
 }

@@ -160,10 +160,10 @@ int N_LibNcurses::getWidth()
 
 arcade::Key N_LibNcurses::getKey()
 {
-	int key = getch();
+	_key = getch();
 
-	if (_keyMatch.find(key) != _keyMatch.end())
-		return _keyMatch[key];
+	if (_keyMatch.find(_key) != _keyMatch.end())
+		return _keyMatch[_key];
 	else
 		return NONE;
 }

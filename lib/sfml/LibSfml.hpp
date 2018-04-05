@@ -49,6 +49,7 @@ namespace arcade {
 		int _sx;
 		int _sy;
 
+		sf::Keyboard::Key _key;
 		sf::RenderWindow _window;
 		sf::Font _font;
 		sf::Text _text;

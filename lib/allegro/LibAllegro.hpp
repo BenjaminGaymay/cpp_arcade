@@ -61,6 +61,7 @@ namespace arcade {
 		ALLEGRO_TIMER *_timer;
 		ALLEGRO_BITMAP *_background;
 		ALLEGRO_EVENT _event;
+		int _key;
 
 		std::map<int, Key> _keyMatch;
 		std::map<Color, ALLEGRO_COLOR> _colorsMatch;
