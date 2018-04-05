@@ -56,6 +56,7 @@ namespace arcade {
 		sf::Font _font;
 		sf::Text _text;
 		sf::Event _event;
+		sf::Keyboard::Key _key;
 
 		std::map<Color, sf::Color> _colorsMatch;
 		std::map<sf::Keyboard::Key, Key> _keyMatch;

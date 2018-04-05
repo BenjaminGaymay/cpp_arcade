@@ -42,6 +42,7 @@ namespace arcade {
 	private:
 		int _width;
 		int _height;
+		int _key;
 
 		std::map<int, Key> _keyMatch;
 	};

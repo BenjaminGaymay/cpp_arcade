@@ -144,8 +144,11 @@ void N_LibAllegro::drawMap(const std::vector<std::string> &map)
 arcade::Key N_LibAllegro::getKey()
 {
 	al_wait_for_event(_eventQueue, &_event);
-	if (_event.type == ALLEGRO_EVENT_KEY_DOWN)
-		return _keyMatch[_event.keyboard.keycode];
+	if (_event.type == ALLEGRO_EVENT_KEY_DOWN) {
+		_key = _event.keyboard.keycode;
+		if (_keyMatch.find(_event.keyboard.keycode) != _keyMatch.end())
+			return _keyMatch[_event.keyboard.keycode];
+	}
 	return NONE;
 }
 
