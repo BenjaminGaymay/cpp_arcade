@@ -155,9 +155,22 @@ void N_Console::downAction()
 		_currGame = (_listGames.size() - 1 == _currGame ? _listGames.size() - 1 : _currGame + 1);
 }
 
+std::vector<std::string> N_Console::epurVector(std::vector<std::string> &oldList)
+{
+	std::vector<std::string> newList;
+
+	for (auto elem : oldList)
+		newList.push_back(epureName(elem));
+
+	return newList;
+}
+
 int N_Console::writeMenu()
 {
-	_lib->drawMenu(_listLibs, _listGames, _index);
+	static std::vector<std::string> epurLibs = epurVector(_listLibs);
+	static std::vector<std::string> epurGames  = epurVector(_listGames);
+
+	_lib->drawMenu(epurLibs, epurGames, _index);
 	switch (_key) {
 		case ENTER:
 			enterAction();

@@ -96,7 +96,6 @@ namespace arcade {
 		virtual std::vector<std::string> splitString(std::string , char ) = 0;
 		virtual bool isOpen() = 0;
 		virtual void drawMenu(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t) = 0;
-		virtual std::string epureName(const std::string &) = 0;
 		virtual void drawListLibs(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t ) = 0;
 		virtual void drawListGames(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t ) = 0;
 	};

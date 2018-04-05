@@ -301,11 +301,10 @@ std::vector<std::string> N_LibOpengl::splitString(std::string str, char separato
 void N_LibOpengl::printScore(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
 {
 	std::string _gameName = games[_index - libs.size()];
-	auto game = epureName(_gameName);
 	int i = -5;
 	int p = 0;
 
-	std::ifstream readScore("scoreboard/" + game + ".score");
+	std::ifstream readScore("scoreboard/" + _gameName + ".score");
 	std::string line;
 	std::string fileOutput;
 	std::vector<std::string> split;
@@ -329,15 +328,6 @@ void N_LibOpengl::printScore(const std::vector<std::string> &libs, const std::ve
 	readScore.close();
 }
 
-std::string N_LibOpengl::epureName(const std::string &name)
-{
-	std::string str(name);
-
-	std::size_t pos = str.find_last_of("_") + 1;
-	std::size_t end = str.find_last_of(".");
-	return str.substr(pos, end - pos);
-}
-
 void N_LibOpengl::drawListLibs(const std::vector<std::string> &libs, const std::vector<std::string> &games, int size_width, int size_height, std::size_t _index)
 {
 	int i = 0;
@@ -345,7 +335,6 @@ void N_LibOpengl::drawListLibs(const std::vector<std::string> &libs, const std::
 	Color color;
 
 	for (auto c : libs){
-		c = epureName(c);
 		if (_index == j){
 			color = RED;
 			drawSquare((size_width / 3) - 5, (size_height / 3) + i, arcade::BG_RED);
@@ -365,7 +354,6 @@ void N_LibOpengl::drawListGames(const std::vector<std::string> &libs, const std:
 	Color color;
 
 	for (auto c : games){
-		c = epureName(c);
 		if (_index == j){
 			color = RED;
 			drawSquare((size_width / 2) + (c.size() + 5), (size_height / 3) + i, arcade::BG_RED);

@@ -71,15 +71,6 @@ void arcade::Pacman::fillMap()
 {
 	char ghostColor = 'e';
 
-	if (_x == 1)
-		_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'a' : '1');
-	else if (_x == -1)
-		_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'b' : '2');
-	else if (_y == 1)
-		_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'd' : '4');
-	else
-		 _map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'c' : '3');
-
 	for (auto &ghost : _ghostPos) {
 		switch (ghost->_state) {
 			case GhostState::ALIVE:
@@ -90,6 +81,15 @@ void arcade::Pacman::fillMap()
 				_map[ghost->_pos.first][ghost->_pos.second] = 'i'; break;
 		}
 	}
+
+	if (_x == 1)
+		_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'a' : '1');
+	else if (_x == -1)
+		_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'b' : '2');
+	else if (_y == 1)
+		_map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'd' : '4');
+	else
+		 _map[_pacmanPos.first][_pacmanPos.second] = (_state == PacmanState::SUPER ? 'c' : '3');
 }
 
 void arcade::Pacman::clearMap()

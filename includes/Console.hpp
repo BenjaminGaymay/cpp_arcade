@@ -41,6 +41,7 @@ namespace arcade {
 		const std::string &getLibName() const;
 		const std::string &getGameName() const;
 		std::string epureName(const std::string &);
+		std::vector<std::string> epurVector(std::vector<std::string> &);
 		void enterAction();
 		void upAction();
 		void downAction();
