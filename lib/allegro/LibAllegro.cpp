@@ -215,10 +215,7 @@ std::vector<std::string> N_LibAllegro::splitString(std::string str, char separat
 
 std::string N_LibAllegro::getPseudo()
 {
-	std::string line;
-
-	std::getline(std::cin,line);
-	return line;
+	return "allegro";
 }
 
 void N_LibAllegro::printScore(const std::vector<std::string> &games, std::size_t size, std::size_t _index)

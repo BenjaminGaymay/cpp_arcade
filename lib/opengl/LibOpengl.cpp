@@ -297,10 +297,34 @@ std::vector<std::string> N_LibOpengl::splitString(std::string str, char separato
 
 std::string N_LibOpengl::getPseudo()
 {
-	std::string line;
+	sf::Event event;
+	sf::Keyboard::Key key;
+	std::string pseudo;
+	char character;
 
-	std::getline(std::cin,line);
-	return line;
+	while (true) {
+		clearWindow();
+		key = sf::Keyboard::Key::Up;
+		character = '\0';
+		while (_window.pollEvent(event)) {
+			if (event.type == sf::Event::KeyPressed)
+				key = event.key.code;
+			else if (event.type == sf::Event::TextEntered)
+				character = event.text.unicode;
+		}
+  		if (key == sf::Keyboard::Key::Return or pseudo.size() >= 12)
+			return (pseudo[0] == '\0' ? "Bertrand" : pseudo);
+		else if (key == sf::Keyboard::Key::Escape)
+			return "Bertrand";
+		else if (key == sf::Keyboard::Key::BackSpace)
+			pseudo = pseudo.substr(0, pseudo.size() - 1);
+		if (isalnum(character))
+			pseudo = pseudo + character;
+
+		drawText("Your pseudo :", 25, 10,  RED);
+		drawText(pseudo, 33, 10, RED);
+		refreshWindow();
+	}
 }
 
 void N_LibOpengl::printScore(const std::vector<std::string> &games, std::size_t size, std::size_t _index)
