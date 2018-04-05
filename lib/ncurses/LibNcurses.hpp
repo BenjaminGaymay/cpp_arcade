@@ -14,6 +14,7 @@
 #include <map>
 #include <dlfcn.h>
 #include <dirent.h>
+#include <time.h>
 #include "IGraphics.hpp"
 
 namespace arcade {

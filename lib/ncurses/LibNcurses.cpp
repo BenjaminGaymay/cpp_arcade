@@ -11,6 +11,7 @@ using N_LibNcurses = arcade::LibNcurses;
 
 N_LibNcurses::LibNcurses()
 {
+	srand(time(NULL));
 	_keyMatch[27] = ESC;
 	_keyMatch[KEY_UP] = UP;
 	_keyMatch[KEY_DOWN] = DOWN;
@@ -169,41 +170,53 @@ arcade::Key N_LibNcurses::getKey()
 
 void N_LibNcurses::drawListLibs(const std::vector<std::string> &libs, int size_width, int size_height, std::size_t _index)
 {
+	static int loop = 0;
 	int i = 0;
 	std::size_t j = 0;
 	Color color;
 
-	for (auto c : libs){
-		if (_index == j){
+	for (auto name : libs) {
+		if (_index == j) {
 			color = RED;
-			drawSquare((size_width / 3) + 5, (size_height / 3) + i, arcade::BG_RED);
+			for ( auto &c : name)
+				c = toupper(c);
+			if (loop % 5000 < 2500)
+				drawSquare((size_width / 3) + 5, (size_height / 3) + i, arcade::BG_RED);
 		}
 		else
 			color = BLUE;
-		drawText(c, (size_width / 3) + 10, (size_height / 3) + i, color);
-		i+=5;
+		name[0] = toupper(name[0]);
+		drawText(name, (size_width / 3) + 10, (size_height / 3) + i, color);
+		i += 5;
 		j++;
 	}
+	loop++;
 }
 
 void N_LibNcurses::drawListGames(const std::vector<std::string> &games, std::size_t size, int size_width, int size_height, std::size_t _index)
 {
+	static int loop = 0;
 	int i = 0;
 	std::size_t j = size;
 	Color color;
 
-	for (auto c : games){
-		if (_index == j){
+	for (auto name : games) {
+		if (_index == j) {
 			color = RED;
-			drawSquare((size_width / 2) + (c.size() + 15), (size_height / 3) + i, arcade::BG_RED);
+			for ( auto &c : name)
+				c = toupper(c);
+			if (loop % 2500 < 1250)
+				drawSquare((size_width / 2) + (name.size() + 15), (size_height / 3) + i, arcade::BG_RED);
 			printScore(games, size, _index);
 		}
 		else
 			color = BLUE;
-		drawText(c, (size_width / 2) + 10, (size_height / 3) + i, color);
-		i+=5;
+		name[0] = toupper(name[0]);
+		drawText(name, (size_width / 2) + 10, (size_height / 3) + i, color);
+		i += 5;
 		j++;
 	}
+	loop++;
 }
 
 std::vector<std::string> N_LibNcurses::splitString(std::string str, char separator)
@@ -253,19 +266,25 @@ void N_LibNcurses::printScore(const std::vector<std::string> &games, std::size_t
 
 void N_LibNcurses::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
 {
-	static int color = RED;
+	static int loop = 0;
+	static int x = rand() % 2 - rand() % 1;
+	static int y = rand() % 2 -  rand() % 1;
+	int color = rand() % 7;
 
-	drawText("  ___  ______  _____   ___ ______ _____ ", (getWidth() / 3) + 15, (getHeight() / 3) -7, (arcade::Color)color);
-	drawText(" / _ \\ | ___ \\/  __ \\ / _ \\|  _  \\  ___|", (getWidth() / 3) + 15, (getHeight() / 3) - 6, (arcade::Color)color);
-	drawText("/ /_\\ \\| |_/ /| /  \\// /_\\ \\ | | | |__  ", (getWidth() / 3) + 15, (getHeight() / 3) - 5, (arcade::Color)color);
-	drawText("|  _  ||    / | |    |  _  | | | |  __| ", (getWidth() / 3) + 15, (getHeight() / 3) - 4, (arcade::Color)color);
-	drawText("| | | || |\\ \\ | \\__/\\| | | | |/ /| |___ ", (getWidth() / 3) + 15, (getHeight() / 3) - 3, (arcade::Color)color);
-	drawText("\\_| |_/\\_| \\_| \\____/\\_| |_/___/ \\____/ ", (getWidth() / 3) + 15, (getHeight() / 3) - 2, (arcade::Color)color);
+	if (loop % 1000 == 0) {
+		x = rand() % 2 - rand() % 1;
+		y = rand() % 2 -  rand() % 1;
+	}
+	color = (color == BLACK ? color + 1 : color);
+	drawText("  ___  ______  _____   ___ ______ _____ ", (getWidth() / 3) + 15 + x, (getHeight() / 3) - 10 + y, (arcade::Color)color);
+	drawText(" / _ \\ | ___ \\/  __ \\ / _ \\|  _  \\  ___|", (getWidth() / 3) + 15 + x, (getHeight() / 3) - 9 + y, (arcade::Color)color);
+	drawText("/ /_\\ \\| |_/ /| /  \\// /_\\ \\ | | | |__  ", (getWidth() / 3) + 15 + x, (getHeight() / 3) - 8 + y, (arcade::Color)color);
+	drawText("|  _  ||    / | |    |  _  | | | |  __| ", (getWidth() / 3) + 15 + x, (getHeight() / 3) - 7 + y, (arcade::Color)color);
+	drawText("| | | || |\\ \\ | \\__/\\| | | | |/ /| |___ ", (getWidth() / 3) + 15 + x, (getHeight() / 3) - 6 + y, (arcade::Color)color);
+	drawText("\\_| |_/\\_| \\_| \\____/\\_| |_/___/ \\____/ ", (getWidth() / 3) + 15 + x, (getHeight() / 3) - 5 + y, (arcade::Color)color);
 	drawListLibs(libs, getWidth(), getHeight() + 10, _index);
 	drawListGames(games, libs.size(), getWidth() + 20, getHeight() + 10, _index);
-	color++;
-	if (color == 7)
-		color = RED;
+	loop++;
 }
 
 extern "C" std::unique_ptr<arcade::IGraphics> launch()

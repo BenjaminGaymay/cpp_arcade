@@ -114,14 +114,8 @@ void N_Console::leftAction()
 	if (_index < _listLibs.size())
 		return;
 	else {
-		if (_listLibs.size() > _listGames.size() && (_currGame + 1) == _listGames.size()){
-			_index = _index - _listGames.size();
-			_currGame = 0;
-		}
-		else{
-			_index = _index - (_listLibs.size());
-			_currGame = 0;
-		}
+		_index = _index - (_listLibs.size());
+		_currGame = 0;
 	}
 }
 
