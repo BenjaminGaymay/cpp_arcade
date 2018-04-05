@@ -47,7 +47,7 @@ bool arcade::Ghost::canMove(std::vector<std::string> &map)
 
 	auto period = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::system_clock::now() - _lifeTime).count();
 
-	if (period > rand()  % 60000) {
+	if (period > rand()  % 60000 + 10000) {
 		_canMove = true;
 		auto side = choseSide(map);
 
