@@ -271,15 +271,17 @@ std::string N_LibNcurses::getPseudo()
 	clearWindow();
 	while (true) {
 		character = getch();
-		drawText("Your pseudo :", (getWidth() / 3) + 0, (getHeight() / 3) + 10, RED);
   		if (static_cast<char>(character) == '\n' or pseudo.size() >= 12)
 			return (pseudo[0] == '\0' ? "Bertrand" : pseudo);
 		if (isalnum(character))
 			pseudo = pseudo + static_cast<char>(character);
-		else if (character == KEY_BACKSPACE)
-			pseudo = pseudo.substr(0, pseudo.size() - 1);
 		else if (character == 27)
 			return "Bertrand";
+		else if (character == KEY_BACKSPACE) {
+			clearWindow();
+			pseudo = pseudo.substr(0, pseudo.size() - 1);
+		}
+		drawText("Your pseudo :", (getWidth() / 3) + 0, (getHeight() / 3) + 10, RED);
 		drawText(pseudo, (getWidth() / 3) + 15, (getHeight() / 3) + 10, RED);
 		refreshWindow();
 	}
