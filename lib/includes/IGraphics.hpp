@@ -87,16 +87,12 @@ namespace arcade {
 		virtual Color setColor(char) = 0;
 		virtual void clearWindow() = 0;
 		virtual void refreshWindow() = 0;
-		virtual void printScore(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t) = 0;
 		virtual Key getKey() = 0;
 		virtual void closeWindow() = 0;
 		virtual void openWindow() = 0;
 		virtual int getWidth() = 0;
 		virtual int getHeight() = 0;
-		virtual std::vector<std::string> splitString(std::string , char ) = 0;
 		virtual bool isOpen() = 0;
 		virtual void drawMenu(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t) = 0;
-		virtual void drawListLibs(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t ) = 0;
-		virtual void drawListGames(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t ) = 0;
 	};
 }

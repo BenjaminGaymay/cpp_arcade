@@ -314,9 +314,9 @@ std::vector<std::string> N_LibSfml::splitString(std::string str, char separator)
 	return splited;
 }
 
-void N_LibSfml::printScore(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
+void N_LibSfml::printScore(const std::vector<std::string> &games, std::size_t size, std::size_t _index)
 {
-	std::string _gameName = games[_index - libs.size()];
+	std::string _gameName = games[_index - size];
 	int i = 0;
 
 	std::ifstream readScore("scoreboard/" + _gameName + ".score");
@@ -341,7 +341,7 @@ void N_LibSfml::printScore(const std::vector<std::string> &libs, const std::vect
 	readScore.close();
 }
 
-void N_LibSfml::drawListLibs(const std::vector<std::string> &libs, const std::vector<std::string> &games, int size_width, int size_height, std::size_t _index)
+void N_LibSfml::drawListLibs(const std::vector<std::string> &libs, int size_width, int size_height, std::size_t _index)
 {
 	int i = 0;
 	std::size_t j = 0;
@@ -360,17 +360,17 @@ void N_LibSfml::drawListLibs(const std::vector<std::string> &libs, const std::ve
 	}
 }
 
-void N_LibSfml::drawListGames(const std::vector<std::string> &libs, const std::vector<std::string> &games, int size_width, int size_height, std::size_t _index)
+void N_LibSfml::drawListGames(const std::vector<std::string> &games, std::size_t size, int size_width, int size_height, std::size_t _index)
 {
 	int i = 0;
-	std::size_t j = libs.size();
+	std::size_t j = size;
 	Color color;
 
 	for (auto c : games){
 		if (_index == j){
 			color = RED;
 			drawSquare((size_width / 2) + (c.size() + 10), (size_height / 3) + i, arcade::BG_RED);
-			printScore(libs, games, _index);
+			printScore(games, size, _index);
 		}
 		else
 			color = BLUE;
@@ -387,6 +387,6 @@ void N_LibSfml::drawMenu(const std::vector<std::string> &libs, const std::vector
 	drawText("AAAA   RRRR   C         AAAA  D     D   EEE  ", 20, 5, BLUE);
 	drawText("A    A    R   R     C         A    A   D     D   E    ", 20, 6, YELLOW);
 	drawText("A    A    R    RR    CCC  A    A   DDD     EEEE ", 20, 7, CYAN);
-	drawListLibs(libs, games, 35, 27 + 10, _index);
-	drawListGames(libs, games, 35 + 20, 27 + 10, _index);
+	drawListLibs(libs, 35, 27 + 10, _index);
+	drawListGames(games, libs.size(), 35 + 20, 27 + 10, _index);
 }

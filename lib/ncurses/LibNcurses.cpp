@@ -167,12 +167,7 @@ arcade::Key N_LibNcurses::getKey()
 		return NONE;
 }
 
-extern "C" std::unique_ptr<arcade::IGraphics> launch()
-{
-	return std::make_unique<arcade::LibNcurses>();
-}
-
-void N_LibNcurses::drawListLibs(const std::vector<std::string> &libs, const std::vector<std::string> &games, int size_width, int size_height, std::size_t _index)
+void N_LibNcurses::drawListLibs(const std::vector<std::string> &libs, int size_width, int size_height, std::size_t _index)
 {
 	int i = 0;
 	std::size_t j = 0;
@@ -191,17 +186,17 @@ void N_LibNcurses::drawListLibs(const std::vector<std::string> &libs, const std:
 	}
 }
 
-void N_LibNcurses::drawListGames(const std::vector<std::string> &libs, const std::vector<std::string> &games, int size_width, int size_height, std::size_t _index)
+void N_LibNcurses::drawListGames(const std::vector<std::string> &games, std::size_t size, int size_width, int size_height, std::size_t _index)
 {
 	int i = 0;
-	std::size_t j = libs.size();
+	std::size_t j = size;
 	Color color;
 
 	for (auto c : games){
 		if (_index == j){
 			color = RED;
 			drawSquare((size_width / 2) + (c.size() + 15), (size_height / 3) + i, arcade::BG_RED);
-			printScore(libs, games, _index);
+			printScore(games, size, _index);
 		}
 		else
 			color = BLUE;
@@ -229,9 +224,9 @@ std::vector<std::string> N_LibNcurses::splitString(std::string str, char separat
 	return splited;
 }
 
-void N_LibNcurses::printScore(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
+void N_LibNcurses::printScore(const std::vector<std::string> &games, std::size_t size, std::size_t _index)
 {
-	std::string _gameName = games[_index - libs.size()];
+	std::string _gameName = games[_index - size];
 	int i = 0;
 
 	std::ifstream readScore("scoreboard/" + _gameName + ".score");
@@ -264,6 +259,11 @@ void N_LibNcurses::drawMenu(const std::vector<std::string> &libs, const std::vec
 	drawText("|  _  ||    / | |    |  _  | | | |  __| ", (getWidth() / 3) + 15, (getHeight() / 3) - 4, YELLOW);
 	drawText("| | | || |\\ \\ | \\__/\\| | | | |/ /| |___ ", (getWidth() / 3) + 15, (getHeight() / 3) - 3, CYAN);
 	drawText("\\_| |_/\\_| \\_| \\____/\\_| |_/___/ \\____/ ", (getWidth() / 3) + 15, (getHeight() / 3) - 2, WHITE);
-	drawListLibs(libs, games, getWidth(), getHeight() + 10, _index);
-	drawListGames(libs, games, getWidth() + 20, getHeight() + 10, _index);
+	drawListLibs(libs, getWidth(), getHeight() + 10, _index);
+	drawListGames(games, libs.size(), getWidth() + 20, getHeight() + 10, _index);
+}
+
+extern "C" std::unique_ptr<arcade::IGraphics> launch()
+{
+	return std::make_unique<arcade::LibNcurses>();
 }

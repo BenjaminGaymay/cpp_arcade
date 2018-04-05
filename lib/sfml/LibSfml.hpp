@@ -37,9 +37,9 @@ namespace arcade {
 		int getScaleHeight();
 		bool isOpen();
 		std::vector<std::string> splitString(std::string , char );
-		void printScore(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t );
-		void drawListLibs(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t );
-		void drawListGames(const std::vector<std::string> &, const std::vector<std::string> &, int , int , std::size_t );
+		void printScore(const std::vector<std::string> &, std::size_t, std::size_t);
+		void drawListLibs(const std::vector<std::string> &, int , int , std::size_t );
+		void drawListGames(const std::vector<std::string> &, std::size_t, int , int , std::size_t );
 		void loadTexture(const std::string &);
 		void drawMenu(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t);
 

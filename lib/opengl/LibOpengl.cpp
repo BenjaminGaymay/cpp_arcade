@@ -275,11 +275,6 @@ arcade::Key N_LibOpengl::getKey()
 	return NONE;
 }
 
-extern "C" std::unique_ptr<arcade::IGraphics> launch()
-{
-	return std::make_unique<arcade::LibOpengl>();
-}
-
 std::vector<std::string> N_LibOpengl::splitString(std::string str, char separator)
 {
 	std::string tmp = "";
@@ -298,9 +293,9 @@ std::vector<std::string> N_LibOpengl::splitString(std::string str, char separato
 	return splited;
 }
 
-void N_LibOpengl::printScore(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
+void N_LibOpengl::printScore(const std::vector<std::string> &games, std::size_t size, std::size_t _index)
 {
-	std::string _gameName = games[_index - libs.size()];
+	std::string _gameName = games[_index - size];
 	int i = -5;
 	int p = 0;
 
@@ -320,7 +315,6 @@ void N_LibOpengl::printScore(const std::vector<std::string> &libs, const std::ve
 				 drawText(split[0], (getWidth() / 2) + split[0].size(), (getHeight() / 2) + i, GREEN);
 				 drawText(split[1], (getWidth() / 2) + (split[0].size() + 10), (getHeight() / 2) + i, GREEN);
 			 }
-				//Acoreboard.push_back({std::atoi(split[1].c_str()), split[0]});
 		}
 		p = p + 1;
 		i = i + 2;
@@ -328,41 +322,41 @@ void N_LibOpengl::printScore(const std::vector<std::string> &libs, const std::ve
 	readScore.close();
 }
 
-void N_LibOpengl::drawListLibs(const std::vector<std::string> &libs, const std::vector<std::string> &games, int size_width, int size_height, std::size_t _index)
+void N_LibOpengl::drawListLibs(const std::vector<std::string> &libs, int size_width, int size_height, std::size_t _index)
 {
 	int i = 0;
 	std::size_t j = 0;
 	Color color;
 
-	for (auto c : libs){
-		if (_index == j){
+	for (auto c : libs) {
+		if (_index == j) {
 			color = RED;
 			drawSquare((size_width / 3) - 5, (size_height / 3) + i, arcade::BG_RED);
 		}
 		else
 			color = BLUE;
 		drawText(c, (size_width / 3) + 0, (size_height / 3) + i, color);
-		i+=5;
+		i += 5;
 		j++;
 	}
 }
 
-void N_LibOpengl::drawListGames(const std::vector<std::string> &libs, const std::vector<std::string> &games, int size_width, int size_height, std::size_t _index)
+void N_LibOpengl::drawListGames(const std::vector<std::string> &games, std::size_t size, int size_width, int size_height, std::size_t _index)
 {
 	int i = 0;
-	std::size_t j = libs.size();
+	std::size_t j = size;
 	Color color;
 
-	for (auto c : games){
-		if (_index == j){
+	for (auto c : games) {
+		if (_index == j) {
 			color = RED;
 			drawSquare((size_width / 2) + (c.size() + 5), (size_height / 3) + i, arcade::BG_RED);
-			printScore(libs, games, _index);
+			printScore(games, size, _index);
 		}
 		else
 			color = BLUE;
 		drawText(c, (size_width / 2) + 0, (size_height / 3) + i, color);
-		i+=5;
+		i += 5;
 		j++;
 	}
 }
@@ -376,6 +370,11 @@ void N_LibOpengl::drawMenu(const std::vector<std::string> &libs, const std::vect
 	drawText("  >===>>=>   >=>  >=>    >=>           >=====>>=>   >=>    >=>  >=>       ", (getWidth() / 2) - 25, (getHeight() / 3) - 3, CYAN);
 	drawText(" >=>      >=>  >=>    >=>    >=>   >=>   >=>      >=>  >=>   >=>   >=>       ", (getWidth() / 2) - 25, (getHeight() / 3) - 2, WHITE);
 	drawText(">=>          >=> >=>      >=>    >===>    >=>        >=> >====>      >=======> ", (getWidth() / 2) - 25, (getHeight() / 3) - 1, GREEN);
-	drawListLibs(libs, games, (getWidth() / 2) + 5, getHeight() + 10, _index);
-	drawListGames(libs, games, (getWidth() / 2) + 25, getHeight() + 10, _index);
+	drawListLibs(libs, (getWidth() / 2) + 5, getHeight() + 10, _index);
+	drawListGames(games, libs.size(), (getWidth() / 2) + 25, getHeight() + 10, _index);
+}
+
+extern "C" std::unique_ptr<arcade::IGraphics> launch()
+{
+	return std::make_unique<arcade::LibOpengl>();
 }
