@@ -295,6 +295,14 @@ std::vector<std::string> N_LibOpengl::splitString(std::string str, char separato
 	return splited;
 }
 
+std::string N_LibOpengl::getPseudo()
+{
+	std::string line;
+
+	std::getline(std::cin,line);
+	return line;
+}
+
 void N_LibOpengl::printScore(const std::vector<std::string> &games, std::size_t size, std::size_t _index)
 {
 	std::string _gameName = games[_index - size];

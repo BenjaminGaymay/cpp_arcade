@@ -346,6 +346,14 @@ void N_LibSfml::printScore(const std::vector<std::string> &games, std::size_t si
 	readScore.close();
 }
 
+std::string N_LibSfml::getPseudo()
+{
+	std::string line;
+
+	std::getline(std::cin,line);
+	return line;
+}
+
 void N_LibSfml::drawListLibs(const std::vector<std::string> &libs, int size_width, int size_height, std::size_t _index)
 {
 	int i = 0;

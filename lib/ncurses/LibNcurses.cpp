@@ -231,7 +231,6 @@ void N_LibNcurses::printScore(const std::vector<std::string> &games, std::size_t
 
 	std::ifstream readScore("scoreboard/" + _gameName + ".score");
 	std::string line;
-	std::string fileOutput;
 	std::vector<std::string> split;
 	std::vector<std::pair<int, std::string>> scoreboard;
 
@@ -249,6 +248,23 @@ void N_LibNcurses::printScore(const std::vector<std::string> &games, std::size_t
 		i = i + 3;
 	}
 	readScore.close();
+}
+
+std::string N_LibNcurses::getPseudo()
+{
+	static std::string line;
+	int character;
+
+	character = getch();
+	drawText("Your pseudo :", (getWidth() / 3) + 0, (getHeight() / 3) + 10, RED);
+  	if (static_cast<char>(character) == '\n' or line.size() >= 12)
+		return line;
+	if (isalnum(character))
+		line = line + static_cast<char>(character);
+	else if (character == KEY_BACKSPACE)
+		line = line.substr(0, line.size() - 1);
+	drawText(line, (getWidth() / 3) + 15, (getHeight() / 3) + 10, RED);
+  	return "Bertrand";
 }
 
 void N_LibNcurses::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)

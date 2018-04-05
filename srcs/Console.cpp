@@ -236,7 +236,7 @@ void N_Console::setScore(const int score)
 void N_Console::loopConsole()
 {
 	unsigned highscore = 0;
-	unsigned score;
+	unsigned score = 0;
 
 	_lib->openWindow();
 	while (_lib->isOpen()) {
@@ -246,7 +246,10 @@ void N_Console::loopConsole()
 				break;
 		}
 		else {
-			score = _game->start(_lib);
+			if (_pseudo.compare("Bertrand") == 0)
+				_pseudo = _lib->getPseudo();
+			else
+				score = _game->start(_lib);
 			if (score > highscore)
 				highscore = score;
 			_game->setKey(_key);

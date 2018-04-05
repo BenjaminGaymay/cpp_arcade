@@ -91,6 +91,7 @@ namespace arcade {
 		virtual void closeWindow() = 0;
 		virtual void openWindow() = 0;
 		virtual int getWidth() = 0;
+		virtual std::string getPseudo() = 0;
 		virtual int getHeight() = 0;
 		virtual bool isOpen() = 0;
 		virtual void drawMenu(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t) = 0;

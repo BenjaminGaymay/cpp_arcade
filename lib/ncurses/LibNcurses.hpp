@@ -35,6 +35,7 @@ namespace arcade {
 		std::vector<std::string> splitString(std::string , char );
 		int getWidth();
 		bool isOpen();
+		std::string getPseudo();
 		void drawMenu(const std::vector<std::string> &, const std::vector<std::string> &, std::size_t);
 		void printScore(const std::vector<std::string> &, std::size_t, std::size_t);
 		void drawListLibs(const std::vector<std::string> &, int , int , std::size_t );

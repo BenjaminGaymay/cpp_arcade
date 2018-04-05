@@ -39,6 +39,7 @@ namespace arcade {
 		void openWindow();
 		int getHeight();
 		int getWidth();
+		std::string getPseudo();
 		std::vector<std::string> splitString(std::string , char );
 		int getScaleHeight();
 		void printScore(const std::vector<std::string> &, std::size_t, std::size_t);
