@@ -253,14 +253,19 @@ void N_LibNcurses::printScore(const std::vector<std::string> &games, std::size_t
 
 void N_LibNcurses::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
 {
-	drawText("  ___  ______  _____   ___ ______ _____ ", (getWidth() / 3) + 15, (getHeight() / 3) -7, RED);
-	drawText(" / _ \\ | ___ \\/  __ \\ / _ \\|  _  \\  ___|", (getWidth() / 3) + 15, (getHeight() / 3) - 6, GREEN);
-	drawText("/ /_\\ \\| |_/ /| /  \\// /_\\ \\ | | | |__  ", (getWidth() / 3) + 15, (getHeight() / 3) - 5, BLUE);
-	drawText("|  _  ||    / | |    |  _  | | | |  __| ", (getWidth() / 3) + 15, (getHeight() / 3) - 4, YELLOW);
-	drawText("| | | || |\\ \\ | \\__/\\| | | | |/ /| |___ ", (getWidth() / 3) + 15, (getHeight() / 3) - 3, CYAN);
-	drawText("\\_| |_/\\_| \\_| \\____/\\_| |_/___/ \\____/ ", (getWidth() / 3) + 15, (getHeight() / 3) - 2, WHITE);
+	static int color = RED;
+
+	drawText("  ___  ______  _____   ___ ______ _____ ", (getWidth() / 3) + 15, (getHeight() / 3) -7, (arcade::Color)color);
+	drawText(" / _ \\ | ___ \\/  __ \\ / _ \\|  _  \\  ___|", (getWidth() / 3) + 15, (getHeight() / 3) - 6, (arcade::Color)color);
+	drawText("/ /_\\ \\| |_/ /| /  \\// /_\\ \\ | | | |__  ", (getWidth() / 3) + 15, (getHeight() / 3) - 5, (arcade::Color)color);
+	drawText("|  _  ||    / | |    |  _  | | | |  __| ", (getWidth() / 3) + 15, (getHeight() / 3) - 4, (arcade::Color)color);
+	drawText("| | | || |\\ \\ | \\__/\\| | | | |/ /| |___ ", (getWidth() / 3) + 15, (getHeight() / 3) - 3, (arcade::Color)color);
+	drawText("\\_| |_/\\_| \\_| \\____/\\_| |_/___/ \\____/ ", (getWidth() / 3) + 15, (getHeight() / 3) - 2, (arcade::Color)color);
 	drawListLibs(libs, getWidth(), getHeight() + 10, _index);
 	drawListGames(games, libs.size(), getWidth() + 20, getHeight() + 10, _index);
+	color++;
+	if (color == 7)
+		color = RED;
 }
 
 extern "C" std::unique_ptr<arcade::IGraphics> launch()

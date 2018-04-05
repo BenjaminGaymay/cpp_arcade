@@ -18,6 +18,9 @@ N_LibSfml::LibSfml() :
 	_font(),
 	_text()
 {
+	sf::Texture text;
+	text.loadFromFile("./ressources/images/arcade_bg.png");
+	_bg.setTexture(text);
 	_colorsMatch[RED] = sf::Color::Red;
 	_colorsMatch[BLUE] = sf::Color::Blue;
 	_colorsMatch[GREEN] = sf::Color::Green;

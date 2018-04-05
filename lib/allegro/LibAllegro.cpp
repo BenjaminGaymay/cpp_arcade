@@ -68,7 +68,7 @@ void N_LibAllegro::openWindow()
 	_height = info.y2 - info.y1;
 	_window = al_create_display(_width, _height);
 	if ((_font = al_load_font("./ressources/Lato.ttf", 36, 0)) == nullptr ||
-		(_background = al_load_bitmap("./ressources/images/arcade_bg.jpg")) == nullptr)
+		(_background = al_load_bitmap("./ressources/images/arcade_bg.png")) == nullptr)
 		throw std::runtime_error("Error: can't load ressources.");
 }
 

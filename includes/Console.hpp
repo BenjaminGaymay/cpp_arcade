@@ -55,6 +55,7 @@ namespace arcade {
 		void changeLibs(const Type &);
 		void setHighScore(const std::size_t &);
 		void setScore(const int);
+		void handleKeys();
 
 	private:
 		void *_handle;
