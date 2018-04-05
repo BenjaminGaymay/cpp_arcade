@@ -203,7 +203,6 @@ int arcade::Nibbler::start(std::unique_ptr<arcade::IGraphics> &lib)
 	if (doLoop() && !_pause)
 		moveNibbler();
 	getNewSide();
-	lib->refreshWindow();
 	return _score;
 }
 

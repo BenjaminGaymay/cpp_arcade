@@ -265,19 +265,24 @@ void N_LibNcurses::printScore(const std::vector<std::string> &games, std::size_t
 
 std::string N_LibNcurses::getPseudo()
 {
-	static std::string line;
+	std::string pseudo;
 	int character;
 
-	character = getch();
-	drawText("Your pseudo :", (getWidth() / 3) + 0, (getHeight() / 3) + 10, RED);
-  	if (static_cast<char>(character) == '\n' or line.size() >= 12)
-		return line;
-	if (isalnum(character))
-		line = line + static_cast<char>(character);
-	else if (character == KEY_BACKSPACE)
-		line = line.substr(0, line.size() - 1);
-	drawText(line, (getWidth() / 3) + 15, (getHeight() / 3) + 10, RED);
-  	return "Bertrand";
+	clearWindow();
+	while (true) {
+		character = getch();
+		drawText("Your pseudo :", (getWidth() / 3) + 0, (getHeight() / 3) + 10, RED);
+  		if (static_cast<char>(character) == '\n' or pseudo.size() >= 12)
+			return (pseudo[0] == '\0' ? "Bertrand" : pseudo);
+		if (isalnum(character))
+			pseudo = pseudo + static_cast<char>(character);
+		else if (character == KEY_BACKSPACE)
+			pseudo = pseudo.substr(0, pseudo.size() - 1);
+		else if (character == 27)
+			return "Bertrand";
+		drawText(pseudo, (getWidth() / 3) + 15, (getHeight() / 3) + 10, RED);
+		refreshWindow();
+	}
 }
 
 void N_LibNcurses::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)

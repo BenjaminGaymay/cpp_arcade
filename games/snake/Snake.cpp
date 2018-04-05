@@ -192,7 +192,6 @@ bool arcade::Snake::isWin()
 
 int arcade::Snake::start(std::unique_ptr<arcade::IGraphics> &lib)
 {
-	lib->clearWindow();
 	fillMap();
 	lib->drawMap(_map);
 	clearMap();
@@ -200,7 +199,6 @@ int arcade::Snake::start(std::unique_ptr<arcade::IGraphics> &lib)
 	if (doLoop() && !_pause)
 		moveSnake();
 	getNewSide();
-	lib->refreshWindow();
 	return _score;
 }
 

@@ -240,14 +240,12 @@ void N_Console::loopConsole()
 				break;
 		}
 		else {
-			if (_pseudo.compare("Bertrand") == 0)
-				_pseudo = _lib->getPseudo();
-			else
-				score = _game->start(_lib);
+			score = _game->start(_lib);
 			if (score > highscore)
 				highscore = score;
 			_game->setKey(_key);
 			if (_key == ESC or _game->isWin()) {
+				_pseudo = _lib->getPseudo();
 				_state = IN_MENU;
 				setScore(highscore);
 			}

@@ -218,7 +218,6 @@ bool arcade::Pacman::isWin()
 
 int arcade::Pacman::start(std::unique_ptr<arcade::IGraphics> &lib)
 {
-	lib->clearWindow();
 	fillMap();
 	lib->drawMap(_map);
 	clearMap();
@@ -240,7 +239,6 @@ int arcade::Pacman::start(std::unique_ptr<arcade::IGraphics> &lib)
 		movePacman();
 	}
 	getNewSide();
-	lib->refreshWindow();
 	return _score;
 }
 
