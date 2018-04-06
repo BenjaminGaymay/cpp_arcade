@@ -18,9 +18,9 @@ N_LibSfml::LibSfml() :
 	_font(),
 	_text()
 {
-	sf::Texture text;
-	text.loadFromFile("./ressources/images/arcade_bg.png");
-	_bg.setTexture(text);
+	if (!_bgtext.loadFromFile("./ressources/images/arcade_bg.png"))
+		throw std::runtime_error("Can't load ressources.");
+	_bg.setTexture(_bgtext);
 	_colorsMatch[RED] = sf::Color::Red;
 	_colorsMatch[BLUE] = sf::Color::Blue;
 	_colorsMatch[GREEN] = sf::Color::Green;
@@ -177,6 +177,7 @@ void N_LibSfml::closeWindow()
 void N_LibSfml::clearWindow()
 {
 	_window.clear(sf::Color::Black);
+	_window.draw(_bg);
 }
 
 void N_LibSfml::refreshWindow()

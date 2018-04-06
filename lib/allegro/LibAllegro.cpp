@@ -104,6 +104,7 @@ int N_LibAllegro::getScaleWidth()
 void N_LibAllegro::clearWindow()
 {
 	al_clear_to_color(_colorsMatch[BLACK]);
+	al_draw_bitmap(_background, 0, 0, 0);
 }
 
 void N_LibAllegro::refreshWindow()
@@ -215,7 +216,6 @@ std::vector<std::string> N_LibAllegro::splitString(std::string str, char separat
 
 std::string N_LibAllegro::getPseudo()
 {
-	ALLEGRO_USTR *input = al_ustr_new("");
 	std::string pseudo("Bertrand");
 	while (true) {
 		clearWindow();
