@@ -301,7 +301,7 @@ void N_LibAllegro::drawListGames(const std::vector<std::string> &games, std::siz
 	for (auto c : games) {
 		if (_index == j) {
 			color = RED;
-			drawSquare((size_width / 2) + (c.size() + 10), (size_height / 3) + i, arcade::BG_RED);
+			drawSquare((size_width / 2) + (c.size() + 7), (size_height / 3) + i, arcade::BG_RED);
 			printScore(games, size, _index);
 		}
 		else
