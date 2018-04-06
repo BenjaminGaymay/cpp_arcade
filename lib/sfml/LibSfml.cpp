@@ -364,13 +364,17 @@ std::string N_LibSfml::getPseudo()
 	std::string pseudo;
 	char character;
 	sf::RectangleShape border;
+	sf::RectangleShape rect;
 	border.setSize(sf::Vector2f(500, 55));
-	border.setOutlineColor(sf::Color::White);
-	border.setOutlineThickness(4);
+	border.setFillColor(sf::Color::White);
 	border.setPosition(sf::Vector2f(740, 290));
+	rect.setSize(sf::Vector2f(490, 45));
+	rect.setFillColor(sf::Color::Black);
+	rect.setPosition(sf::Vector2f(745, 295));
 	while (true) {
 		clearWindow();
 		_window.draw(border);
+		_window.draw(rect);
 		key = sf::Keyboard::Key::Up;
 		character = '\0';
 		while (_window.pollEvent(event)) {

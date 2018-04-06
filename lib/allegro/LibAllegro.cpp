@@ -67,8 +67,9 @@ void N_LibAllegro::openWindow()
 	_width = info.x2 - info.x1;
 	_height = info.y2 - info.y1;
 	_window = al_create_display(_width, _height);
-	if ((_font = al_load_font("./ressources/Lato.ttf", 36, 0)) == nullptr ||
-		(_background = al_load_bitmap("./ressources/images/arcade_bg.png")) == nullptr)
+	if ((_font = al_load_font("./ressources/Lato.ttf", 30, 0)) == nullptr ||
+		(_background = al_load_bitmap("./ressources/images/arcade_bg.png")) == nullptr ||
+		(_title = al_load_bitmap("./ressources/images/arcade_title.png")) == nullptr)
 		throw std::runtime_error("Error: can't load ressources.");
 }
 
@@ -109,10 +110,8 @@ void N_LibAllegro::clearWindow()
 
 void N_LibAllegro::refreshWindow()
 {
-	if (_event.timer.source == _timer) {
+	if (_event.timer.source == _timer)
 		al_flip_display();
-		// al_draw_bitmap(_background, 0, 0, 0);
-	}
 }
 
 bool N_LibAllegro::isOpen()
@@ -266,7 +265,7 @@ void N_LibAllegro::printScore(const std::vector<std::string> &games, std::size_t
 			split = std::vector<std::string> (splitString(line, ':'));
 			 if (split.size() == 2){
 				 drawText(split[0], 45, 10 + i,GREEN);
-				 drawText(split[1], 50 + split[0].size(), 10 + i, GREEN);
+				 drawText(split[1], 53, 10 + i, GREEN);
 			 }
 		}
 		i = i + 2;
@@ -315,10 +314,7 @@ void N_LibAllegro::drawListGames(const std::vector<std::string> &games, std::siz
 
 void N_LibAllegro::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
 {
-	drawText("  ,---.,---.,---.,---.,--. ,---.", 24, 4, RED);
-	drawText("|---||---' |     |---||   ||--- ", 24, 5, GREEN);
-	drawText("|   ||  \\ |    |   ||   ||   ", 24, 6, BLUE);
-	drawText("'`   ``---'`   '`--' `---'", 24, 7, YELLOW);
+	al_draw_bitmap(_title, 600, 50, 0);
 	drawListLibs(libs, 28, 37, _index);
 	drawListGames(games, libs.size(), 48, 37, _index);
 }
