@@ -333,7 +333,7 @@ std::vector<std::string> N_LibSfml::splitString(std::string str, char separator)
 void N_LibSfml::printScore(const std::vector<std::string> &games, std::size_t size, std::size_t _index)
 {
 	std::string _gameName = games[_index - size];
-	int i = 0;
+	int i = 3;
 
 	std::ifstream readScore("scoreboard/" + _gameName + ".score");
 	std::string line;
@@ -344,7 +344,7 @@ void N_LibSfml::printScore(const std::vector<std::string> &games, std::size_t si
 	if (!readScore)
 		return ;
 
-	while (std::getline(readScore, line) && i < 20) {
+	while (std::getline(readScore, line) && i < 23) {
 		if (!line.empty()) {
 			split = std::vector<std::string> (splitString(line, ':'));
 			 if (split.size() == 2){

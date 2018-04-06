@@ -249,7 +249,7 @@ std::string N_LibAllegro::getPseudo()
 void N_LibAllegro::printScore(const std::vector<std::string> &games, std::size_t size, std::size_t _index)
 {
 	std::string _gameName = games[_index - size];
-	int i = 0;
+	int i = 3;
 
 	std::ifstream readScore("scoreboard/" + _gameName + ".score");
 	std::string line;
@@ -260,7 +260,7 @@ void N_LibAllegro::printScore(const std::vector<std::string> &games, std::size_t
 	if (!readScore)
 		return ;
 
-	while (std::getline(readScore, line) && i < 20) {
+	while (std::getline(readScore, line) && i < 23) {
 		if (!line.empty()) {
 			split = std::vector<std::string> (splitString(line, ':'));
 			 if (split.size() == 2){
@@ -301,7 +301,7 @@ void N_LibAllegro::drawListGames(const std::vector<std::string> &games, std::siz
 	for (auto c : games) {
 		if (_index == j) {
 			color = RED;
-			drawSquare((size_width / 2) + (c.size() + 10), (size_height / 3) + i, arcade::BG_RED);
+			drawSquare((size_width / 2) + (c.size() + 7), (size_height / 3) + i, arcade::BG_RED);
 			printScore(games, size, _index);
 		}
 		else
