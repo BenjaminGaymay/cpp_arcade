@@ -18,7 +18,7 @@ N_LibSfml::LibSfml() :
 	_font(),
 	_text()
 {
-	if (!_bgText.loadFromFile("./ressources/images/arcade_bg.png") or
+	if (!_bgText.loadFromFile("./ressources/images/arcade_bg_mano.png") or
 		!_titleImgText.loadFromFile("./ressources/images/arcade_title.png") or
 		!_music.openFromFile("./ressources/sounds/undertale.ogg"))
 		throw std::runtime_error("Can't load ressources.");
@@ -423,7 +423,7 @@ void N_LibSfml::drawListGames(const std::vector<std::string> &games, std::size_t
 	std::size_t j = size;
 	Color color;
 
-	for (auto c : games){
+	for (auto c : games) {
 		if (_index == j) {
 			color = RED;
 			drawSquare((size_width / 2) + (c.size() + 10), (size_height / 3) + i, arcade::BG_RED);
@@ -432,18 +432,13 @@ void N_LibSfml::drawListGames(const std::vector<std::string> &games, std::size_t
 		else
 			color = BLUE;
 		drawText(c, (size_width / 2) + 10, (size_height / 3) + i, color);
-		i+=5;
+		i += 5;
 		j++;
 	}
 }
 
 void N_LibSfml::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
 {
-	// drawText("  AA      RRRR     CCC    AA     DDD     EEEE ", 20, 3, RED);
-	// drawText("A    A    R     R   C         A    A   D     D   E    ", 20, 4, GREEN);
-	// drawText("AAAA   RRRR   C         AAAA  D     D   EEE  ", 20, 5, BLUE);
-	// drawText("A    A    R   R     C         A    A   D     D   E    ", 20, 6, YELLOW);
-	// drawText("A    A    R    RR    CCC  A    A   DDD     EEEE ", 20, 7, CYAN);
 	_window.draw(_title);
 	drawListLibs(libs, 35, 27 + 10, _index);
 	drawListGames(games, libs.size(), 35 + 20, 27 + 10, _index);
