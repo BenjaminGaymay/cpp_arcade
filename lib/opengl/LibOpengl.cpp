@@ -18,6 +18,8 @@ N_LibOpengl::LibOpengl() :
 	_font(),
 	_text()
 {
+	if (!_music.openFromFile("./ressources/sounds/undertale.ogg"))
+		throw std::runtime_error("Can't load ressources.");
 	_colorsMatch[RED] = sf::Color::Red;
 	_colorsMatch[BLUE] = sf::Color::Blue;
 	_colorsMatch[GREEN] = sf::Color::Green;
@@ -48,6 +50,9 @@ N_LibOpengl::LibOpengl() :
 	_keyMatch[sf::Keyboard::Key::M] = NEXT_GAME;
 	_keyMatch[sf::Keyboard::Key::L] = PREVIOUS_GAME;
 	_keyMatch[sf::Keyboard::Key::S] = SHOOT;
+
+	_music.setLoop(true);
+	_music.play();
 
 	_mapHeight = 30;
 	_mapWidth = 30;

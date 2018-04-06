@@ -13,6 +13,7 @@
 #include <dirent.h>
 #include <fstream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "IGraphics.hpp"
@@ -58,6 +59,11 @@ namespace arcade {
 		sf::Text _text;
 		sf::Event _event;
 		sf::Keyboard::Key _key;
+		sf::Sprite _bg;
+		sf::Texture _bgText;
+		sf::Texture _titleImgText;
+		sf::Sprite _title;
+		sf::Music _music;
 
 		std::map<Color, sf::Color> _colorsMatch;
 		std::map<sf::Keyboard::Key, Key> _keyMatch;
