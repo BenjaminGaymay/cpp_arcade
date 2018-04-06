@@ -29,7 +29,7 @@ OBJOPENGL	=	$(SRCOPENGL:.cpp=.o)
 CPPFLAGS	=	-I ./includes/
 CPPFLAGS	+=	-W -Wall -Wextra -fPIC
 
-LDFLAGS		=	-shared -lncurses -lsfml-graphics -lallegro -lallegro_primitives -lallegro_font -lallegro_image -lallegro_ttf -lGL -lGLU
+LDFLAGS		=	-shared -lncurses -lsfml-graphics -lsfml-audio -lallegro -lallegro_primitives -lallegro_font -lallegro_image -lallegro_ttf -lGL -lGLU
 
 all:		$(SFML) $(NCURSES) $(ALLEGRO) $(OPENGL)
 

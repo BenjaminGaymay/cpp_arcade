@@ -315,10 +315,10 @@ void N_LibAllegro::drawListGames(const std::vector<std::string> &games, std::siz
 
 void N_LibAllegro::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
 {
-	drawText(",---.,---.,---.,---.,--. ,---.", 25, 4, RED);
-	drawText("    |---||---'|    |---||   ||--- ", 24, 5, GREEN);
-	drawText("    |   ||  \\ |    |   ||   ||   ", 24, 6, BLUE);
-	drawText("    `   '`   ``---'`   '`--' `---'", 24, 7, YELLOW);
+	drawText("  ,---.,---.,---.,---.,--. ,---.", 24, 4, RED);
+	drawText("|---||---' |     |---||   ||--- ", 24, 5, GREEN);
+	drawText("|   ||  \\ |    |   ||   ||   ", 24, 6, BLUE);
+	drawText("'`   ``---'`   '`--' `---'", 24, 7, YELLOW);
 	drawListLibs(libs, 28, 37, _index);
 	drawListGames(games, libs.size(), 48, 37, _index);
 }

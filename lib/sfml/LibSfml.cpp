@@ -18,9 +18,13 @@ N_LibSfml::LibSfml() :
 	_font(),
 	_text()
 {
-	if (!_bgtext.loadFromFile("./ressources/images/arcade_bg.png"))
+	if (!_bgText.loadFromFile("./ressources/images/arcade_bg.png") or
+		!_titleImgText.loadFromFile("./ressources/images/arcade_title.png") or
+		!_music.openFromFile("./ressources/sounds/undertale.ogg"))
 		throw std::runtime_error("Can't load ressources.");
-	_bg.setTexture(_bgtext);
+	_bg.setTexture(_bgText);
+	_title.setTexture(_titleImgText);
+	_title.setPosition(sf::Vector2f(600, 50));
 	_colorsMatch[RED] = sf::Color::Red;
 	_colorsMatch[BLUE] = sf::Color::Blue;
 	_colorsMatch[GREEN] = sf::Color::Green;
@@ -80,7 +84,6 @@ N_LibSfml::LibSfml() :
 	loadTexture("./ressources/images/ghost_blue.png"); // 21
 	loadTexture("./ressources/images/ghost_red.png"); // 22
 	loadTexture("./ressources/images/ghost_dead.png"); // 23
-	// _textureMatch[GREEN] = _texture[0];
 
 	_textureMatch[GREEN] = _texture[0];
 
@@ -117,6 +120,8 @@ N_LibSfml::LibSfml() :
 	_textureMatch[G_BLUE] = _texture[21];
 	_textureMatch[G_RED] = _texture[22];
 	_textureMatch[G_DEAD] = _texture[23];
+	_music.setLoop(true);
+	_music.play();
 }
 
 N_LibSfml::~LibSfml()
@@ -171,6 +176,11 @@ void N_LibSfml::drawSquare(const int &x, const int &y, const Color &color)
 
 void N_LibSfml::closeWindow()
 {
+	for (float i = 100; i >= 0; i--){
+		_music.setVolume(i);
+		usleep(1000);
+	}
+	_music.stop();
 	_window.close();
 }
 
@@ -339,7 +349,7 @@ void N_LibSfml::printScore(const std::vector<std::string> &games, std::size_t si
 			split = std::vector<std::string> (splitString(line, ':'));
 			 if (split.size() == 2){
 				 drawText(split[0], 45, 10 + i,GREEN);
-				 drawText(split[1], 50 + split[0].size(), 10 + i, GREEN);
+				 drawText(split[1], 52, 10 + i, GREEN);
 			 }
 		}
 		i = i + 2;
@@ -353,9 +363,14 @@ std::string N_LibSfml::getPseudo()
 	sf::Keyboard::Key key;
 	std::string pseudo;
 	char character;
-
+	sf::RectangleShape border;
+	border.setSize(sf::Vector2f(500, 55));
+	border.setOutlineColor(sf::Color::White);
+	border.setOutlineThickness(4);
+	border.setPosition(sf::Vector2f(740, 290));
 	while (true) {
 		clearWindow();
+		_window.draw(border);
 		key = sf::Keyboard::Key::Up;
 		character = '\0';
 		while (_window.pollEvent(event)) {
@@ -405,7 +420,7 @@ void N_LibSfml::drawListGames(const std::vector<std::string> &games, std::size_t
 	Color color;
 
 	for (auto c : games){
-		if (_index == j){
+		if (_index == j) {
 			color = RED;
 			drawSquare((size_width / 2) + (c.size() + 10), (size_height / 3) + i, arcade::BG_RED);
 			printScore(games, size, _index);
@@ -420,11 +435,12 @@ void N_LibSfml::drawListGames(const std::vector<std::string> &games, std::size_t
 
 void N_LibSfml::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
 {
-	drawText("  AA      RRRR     CCC    AA     DDD     EEEE ", 20, 3, RED);
-	drawText("A    A    R     R   C         A    A   D     D   E    ", 20, 4, GREEN);
-	drawText("AAAA   RRRR   C         AAAA  D     D   EEE  ", 20, 5, BLUE);
-	drawText("A    A    R   R     C         A    A   D     D   E    ", 20, 6, YELLOW);
-	drawText("A    A    R    RR    CCC  A    A   DDD     EEEE ", 20, 7, CYAN);
+	// drawText("  AA      RRRR     CCC    AA     DDD     EEEE ", 20, 3, RED);
+	// drawText("A    A    R     R   C         A    A   D     D   E    ", 20, 4, GREEN);
+	// drawText("AAAA   RRRR   C         AAAA  D     D   EEE  ", 20, 5, BLUE);
+	// drawText("A    A    R   R     C         A    A   D     D   E    ", 20, 6, YELLOW);
+	// drawText("A    A    R    RR    CCC  A    A   DDD     EEEE ", 20, 7, CYAN);
+	_window.draw(_title);
 	drawListLibs(libs, 35, 27 + 10, _index);
 	drawListGames(games, libs.size(), 35 + 20, 27 + 10, _index);
 }
