@@ -255,7 +255,7 @@ void N_LibNcurses::printScore(const std::vector<std::string> &games, std::size_t
 			split = std::vector<std::string> (splitString(line, ':'));
 			 if (split.size() == 2){
 				 drawText(split[0], (getWidth() / 2) + 60, (getHeight() / 4) + i, GREEN);
-				 drawText(split[1], (getWidth() / 2) + (split[0].size() + 65), (getHeight() / 4) + i, GREEN);
+				 drawText(split[1], (getWidth() / 2) + (12 + 65), (getHeight() / 4) + i, GREEN);
 			 }
 		}
 		i = i + 3;

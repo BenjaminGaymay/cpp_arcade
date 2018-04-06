@@ -346,8 +346,8 @@ void N_LibOpengl::printScore(const std::vector<std::string> &games, std::size_t 
 		if (!line.empty()) {
 			split = std::vector<std::string> (splitString(line, ':'));
 			 if (split.size() == 2){
-				 drawText(split[0], (getWidth() / 2) + split[0].size(), (getHeight() / 2) + i, GREEN);
-				 drawText(split[1], (getWidth() / 2) + (split[0].size() + 10), (getHeight() / 2) + i, GREEN);
+				 drawText(split[0], (getWidth() / 2) + 10, (getHeight() / 2) + i, GREEN);
+				 drawText(split[1], (getWidth() / 2) + (12 + 5), (getHeight() / 2) + i, GREEN);
 			 }
 		}
 		p = p + 1;
