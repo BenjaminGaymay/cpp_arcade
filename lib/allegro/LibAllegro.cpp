@@ -215,7 +215,36 @@ std::vector<std::string> N_LibAllegro::splitString(std::string str, char separat
 
 std::string N_LibAllegro::getPseudo()
 {
-	return "allegro";
+	ALLEGRO_USTR *input = al_ustr_new("");
+	std::string pseudo("Bertrand");
+	while (true) {
+		clearWindow();
+		al_wait_for_event(_eventQueue, &_event);
+		switch (_event.type) {
+			case ALLEGRO_EVENT_KEY_CHAR:
+				if (isalnum(_event.keyboard.unichar))
+					pseudo += _event.keyboard.unichar;
+				break;
+			case ALLEGRO_EVENT_KEY_DOWN:
+				switch (_event.keyboard.keycode) {
+					case ALLEGRO_KEY_ENTER:
+						return pseudo;
+						break;
+					case ALLEGRO_KEY_BACKSPACE:
+						pseudo = pseudo.substr(0, pseudo.size() - 1);
+						break;
+					default:
+						break;
+				}
+				break;
+			default: break;
+		}
+		if (pseudo.size() >= 12)
+			return pseudo;
+		drawText("Your pseudo:", 25, 10, RED);
+		drawText(pseudo, 33, 10, RED);
+		refreshWindow();
+	}
 }
 
 void N_LibAllegro::printScore(const std::vector<std::string> &games, std::size_t size, std::size_t _index)
