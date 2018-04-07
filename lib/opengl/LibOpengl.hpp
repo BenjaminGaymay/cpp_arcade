@@ -16,6 +16,7 @@
 #include <SFML/Audio.hpp>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <unistd.h>
 #include "IGraphics.hpp"
 
 namespace arcade {

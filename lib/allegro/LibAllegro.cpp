@@ -275,41 +275,53 @@ void N_LibAllegro::printScore(const std::vector<std::string> &games, std::size_t
 
 void N_LibAllegro::drawListLibs(const std::vector<std::string> &libs, int size_width, int size_height, std::size_t _index)
 {
+	static int loop = 0;
 	int i = 0;
 	std::size_t j = 0;
 	Color color;
 
-	for (auto c : libs) {
+	for (auto name : libs) {
 		if (_index == j) {
 			color = RED;
-			drawSquare((size_width / 3) + 5, (size_height / 3) + i, arcade::BG_RED);
+			for ( auto &c : name)
+				c = toupper(c);
+			if (loop % 20 < 10)
+				drawSquare((size_width / 3) + 5, (size_height / 3) + i, arcade::BG_RED);
 		}
 		else
 			color = BLUE;
-		drawText(c, (size_width / 3) + 10, (size_height / 3) + i, color);
+		name[0] = toupper(name[0]);
+		drawText(name, (size_width / 3) + 10, (size_height / 3) + i, color);
 		i += 5;
 		j++;
 	}
+	loop++;
 }
 
 void N_LibAllegro::drawListGames(const std::vector<std::string> &games, std::size_t size, int size_width, int size_height, std::size_t _index)
 {
+	static int loop = 0;
 	int i = 0;
 	std::size_t j = size;
 	Color color;
 
-	for (auto c : games) {
+	for (auto name : games) {
 		if (_index == j) {
 			color = RED;
-			drawSquare((size_width / 2) + (c.size() + 7), (size_height / 3) + i, arcade::BG_RED);
+			for ( auto &c : name)
+				c = toupper(c);
+			if (loop % 20 < 10)
+				drawSquare((size_width / 2) + (name.size() + 7), (size_height / 3) + i, arcade::BG_RED);
 			printScore(games, size, _index);
 		}
 		else
 			color = BLUE;
-		drawText(c, (size_width / 2) + 10, (size_height / 3) + i, color);
+		name[0] = toupper(name[0]);
+		drawText(name, (size_width / 2) + 20, (size_height / 3) + i, color);
 		i += 5;
 		j++;
 	}
+	loop++;
 }
 
 void N_LibAllegro::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)

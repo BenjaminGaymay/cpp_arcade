@@ -18,6 +18,7 @@ N_LibOpengl::LibOpengl() :
 	_font(),
 	_text()
 {
+	srand(time(NULL));
 	if (!_music.openFromFile("./ressources/sounds/undertale.ogg"))
 		throw std::runtime_error("Can't load ressources.");
 	_colorsMatch[RED] = sf::Color::Red;
@@ -351,8 +352,8 @@ void N_LibOpengl::printScore(const std::vector<std::string> &games, std::size_t 
 		if (!line.empty()) {
 			split = std::vector<std::string> (splitString(line, ':'));
 			 if (split.size() == 2){
-				 drawText(split[0], (getWidth() / 2) + 10, (getHeight() / 2) + i, GREEN);
-				 drawText(split[1], (getWidth() / 2) + (12 + 5), (getHeight() / 2) + i, GREEN);
+				 drawText(split[0], 50, 17 + i, GREEN);
+				 drawText(split[1], 57, 17 + i, GREEN);
 			 }
 		}
 		p = p + 1;
@@ -363,54 +364,74 @@ void N_LibOpengl::printScore(const std::vector<std::string> &games, std::size_t 
 
 void N_LibOpengl::drawListLibs(const std::vector<std::string> &libs, int size_width, int size_height, std::size_t _index)
 {
+	static int loop = 0;
 	int i = 0;
 	std::size_t j = 0;
 	Color color;
 
-	for (auto c : libs) {
+	for (auto name : libs) {
 		if (_index == j) {
 			color = RED;
-			drawSquare((size_width / 3) - 5, (size_height / 3) + i, arcade::BG_RED);
+			for ( auto &c : name)
+				c = toupper(c);
 		}
 		else
 			color = BLUE;
-		drawText(c, (size_width / 3) + 0, (size_height / 3) + i, color);
+		name[0] = toupper(name[0]);
+		drawText(name, (size_width / 3) + 0, (size_height / 3) + i, color);
 		i += 5;
 		j++;
 	}
+	loop++;
 }
 
 void N_LibOpengl::drawListGames(const std::vector<std::string> &games, std::size_t size, int size_width, int size_height, std::size_t _index)
 {
+	static int loop = 0;
 	int i = 0;
 	std::size_t j = size;
 	Color color;
 
-	for (auto c : games) {
+	for (auto name : games) {
 		if (_index == j) {
 			color = RED;
-			drawSquare((size_width / 2) + (c.size() + 5), (size_height / 3) + i, arcade::BG_RED);
+			for ( auto &c : name)
+				c = toupper(c);
 			printScore(games, size, _index);
 		}
 		else
 			color = BLUE;
-		drawText(c, (size_width / 2) + 0, (size_height / 3) + i, color);
+		name[0] = toupper(name[0]);
+		drawText(name, (size_width / 2) + 0, (size_height / 3) + i, color);
 		i += 5;
 		j++;
 	}
+	loop++;
 }
 
 void N_LibOpengl::drawMenu(const std::vector<std::string> &libs, const std::vector<std::string> &games, std::size_t _index)
 {
-	drawText("      >>       >======>         >=>           >>       >====>      >=======> ", (getWidth() / 2) - 25, (getHeight() / 3) -7, RED);
-	drawText("     >>=>      >=>    >=>    >=>   >=>      >>=>      >=>   >=>   >=>       ", (getWidth() / 2) - 25, (getHeight() / 3) - 6, GREEN);
-	drawText("    >>  >=>     >=>    >=>   >=>            >> >=>     >=>    >=>  >=>       ", (getWidth() / 2) - 25, (getHeight() / 3) - 5, BLUE);
-	drawText("   >=>  >=>    >> >==>      >=>            >=>  >=>    >=>    >=>  >=====>   ", (getWidth() / 2) - 25, (getHeight() / 3) - 4, YELLOW);
-	drawText("  >===>>=>   >=>  >=>    >=>           >=====>>=>   >=>    >=>  >=>       ", (getWidth() / 2) - 25, (getHeight() / 3) - 3, CYAN);
-	drawText(" >=>      >=>  >=>    >=>    >=>   >=>   >=>      >=>  >=>   >=>   >=>       ", (getWidth() / 2) - 25, (getHeight() / 3) - 2, WHITE);
-	drawText(">=>          >=> >=>      >=>    >===>    >=>        >=> >====>      >=======> ", (getWidth() / 2) - 25, (getHeight() / 3) - 1, GREEN);
-	drawListLibs(libs, (getWidth() / 2) + 5, getHeight() + 10, _index);
-	drawListGames(games, libs.size(), (getWidth() / 2) + 25, getHeight() + 10, _index);
+	static int loop = 0;
+	static int x = rand() % 2 - rand() % 1;
+	static int y = rand() % 2 -  rand() % 1;
+	static int color = rand() % 7;
+
+	if (loop % 10 == 0) {
+		color = rand() % 7;
+		x = rand() % 2 - rand() % 1;
+		y = rand() % 2 -  rand() % 1;
+	}
+	color = (color == BLACK ? color + 1 : color);
+	drawText("      >>       >======>         >=>           >>       >====>      >=======> ", 15 + x, y, (arcade::Color)color);
+  	drawText("     >>=>      >=>    >=>    >=>   >=>      >>=>      >=>   >=>   >=>       ", 15 + x, y + 1, (arcade::Color)color);
+  	drawText("    >>  >=>     >=>    >=>   >=>            >> >=>     >=>    >=>  >=>       ", 15 + x, y + 2, (arcade::Color)color);
+  	drawText("   >=>  >=>    >> >==>      >=>            >=>  >=>    >=>    >=>  >=====>   ", 15 + x, y + 3, (arcade::Color)color);
+  	drawText("  >===>>=>   >=>  >=>    >=>           >=====>>=>   >=>    >=>  >=>       ", 15 + x, y + 4, (arcade::Color)color);
+  	drawText(" >=>      >=>  >=>    >=>    >=>   >=>   >=>      >=>  >=>   >=>   >=>       ", 15 + x, y + 5, (arcade::Color)color);
+  	drawText(">=>          >=> >=>      >=>    >===>    >=>        >=> >====>      >=======> ", 15 + x, y + 6, (arcade::Color)color);
+	drawListLibs(libs, 60, 40, _index);
+	drawListGames(games, libs.size(), 80, 40, _index);
+	loop++;
 }
 
 extern "C" std::unique_ptr<arcade::IGraphics> launch()
