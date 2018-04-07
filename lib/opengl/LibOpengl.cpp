@@ -422,13 +422,12 @@ void N_LibOpengl::drawMenu(const std::vector<std::string> &libs, const std::vect
 		y = rand() % 2 -  rand() % 1;
 	}
 	color = (color == BLACK ? color + 1 : color);
-	drawText("      >>       >======>         >=>           >>       >====>      >=======> ", 15 + x, y, (arcade::Color)color);
-  	drawText("     >>=>      >=>    >=>    >=>   >=>      >>=>      >=>   >=>   >=>       ", 15 + x, y + 1, (arcade::Color)color);
-  	drawText("    >>  >=>     >=>    >=>   >=>            >> >=>     >=>    >=>  >=>       ", 15 + x, y + 2, (arcade::Color)color);
-  	drawText("   >=>  >=>    >> >==>      >=>            >=>  >=>    >=>    >=>  >=====>   ", 15 + x, y + 3, (arcade::Color)color);
-  	drawText("  >===>>=>   >=>  >=>    >=>           >=====>>=>   >=>    >=>  >=>       ", 15 + x, y + 4, (arcade::Color)color);
-  	drawText(" >=>      >=>  >=>    >=>    >=>   >=>   >=>      >=>  >=>   >=>   >=>       ", 15 + x, y + 5, (arcade::Color)color);
-  	drawText(">=>          >=> >=>      >=>    >===>    >=>        >=> >====>      >=======> ", 15 + x, y + 6, (arcade::Color)color);
+	drawText(" ____ ___   ___    _____  ___    ____   ", 25 + x, y + 2, (arcade::Color)color);
+  	drawText("(  _  )|  _`\\ (   _`\\ (  __  )(  _ `\\ (   _`\\", 25 + x, y + 3, (arcade::Color)color);
+  	drawText("| (_) || (_) ) |  (  (_) | (_) | |  |  )  ||  (_(_)", 25 + x, y + 4, (arcade::Color)color);
+  	drawText("|  _  ||  ,  / |  |   _  |  _  | |  |  |  )|   _)_ ", 25 + x, y + 5, (arcade::Color)color);
+  	drawText("| | |  || |\\ \\ |  (_(  ) | |  | | |  |_)  ||  (_(  )", 25 + x, y + 6, (arcade::Color)color);
+  	drawText("(_)(_)(_) (_)(____/'(_) (_)(____/'(____/'", 25 + x, y + 7, (arcade::Color)color);
 	drawListLibs(libs, 60, 40, _index);
 	drawListGames(games, libs.size(), 80, 40, _index);
 	loop++;
